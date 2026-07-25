@@ -1607,7 +1607,8 @@ function renderDateTabs() {
       const dateOk = t.key === '全部' || m.match_date === t.key;
       return leagueOk && dateOk;
     }).length;
-    return `<button class="date-tab ${t.key === currentDate ? 'active' : ''}" onclick="switchDate('${t.key}', '${t.label.replace(/'/g, '\\'')}')">${t.label}<span class="count">${cnt}</span></button>`;
+    const safeLabel = t.label.replace(/'/g, "\\'");
+    return `<button class="date-tab ${t.key === currentDate ? 'active' : ''}" onclick="switchDate('${t.key}', '${safeLabel}')">${t.label}<span class="count">${cnt}</span></button>`;
   }).join('');
 }
 
