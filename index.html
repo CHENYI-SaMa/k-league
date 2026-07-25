@@ -609,6 +609,83 @@
   }
   .btn-bg-clear:active { background: #f5dada; }
 
+  /* ===== Background Editor ===== */
+  .bg-editor-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .bg-editor-overlay.show { display: flex; }
+  .bg-editor-panel {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px 16px;
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+  }
+  .bg-editor-title { font-size: 1.1rem; font-weight: 800; color: #1a1a2e; }
+  .bg-editor-subtitle { font-size: 0.75rem; color: #999; margin-top: 4px; margin-bottom: 14px; }
+  .bg-editor-preview-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  #bgEditorCanvas {
+    max-width: 100%;
+    max-height: 60vh;
+    border: 2px dashed #c8d6f0;
+    border-radius: 8px;
+    cursor: grab;
+    touch-action: none;
+    background: #f5f7fa;
+  }
+  #bgEditorCanvas:active { cursor: grabbing; }
+  .bg-editor-controls { margin-bottom: 16px; }
+  .bg-ctrl-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .bg-ctrl-lbl {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #333;
+    width: 56px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .bg-ctrl-row input[type="range"] {
+    flex: 1;
+    accent-color: #2980b9;
+  }
+  .bg-ctrl-val {
+    font-size: 0.8rem;
+    color: #2980b9;
+    font-weight: 700;
+    width: 42px;
+    text-align: left;
+    flex-shrink: 0;
+  }
+  .bg-editor-buttons { display: flex; gap: 10px; justify-content: center; }
+  .btn-bg-cancel, .btn-bg-confirm {
+    padding: 10px 24px;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .btn-bg-cancel { background: #eee; color: #555; }
+  .btn-bg-confirm { background: #27ae60; color: #fff; }
+
   /* ===== Export Template Image Styles ===== */
   .exp-block {
     width: 100%;
@@ -846,6 +923,33 @@
 
 <!-- Toast -->
 <div class="exporting-toast" id="toast"></div>
+
+<!-- Background Image Editor Overlay -->
+<div class="bg-editor-overlay" id="bgEditorOverlay">
+  <div class="bg-editor-panel">
+    <div class="bg-editor-title">🖼 调整背景图</div>
+    <div class="bg-editor-subtitle">拖动图片调整位置</div>
+    <div class="bg-editor-preview-wrap">
+      <canvas id="bgEditorCanvas" width="360" height="520"></canvas>
+    </div>
+    <div class="bg-editor-controls">
+      <div class="bg-ctrl-row">
+        <span class="bg-ctrl-lbl">缩放</span>
+        <input type="range" id="bgScale" min="50" max="300" value="100" oninput="drawBgPreview()">
+        <span class="bg-ctrl-val" id="bgScaleVal">100%</span>
+      </div>
+      <div class="bg-ctrl-row">
+        <span class="bg-ctrl-lbl">透明度</span>
+        <input type="range" id="bgOpacity" min="0" max="95" value="80" oninput="drawBgPreview()">
+        <span class="bg-ctrl-val" id="bgOpacityVal">80%</span>
+      </div>
+    </div>
+    <div class="bg-editor-buttons">
+      <button class="btn-bg-cancel" onclick="closeBgEditor()">取消</button>
+      <button class="btn-bg-confirm" onclick="confirmBgEditor()">✓ 确认使用</button>
+    </div>
+  </div>
+</div>
 
 <script>
 // ===== State =====
@@ -1381,10 +1485,13 @@ function closeExport() {
   exportImageDataUrl = null;
 }
 
-// ===== Background Image (localStorage) =====
-function getBgImage() {
-  return localStorage.getItem('kleague_bg_image') || '';
-}
+// ===== Background Image (localStorage + Editor) =====
+function getBgImage() { return localStorage.getItem('kleague_bg_image') || ''; }
+
+let _bgEditorImg = null;
+let _bgOffX = 0, _bgOffY = 0;
+let _bgDragStart = null;
+
 function handleBgUpload(e) {
   const file = e.target.files[0];
   if (!file) return;
@@ -1397,37 +1504,124 @@ function handleBgUpload(e) {
   reader.onload = function(ev) {
     const img = new Image();
     img.onload = function() {
-      const canvas = document.createElement('canvas');
-      const maxW = 1500;
-      const scale = Math.min(1, maxW / img.width);
-      canvas.width = Math.round(img.width * scale);
-      canvas.height = Math.round(img.height * scale);
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      let dataUrl;
-      try { dataUrl = canvas.toDataURL('image/jpeg', 0.72); }
-      catch(err) { showToast('图片处理失败'); return; }
-      try {
-        localStorage.setItem('kleague_bg_image', dataUrl);
-        showToast('✅ 背景图已保存，下次自动使用');
-        updateBgButtons();
-        applyBgToExport();
-        regenerateImage();
-      } catch(err) {
-        showToast('存储失败，图片太大请换张小的');
-      }
+      _bgEditorImg = img;
+      _bgOffX = 0; _bgOffY = 0;
+      document.getElementById('bgScale').value = 100;
+      document.getElementById('bgOpacity').value = 80;
+      // auto-fit scale so image covers preview height
+      const canvas = document.getElementById('bgEditorCanvas');
+      const fitScale = Math.max(canvas.height / img.width, canvas.width / img.height);
+      // actually fit to cover canvas
+      const sc = Math.max(canvas.width / img.width, canvas.height / img.height);
+      const baseScale = Math.round(sc * 100);
+      const slider = document.getElementById('bgScale');
+      slider.min = Math.max(50, Math.round(baseScale * 0.5));
+      slider.max = Math.round(baseScale * 3);
+      slider.value = baseScale;
+      drawBgPreview();
+      document.getElementById('bgEditorOverlay').classList.add('show');
+      bindBgDrag();
     };
     img.src = ev.target.result;
   };
   reader.readAsDataURL(file);
   e.target.value = '';
 }
+
+function drawBgPreview() {
+  if (!_bgEditorImg) return;
+  const canvas = document.getElementById('bgEditorCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#f5f7fa';
+  ctx.fillRect(0, 0, W, H);
+  const img = _bgEditorImg;
+  const scale = document.getElementById('bgScale').value / 100;
+  const iw = img.width * scale;
+  const ih = img.height * scale;
+  const x = (W - iw) / 2 + _bgOffX;
+  const y = (H - ih) / 2 + _bgOffY;
+  ctx.drawImage(img, x, y, iw, ih);
+  const op = document.getElementById('bgOpacity').value / 100;
+  ctx.fillStyle = `rgba(255,255,255,${op})`;
+  ctx.fillRect(0, 0, W, H);
+  // overlay grid lines to simulate text area
+  ctx.strokeStyle = 'rgba(200,214,240,0.4)';
+  ctx.lineWidth = 1;
+  for (let i = 1; i < 4; i++) {
+    ctx.beginPath();
+    ctx.moveTo(0, H * i / 4);
+    ctx.lineTo(W, H * i / 4);
+    ctx.stroke();
+  }
+  document.getElementById('bgScaleVal').textContent = document.getElementById('bgScale').value + '%';
+  document.getElementById('bgOpacityVal').textContent = document.getElementById('bgOpacity').value + '%';
+}
+
+function bindBgDrag() {
+  const canvas = document.getElementById('bgEditorCanvas');
+  canvas.onpointerdown = function(e) {
+    _bgDragStart = { x: e.clientX, y: e.clientY, ox: _bgOffX, oy: _bgOffY };
+    canvas.setPointerCapture(e.pointerId);
+  };
+  canvas.onpointermove = function(e) {
+    if (!_bgDragStart) return;
+    _bgOffX = _bgDragStart.ox + (e.clientX - _bgDragStart.x);
+    _bgOffY = _bgDragStart.oy + (e.clientY - _bgDragStart.y);
+    drawBgPreview();
+  };
+  canvas.onpointerup = function(e) { _bgDragStart = null; };
+}
+
+function confirmBgEditor() {
+  if (!_bgEditorImg) return;
+  const exportW = 750;
+  const exportH = 1500;
+  const canvas = document.createElement('canvas');
+  canvas.width = exportW;
+  canvas.height = exportH;
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, exportW, exportH);
+  const img = _bgEditorImg;
+  const previewCanvas = document.getElementById('bgEditorCanvas');
+  const pW = previewCanvas.width, pH = previewCanvas.height;
+  const scale = document.getElementById('bgScale').value / 100;
+  const iw = img.width * scale;
+  const ih = img.height * scale;
+  const x = (exportW - iw) / 2 + _bgOffX * (exportW / pW);
+  const y = (exportH - ih) / 2 + _bgOffY * (exportH / pH);
+  ctx.drawImage(img, x, y, iw, ih);
+  const op = document.getElementById('bgOpacity').value / 100;
+  ctx.fillStyle = `rgba(255,255,255,${op})`;
+  ctx.fillRect(0, 0, exportW, exportH);
+  let dataUrl;
+  try { dataUrl = canvas.toDataURL('image/jpeg', 0.78); }
+  catch(err) { showToast('图片处理失败'); return; }
+  try {
+    localStorage.setItem('kleague_bg_image', dataUrl);
+    closeBgEditor();
+    updateBgButtons();
+    applyBgToExport();
+    regenerateImage();
+    showToast('✅ 背景图已保存，下次自动使用');
+  } catch(err) {
+    showToast('存储失败，请调小缩放后重试');
+  }
+}
+
+function closeBgEditor() {
+  document.getElementById('bgEditorOverlay').classList.remove('show');
+  _bgEditorImg = null;
+}
+
 function applyBgToExport() {
   const bg = getBgImage();
   const block = document.querySelector('#exportCard .exp-block');
   if (!block) return;
   if (bg) {
-    block.style.background = `linear-gradient(rgba(255,255,255,0.82), rgba(255,255,255,0.82)), url("${bg}")`;
+    block.style.background = `url("${bg}")`;
     block.style.backgroundSize = 'cover';
     block.style.backgroundPosition = 'center';
   } else {
