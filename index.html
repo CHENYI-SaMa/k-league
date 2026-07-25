@@ -674,15 +674,15 @@
     line-height: 1.8;
   }
   .exp-pred-stamp {
-    margin-top: 16px;
-    padding: 12px 14px;
-    background: #f0f4ff;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, #f0f4ff 0%, #e8edfb 100%);
     border-radius: 6px;
     border: 1px solid #c8d6f0;
     display: flex;
     gap: 20px;
     align-items: center;
     flex-wrap: wrap;
+    margin-bottom: 14px;
   }
   .exp-pred-stamp .stamp-lbl {
     font-size: 11px;
@@ -1167,6 +1167,23 @@ async function exportMatch(id) {
         <div class="exp-time"></div>
       </div>
 
+      <!-- Prediction Stamp (Top) -->
+      <div class="exp-pred-stamp">
+        <div>
+          <div class="stamp-lbl">预测结果</div>
+          <div class="stamp-val" style="color:${resultLabel==='主胜'?'#c0392b':resultLabel==='客胜'?'#27ae60':resultLabel==='平局'?'#f39c12':'#999'};font-size:18px;">${resultLabel}</div>
+        </div>
+        <div>
+          <div class="stamp-lbl">进球数</div>
+          <div class="stamp-val">${goalsLabel}</div>
+        </div>
+        <div>
+          <div class="stamp-lbl">比分参考</div>
+          <div class="stamp-val">${scoresLabel}</div>
+        </div>
+        ${noteLabel?`<div style="flex-basis:100%;"><div class="stamp-lbl">分析</div><div style="font-size:12px;color:#555;margin-top:4px;">${noteLabel}</div></div>`:''}
+      </div>
+
       <!-- Recent Form -->
       <div class="exp-section-title">📋 球队近况（近5场）</div>
       <table style="width:100%;border-collapse:collapse;margin-bottom:10px;">
@@ -1238,22 +1255,6 @@ async function exportMatch(id) {
         }).join('')}
       </table>
 
-      <!-- Prediction Stamp -->
-      <div class="exp-pred-stamp">
-        <div>
-          <div class="stamp-lbl">预测结果</div>
-          <div class="stamp-val" style="color:${resultLabel==='主胜'?'#c0392b':resultLabel==='客胜'?'#27ae60':resultLabel==='平局'?'#f39c12':'#999'};font-size:18px;">${resultLabel}</div>
-        </div>
-        <div>
-          <div class="stamp-lbl">进球数</div>
-          <div class="stamp-val">${goalsLabel}</div>
-        </div>
-        <div>
-          <div class="stamp-lbl">比分参考</div>
-          <div class="stamp-val">${scoresLabel}</div>
-        </div>
-        ${noteLabel?`<div style="flex-basis:100%;"><div class="stamp-lbl">分析</div><div style="font-size:12px;color:#555;margin-top:4px;">${noteLabel}</div></div>`:''}
-      </div>
     </div>
   `;
 
