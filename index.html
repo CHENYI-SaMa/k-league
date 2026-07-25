@@ -484,6 +484,22 @@
     font-size: 0.72rem;
     font-family: inherit;
   }
+  .btn-clear-pred {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #f0c8c8;
+    background: #fdf0ef;
+    color: #c0392b;
+    border-radius: 5px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-clear-pred:active { background: #f5dada; transform: scale(0.95); }
   .btn-export {
     display: flex;
     align-items: center;
@@ -1211,6 +1227,7 @@ function render() {
       <input class="score-inp" placeholder="X-X" value="${(pred.scores||['','',''])[1]}" onchange="setScore('${id}',1,this.value)">
       <input class="score-inp" placeholder="X-X" value="${(pred.scores||['','',''])[2]}" onchange="setScore('${id}',2,this.value)">
       <input class="note-inp" placeholder="分析备注..." value="${pred.note||''}" onchange="setPred('${id}','note',this.value)">
+      <button class="btn-clear-pred" onclick="clearPred('${id}', this)" title="清除预测">❌</button>
     </div>
     <button class="btn-export" onclick="exportMatch('${id}')">📸 导出为图片</button>
   </div>
@@ -1326,6 +1343,20 @@ function setScore(id, idx, val) {
   p[id].scores[idx] = val;
   savePreds(p);
   updatePredSummary(id);
+}
+function clearPred(id, btn) {
+  const p = loadPreds();
+  if (p[id]) { delete p[id]; savePreds(p); }
+  const row = btn.parentElement;
+  row.querySelectorAll('.score-inp').forEach(inp => inp.value = '');
+  const noteInput = row.querySelector('.note-inp');
+  if (noteInput) noteInput.value = '';
+  const resContainer = document.getElementById('resBtns_'+id);
+  if (resContainer) resContainer.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+  const goalContainer = document.getElementById('goalBtns_'+id);
+  if (goalContainer) goalContainer.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+  updatePredSummary(id);
+  showToast('已清除预测');
 }
 
 // ===== Export =====
