@@ -97,14 +97,28 @@
     background: #fff;
     border-bottom: 1px solid var(--border-light);
     position: sticky;
-    top: 84px;
+    top: 116px;
     z-index: 99;
     overflow-x: auto;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
   .league-bar::-webkit-scrollbar { display: none; }
-  .league-tab {
+  .date-bar {
+    display: flex;
+    gap: 6px;
+    padding: 10px 12px 6px;
+    background: #fff;
+    border-bottom: 1px solid var(--border-light);
+    position: sticky;
+    top: 84px;
+    z-index: 100;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .date-bar::-webkit-scrollbar { display: none; }
+  .date-tab {
     flex: 0 0 auto;
     padding: 7px 16px;
     border-radius: 20px;
@@ -117,6 +131,17 @@
     white-space: nowrap;
     transition: all 0.2s;
   }
+  .date-tab.active {
+    background: var(--red);
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(192,57,43,0.3);
+  }
+  .date-tab .count {
+    font-size: 0.6rem;
+    opacity: 0.9;
+    margin-left: 4px;
+  }
+  .date-tab:active { transform: scale(0.95); }
   .league-tab.active {
     background: var(--navy);
     color: #fff;
@@ -952,6 +977,9 @@
   </div>
 </div>
 
+<!-- Date Filter Tabs -->
+<div class="date-bar" id="dateBar"></div>
+
 <!-- League Tabs -->
 <div class="league-bar" id="leagueBar"></div>
 
@@ -1011,6 +1039,7 @@
 // ===== State =====
 let allData = [];
 let currentLeague = '全部';
+let currentDate = '全部';
 const STORAGE_KEY = 'k_league_preds_v2';
 let exportImageDataUrl = null;
 
@@ -1387,7 +1416,11 @@ function renderTabs() {
   const bar = document.getElementById('leagueBar');
   const leagues = getLeagues(allData);
   bar.innerHTML = leagues.map(l => {
-    const cnt = l==='全部' ? allData.length : allData.filter(m=>(m.league||'其他')===l).length;
+    const cnt = allData.filter(m => {
+      const leagueOk = l === '全部' || (m.league || '其他') === l;
+      const dateOk = currentDate === '全部' || m.match_date === currentDate;
+      return leagueOk && dateOk;
+    }).length;
     return `<button class="league-tab ${l===currentLeague?'active':''}" onclick="switchLeague('${l}')">${l}<span class="count">${cnt}</span></button>`;
   }).join('');
 }
@@ -1395,6 +1428,42 @@ function renderTabs() {
 function switchLeague(l) {
   currentLeague = l;
   renderTabs();
+  renderDateTabs();
+  render();
+}
+
+function getDateTabs() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const tabs = [{key: '全部', label: '全部'}];
+  for (let i = 0; i <= 2; i++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() + i);
+    const ymd = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    const dayMap = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+    const label = i === 0 ? '今天' : i === 1 ? '明天' : '后天';
+    tabs.push({key: ymd, label: label + ' ' + dayMap[d.getDay()]});
+  }
+  return tabs;
+}
+
+function renderDateTabs() {
+  const bar = document.getElementById('dateBar');
+  const tabs = getDateTabs();
+  bar.innerHTML = tabs.map(t => {
+    const cnt = allData.filter(m => {
+      const leagueOk = currentLeague === '全部' || (m.league || '其他') === currentLeague;
+      const dateOk = t.key === '全部' || m.match_date === t.key;
+      return leagueOk && dateOk;
+    }).length;
+    return `<button class="date-tab ${t.key === currentDate ? 'active' : ''}" onclick="switchDate('${t.key}', '${t.label.replace(/'/g, '\\'')}')">${t.label}<span class="count">${cnt}</span></button>`;
+  }).join('');
+}
+
+function switchDate(key, label) {
+  currentDate = key;
+  renderTabs();
+  renderDateTabs();
   render();
 }
 
@@ -1410,9 +1479,16 @@ function render() {
   document.getElementById('updateLabel').textContent =
     '更新于 ' + now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0')+' '+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
 
-  const filtered = currentLeague === '全部'
-    ? allData
-    : allData.filter(m => (m.league || '其他') === currentLeague);
+  const filtered = allData.filter(m => {
+    const leagueOk = currentLeague === '全部' || (m.league || '其他') === currentLeague;
+    const dateOk = currentDate === '全部' || m.match_date === currentDate;
+    return leagueOk && dateOk;
+  });
+
+  if (!filtered.length) {
+    app.innerHTML = '<div class="empty-box"><span class="icon">📅</span><p>该日期暂无比赛</p><p style="font-size:0.75rem;color:#aaa">试试切换其他日期或联赛</p></div>';
+    return;
+  }
 
   const dayMap = ['周日','周一','周二','周三','周四','周五','周六'];
   const grp = {};
@@ -2001,6 +2077,7 @@ async function init() {
     } catch {}
   }
   renderTabs();
+  renderDateTabs();
   render();
 }
 
