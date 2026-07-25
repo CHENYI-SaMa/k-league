@@ -67,12 +67,17 @@ def parse_main_page(html):
         nspf_spans = re.findall(r'data-type="nspf"[^>]*data-sp="([^"]*)"', context)
         spf_spans = re.findall(r'data-type="spf"[^>]*data-sp="([^"]*)"', context)
         
+        # Extract team IDs from links like liansai.500.com/team/1615/
+        team_ids = re.findall(r'/team/(\d+)/', context)
+        
         matches.append({
             'fixture_id': fixture_id,
             'match_num': match_num,
             'league': league_display,
             'home_team': home,
             'away_team': away,
+            'home_team_id': team_ids[0] if len(team_ids) >= 1 else '',
+            'away_team_id': team_ids[1] if len(team_ids) >= 2 else '',
             'home_rank': home_rank,
             'away_rank': away_rank,
             'match_date': match_date,

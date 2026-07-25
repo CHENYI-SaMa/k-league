@@ -189,6 +189,18 @@
     font-size: 0.65rem;
     color: #ccc;
   }
+  .team-logo {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+  .team-name-wrap {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
   .match-time-badge {
     font-size: 0.72rem;
     color: var(--red);
@@ -894,6 +906,17 @@ function getLeagues(data) {
   return ['全部', ...Array.from(set).sort()];
 }
 
+function teamLogoUrl(teamId) {
+  if (!teamId) return '';
+  return `https://liansai.500.com/static/soccerdata/images/TeamPic/teamsignnew_${teamId}.png`;
+}
+
+function teamLogoSpan(m, side) {
+  const tid = side === 'home' ? m.home_team_id : m.away_team_id;
+  const url = teamLogoUrl(tid);
+  return url ? `<img class="team-logo" src="${url}" alt="" onerror="this.style.display='none'">` : '';
+}
+
 // ===== Render Tabs =====
 function renderTabs() {
   const bar = document.getElementById('leagueBar');
@@ -957,9 +980,9 @@ function render() {
     <div class="match-info">
       <div class="match-league">${m.league||''}</div>
       <div class="match-teams">
-        <span>${m.home_team}<span class="rank">[${m.home_rank}]</span></span>
+        <span class="team-name-wrap">${teamLogoSpan(m,'home')}<span>${m.home_team}<span class="rank">[${m.home_rank}]</span></span></span>
         <span class="vs-dot">VS</span>
-        <span><span class="rank">[${m.away_rank}]</span>${m.away_team}</span>
+        <span class="team-name-wrap"><span><span class="rank">[${m.away_rank}]</span>${m.away_team}</span>${teamLogoSpan(m,'away')}</span>
       </div>
     </div>
     <div class="match-time-badge">
@@ -1160,9 +1183,11 @@ async function exportMatch(id) {
         <div class="exp-num">${m.match_num}</div>
         <div class="exp-league">${m.league||''} · ${m.match_date||''} ${m.match_time||''}</div>
         <div class="exp-matchup">
+          ${teamLogoSpan(m,'home')?`<img src="${teamLogoUrl(m.home_team_id)}" style="width:32px;height:32px;object-fit:contain;vertical-align:middle;" onerror="this.style.display='none'">`:''}
           <span>${m.home_team} <small style="color:#999;font-weight:400;">[${m.home_rank}]</small></span>
           <span class="spacer">VS</span>
           <span><small style="color:#999;font-weight:400;">[${m.away_rank}]</small> ${m.away_team}</span>
+          ${teamLogoSpan(m,'away')?`<img src="${teamLogoUrl(m.away_team_id)}" style="width:32px;height:32px;object-fit:contain;vertical-align:middle;" onerror="this.style.display='none'">`:''}
         </div>
         <div class="exp-time"></div>
       </div>
