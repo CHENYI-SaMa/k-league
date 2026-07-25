@@ -485,13 +485,14 @@
     font-family: inherit;
   }
   .btn-clear-pred {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
+    margin-left: auto;
     border: 1px solid #f0c8c8;
     background: #fdf0ef;
     color: #c0392b;
     border-radius: 5px;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -1203,6 +1204,7 @@ function render() {
         <span>进球数：<b id="predGoals_${id}">${pred.goals||'-'}</b></span>
         <span>比分参考：<b id="predScores_${id}">${(pred.scores||[]).filter(Boolean).join(' / ')||'-'}</b></span>
       </div>
+      <button class="btn-clear-pred" onclick="clearPred('${id}')" title="清除预测">❌</button>
     </div>
     <div class="pred-row">
       <span class="pred-lbl">胜负</span>
@@ -1227,7 +1229,6 @@ function render() {
       <input class="score-inp" placeholder="X-X" value="${(pred.scores||['','',''])[1]}" onchange="setScore('${id}',1,this.value)">
       <input class="score-inp" placeholder="X-X" value="${(pred.scores||['','',''])[2]}" onchange="setScore('${id}',2,this.value)">
       <input class="note-inp" placeholder="分析备注..." value="${pred.note||''}" onchange="setPred('${id}','note',this.value)">
-      <button class="btn-clear-pred" onclick="clearPred('${id}', this)" title="清除预测">❌</button>
     </div>
     <button class="btn-export" onclick="exportMatch('${id}')">📸 导出为图片</button>
   </div>
@@ -1344,13 +1345,16 @@ function setScore(id, idx, val) {
   savePreds(p);
   updatePredSummary(id);
 }
-function clearPred(id, btn) {
+function clearPred(id) {
   const p = loadPreds();
   if (p[id]) { delete p[id]; savePreds(p); }
-  const row = btn.parentElement;
-  row.querySelectorAll('.score-inp').forEach(inp => inp.value = '');
-  const noteInput = row.querySelector('.note-inp');
-  if (noteInput) noteInput.value = '';
+  const badge = document.getElementById('predBadge_'+id);
+  const strip = badge ? badge.closest('.pred-strip') : null;
+  if (strip) {
+    strip.querySelectorAll('.score-inp').forEach(inp => inp.value = '');
+    const noteInput = strip.querySelector('.note-inp');
+    if (noteInput) noteInput.value = '';
+  }
   const resContainer = document.getElementById('resBtns_'+id);
   if (resContainer) resContainer.querySelectorAll('button').forEach(b => b.classList.remove('active'));
   const goalContainer = document.getElementById('goalBtns_'+id);
