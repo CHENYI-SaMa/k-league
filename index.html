@@ -254,6 +254,30 @@
     border-radius: 2px;
     flex-shrink: 0;
   }
+  .sec-title .label-text {
+    flex: 1;
+  }
+  .btn-refresh-an {
+    font-size: 0.65rem;
+    color: #2980b9;
+    background: #eaf2fb;
+    border: 1px solid #c8dcf0;
+    border-radius: 12px;
+    padding: 2px 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.15s;
+  }
+  .btn-refresh-an:active {
+    transform: scale(0.9);
+    background: #d4e6f7;
+  }
+  .analysis-mode-tag {
+    font-size: 0.6rem;
+    color: #999;
+    font-weight: 400;
+  }
 
   /* Two-column Form */
   .form-grid {
@@ -1077,125 +1101,255 @@ function rc(r) {
   return 'r-l';
 }
 
-function genAnalysis(m, hS, aS, h2h, an) {
-  const p = [];
+function genAnalysis(m, hS, aS, h2h, an, mode) {
+  mode = mode || 0;
+  const d = computeAnalysisData(m, hS, aS, h2h, an);
+  if (mode === 1) return genAnalysisBrief(d);
+  if (mode === 2) return genAnalysisData(d);
+  if (mode === 3) return genAnalysisCasual(d);
+  return genAnalysisFull(d);
+}
+
+const ANALYSIS_MODES = ['全面', '简明', '数据', '通俗'];
+const ANALYSIS_MODE_KEY = 'kleague_an_mode';
+
+function getAnalysisMode(id) {
+  const raw = localStorage.getItem(ANALYSIS_MODE_KEY);
+  const map = raw ? JSON.parse(raw) : {};
+  return map[id] || 0;
+}
+function setAnalysisMode(id, mode) {
+  const raw = localStorage.getItem(ANALYSIS_MODE_KEY);
+  const map = raw ? JSON.parse(raw) : {};
+  map[id] = mode;
+  localStorage.setItem(ANALYSIS_MODE_KEY, JSON.stringify(map));
+}
+
+function refreshAnalysis(id) {
+  const cur = getAnalysisMode(id);
+  const next = (cur + 1) % ANALYSIS_MODES.length;
+  setAnalysisMode(id, next);
+  const m = allData.find(x => x.fixture_id === id);
+  if (!m) return;
+  const an = m.analysis || {};
+  const hS = formStats(an.home_recent_5_matches, m.home_team);
+  const aS = formStats(an.away_recent_5_matches, m.away_team);
+  const h2h = h2hSummary(an.h2h_matches, m.home_team, m.away_team);
+  const txt = genAnalysis(m, hS, aS, h2h, an, next);
+  const block = document.getElementById('anBlock_' + id);
+  if (block) block.textContent = txt;
+  const tag = document.getElementById('anTag_' + id);
+  if (tag) tag.textContent = '「' + ANALYSIS_MODES[next] + '」';
+}
+
+function computeAnalysisData(m, hS, aS, h2h, an) {
   const h = m.home_team, a = m.away_team;
   an = an || {};
+  const d = { h, a, m, hS, aS, h2h, an };
 
-  // 1. 排名对比
-  const hr = parseInt(m.home_rank), ar = parseInt(m.away_rank);
-  if (hr && ar) {
-    const gap = Math.abs(hr - ar);
-    if (gap === 0) p.push(`${h}与${a}同列第${hr}名`);
-    else if (gap <= 2) p.push(`${h}第${hr}名 vs ${a}第${ar}名，排名接近`);
-    else if (hr < ar) p.push(`${h}第${hr}名领先${a}（第${ar}名）${gap}个位次`);
-    else p.push(`${a}第${ar}名领先${h}（第${hr}名）${gap}个位次`);
-  }
+  d.hr = parseInt(m.home_rank);
+  d.ar = parseInt(m.away_rank);
+  d.rankGap = (d.hr && d.ar) ? Math.abs(d.hr - d.ar) : null;
+  d.rankFav = (d.hr && d.ar) ? (d.hr < d.ar ? h : d.ar < d.hr ? a : '') : '';
 
-  // 2. 赔率隐含概率（不让球）
+  // odds implied probability
   if (m.odds_nspf && m.odds_nspf.length === 3) {
     const [oh, od, oa] = m.odds_nspf.map(Number);
     if (oh && od && oa) {
       const total = 1/oh + 1/od + 1/oa;
-      const ph = (1/oh/total * 100).toFixed(0);
-      const pd = (1/od/total * 100).toFixed(0);
-      const pa = (1/oa/total * 100).toFixed(0);
-      const fav = ph > pa ? h : pa > ph ? a : '';
-      if (fav) p.push(`不让球赔率隐含胜率：${h}${ph}% / 平${pd}% / ${a}${pa}%，机构略看好${fav}`);
-      else p.push(`不让球赔率隐含胜率：${h}${ph}% / 平${pd}% / ${a}${pa}%，势均力敌`);
+      d.ph = Math.round(1/oh/total * 100);
+      d.pd = Math.round(1/od/total * 100);
+      d.pa = Math.round(1/oa/total * 100);
+      d.oddsFav = d.ph > d.pa ? h : d.pa > d.ph ? a : '';
     }
   }
 
-  // 3. 盘口解读
-  const rq = m.rangqiu;
-  if (rq) {
-    const rn = parseFloat(rq);
-    if (rn > 0) p.push(`盘口${h}受让${rn}球，机构看好${a}`);
-    else if (rn < 0) p.push(`盘口${h}让${Math.abs(rn)}球，机构看好${h}`);
-    else p.push(`盘口平手，无明显倾向`);
+  // handicap
+  d.rq = m.rangqiu;
+  if (d.rq) {
+    const rn = parseFloat(d.rq);
+    d.rqText = rn > 0 ? `${h}受让${rn}球` : rn < 0 ? `${h}让${Math.abs(rn)}球` : '平手';
+    d.rqFav = rn > 0 ? a : rn < 0 ? h : '';
   }
 
-  // 4. 主队近况（含连胜/连败检测）
+  // home form
   if (hS) {
-    const t = hS.w + hS.d + hS.l;
-    if (t > 0) {
-      p.push(`${h}近${t}场${hS.w}胜${hS.d}平${hS.l}负，进${hS.gf}失${hS.ga}`);
-      const streak = detectStreak(hS.f);
-      if (streak) p.push(streak);
-      if (hS.gf >= t * 2) p.push(`进攻火力旺盛（场均${(hS.gf/t).toFixed(1)}球）`);
-      if (hS.ga === 0 && t >= 3) p.push(`近${t}场零失球，防守稳固`);
-      else if (hS.ga >= t * 2) p.push(`防线漏洞明显（场均失${(hS.ga/t).toFixed(1)}球）`);
-      const rate = (hS.w * 3 + hS.d) / (t * 3);
-      if (rate >= 0.7) p.push(`状态出色`);
-      else if (rate <= 0.3) p.push(`状态低迷`);
-    }
+    d.ht = hS.w + hS.d + hS.l;
+    d.hRate = d.ht > 0 ? (hS.w * 3 + hS.d) / (d.ht * 3) : 0;
+    d.hStreak = detectStreak(hS.f);
+    d.hAvgG = d.ht > 0 ? (hS.gf / d.ht).toFixed(1) : '0';
+    d.hAvgC = d.ht > 0 ? (hS.ga / d.ht).toFixed(1) : '0';
+    d.hStatus = d.hRate >= 0.7 ? '出色' : d.hRate <= 0.3 ? '低迷' : '中规中矩';
   }
 
-  // 5. 客队近况
+  // away form
   if (aS) {
-    const t = aS.w + aS.d + aS.l;
-    if (t > 0) {
-      p.push(`${a}近${t}场${aS.w}胜${aS.d}平${aS.l}负，进${aS.gf}失${aS.ga}`);
-      const streak = detectStreak(aS.f);
-      if (streak) p.push(streak);
-      if (aS.gf >= t * 2) p.push(`进攻火力旺盛（场均${(aS.gf/t).toFixed(1)}球）`);
-      if (aS.ga === 0 && t >= 3) p.push(`近${t}场零失球，防守稳固`);
-      else if (aS.ga >= t * 2) p.push(`防线漏洞明显（场均失${(aS.ga/t).toFixed(1)}球）`);
-      const rate = (aS.w * 3 + aS.d) / (t * 3);
-      if (rate >= 0.7) p.push(`状态出色`);
-      else if (rate <= 0.3) p.push(`状态低迷`);
-    }
+    d.at = aS.w + aS.d + aS.l;
+    d.aRate = d.at > 0 ? (aS.w * 3 + aS.d) / (d.at * 3) : 0;
+    d.aStreak = detectStreak(aS.f);
+    d.aAvgG = d.at > 0 ? (aS.gf / d.at).toFixed(1) : '0';
+    d.aAvgC = d.at > 0 ? (aS.ga / d.at).toFixed(1) : '0';
+    d.aStatus = d.aRate >= 0.7 ? '出色' : d.aRate <= 0.3 ? '低迷' : '中规中矩';
   }
 
-  // 6. 攻防对比（主客场专项）
-  const hScored = parseFloat(an.home_avg_scored_home);
-  const hConceded = parseFloat(an.home_avg_conceded_home);
-  const aScored = parseFloat(an.away_avg_scored_away);
-  const aConceded = parseFloat(an.away_avg_conceded_away);
-  if (!isNaN(hScored) && !isNaN(aConceded)) {
-    const exp = hScored + aConceded;
-    if (exp >= 3) p.push(`${h}主场场均进${hScored}球 + ${a}客场场均失${aConceded}球，主队有望破门`);
-  }
-  if (!isNaN(aScored) && !isNaN(hConceded)) {
-    const exp = aScored + hConceded;
-    if (exp >= 3) p.push(`${a}客场场均进${aScored}球 + ${h}主场场均失${hConceded}球，客队反击有力`);
-  }
+  // home/away specific
+  d.hScoredHome = parseFloat(an.home_avg_scored_home);
+  d.hConcededHome = parseFloat(an.home_avg_conceded_home);
+  d.aScoredAway = parseFloat(an.away_avg_scored_away);
+  d.aConcededAway = parseFloat(an.away_avg_conceded_away);
 
-  // 7. 大小球倾向
+  // totals
   const hAvgS = parseFloat(an.home_avg_scored);
   const hAvgC = parseFloat(an.home_avg_conceded);
   const aAvgS = parseFloat(an.away_avg_scored);
   const aAvgC = parseFloat(an.away_avg_conceded);
   if (!isNaN(hAvgS) && !isNaN(aAvgC) && !isNaN(aAvgS) && !isNaN(hAvgC)) {
-    const expTotal = (hAvgS + aAvgC + aAvgS + hAvgC) / 2;
-    if (expTotal >= 3) p.push(`双方场均合计约${expTotal.toFixed(1)}球，大球可期`);
-    else if (expTotal <= 2) p.push(`双方场均合计约${expTotal.toFixed(1)}球，小球概率较高`);
+    d.expTotal = (hAvgS + aAvgC + aAvgS + hAvgC) / 2;
   }
 
-  // 8. 交锋记录（含进球、胜负倾向）
+  // h2h
   if (h2h) {
-    p.push(`近${h2h.n}次交锋${h}${h2h.w}胜${h2h.d}平${h2h.l}负，进${h2h.gf}失${h2h.ga}`);
-    const avgH2H = (h2h.gf + h2h.ga) / h2h.n;
-    if (avgH2H >= 3) p.push(`交锋场均${avgH2H.toFixed(1)}球，对攻倾向`);
-    else if (avgH2H <= 1.5) p.push(`交锋场均${avgH2H.toFixed(1)}球，偏防守`);
-    if (h2h.l > h2h.w + 1) p.push(`历史交锋处于下风`);
-    else if (h2h.w > h2h.l + 1) p.push(`历史交锋占优`);
-    else if (h2h.n >= 3 && h2h.d >= h2h.n * 0.4) p.push(`交锋平局率高`);
+    d.h2hAvg = (h2h.gf + h2h.ga) / h2h.n;
+    d.h2hFav = h2h.w > h2h.l + 1 ? h : h2h.l > h2h.w + 1 ? a : '';
   }
 
-  // 9. 综合倾向
-  const leans = [];
-  if (hS && aS) {
-    const hRate = (hS.w * 3 + hS.d) / Math.max(1, (hS.w + hS.d + hS.l) * 3);
-    const aRate = (aS.w * 3 + aS.d) / Math.max(1, (aS.w + aS.d + aS.l) * 3);
-    if (hRate - aRate > 0.25) leans.push(`${h}近期状态明显占优`);
-    else if (aRate - hRate > 0.25) leans.push(`${a}近期状态明显占优`);
+  // comprehensive lean
+  d.leans = [];
+  if (hS && aS && d.ht && d.at) {
+    if (d.hRate - d.aRate > 0.25) d.leans.push(`${h}近期状态明显占优`);
+    else if (d.aRate - d.hRate > 0.25) d.leans.push(`${a}近期状态明显占优`);
   }
-  if (hr && ar && hr - ar >= 5) leans.push(`${a}排名优势明显`);
-  else if (hr && ar && ar - hr >= 5) leans.push(`${h}排名优势明显`);
-  if (leans.length) p.push(`综合：${leans.join('，')}`);
+  if (d.rankGap && d.rankGap >= 5) d.leans.push(`${d.rankFav}排名优势明显`);
+
+  return d;
+}
+
+// Mode 0: 全面分析
+function genAnalysisFull(d) {
+  const p = [];
+  const { h, a } = d;
+
+  if (d.rankGap !== null) {
+    if (d.rankGap === 0) p.push(`${h}与${a}同列第${d.hr}名`);
+    else if (d.rankGap <= 2) p.push(`${h}第${d.hr}名 vs ${a}第${d.ar}名，排名接近`);
+    else p.push(`${d.rankFav}排名领先${d.rankGap}个位次`);
+  }
+  if (d.ph) {
+    if (d.oddsFav) p.push(`不让球赔率隐含胜率：${h}${d.ph}% / 平${d.pd}% / ${a}${d.pa}%，机构略看好${d.oddsFav}`);
+    else p.push(`不让球赔率隐含胜率：${h}${d.ph}% / 平${d.pd}% / ${a}${d.pa}%，势均力敌`);
+  }
+  if (d.rqText) p.push(`盘口${d.rqText}，机构看好${d.rqFav}`);
+
+  if (d.hS && d.ht > 0) {
+    p.push(`${h}近${d.ht}场${d.hS.w}胜${d.hS.d}平${d.hS.l}负，进${d.hS.gf}失${d.hS.ga}`);
+    if (d.hStreak) p.push(d.hStreak);
+    if (d.hS.gf >= d.ht * 2) p.push(`进攻火力旺盛（场均${d.hAvgG}球）`);
+    if (d.hS.ga === 0 && d.ht >= 3) p.push(`近${d.ht}场零失球，防守稳固`);
+    else if (d.hS.ga >= d.ht * 2) p.push(`防线漏洞明显（场均失${d.hAvgC}球）`);
+    if (d.hStatus !== '中规中矩') p.push(`状态${d.hStatus}`);
+  }
+  if (d.aS && d.at > 0) {
+    p.push(`${a}近${d.at}场${d.aS.w}胜${d.aS.d}平${d.aS.l}负，进${d.aS.gf}失${d.aS.ga}`);
+    if (d.aStreak) p.push(d.aStreak);
+    if (d.aS.gf >= d.at * 2) p.push(`进攻火力旺盛（场均${d.aAvgG}球）`);
+    if (d.aS.ga === 0 && d.at >= 3) p.push(`近${d.at}场零失球，防守稳固`);
+    else if (d.aS.ga >= d.at * 2) p.push(`防线漏洞明显（场均失${d.aAvgC}球）`);
+    if (d.aStatus !== '中规中矩') p.push(`状态${d.aStatus}`);
+  }
+  if (!isNaN(d.hScoredHome) && !isNaN(d.aConcededAway) && d.hScoredHome + d.aConcededAway >= 3)
+    p.push(`${h}主场场均进${d.hScoredHome}球 + ${a}客场场均失${d.aConcededAway}球，主队有望破门`);
+  if (!isNaN(d.aScoredAway) && !isNaN(d.hConcededHome) && d.aScoredAway + d.hConcededHome >= 3)
+    p.push(`${a}客场场均进${d.aScoredAway}球 + ${h}主场场均失${d.hConcededHome}球，客队反击有力`);
+  if (d.expTotal) {
+    if (d.expTotal >= 3) p.push(`双方场均合计约${d.expTotal.toFixed(1)}球，大球可期`);
+    else if (d.expTotal <= 2) p.push(`双方场均合计约${d.expTotal.toFixed(1)}球，小球概率较高`);
+  }
+  if (d.h2h) {
+    p.push(`近${d.h2h.n}次交锋${h}${d.h2h.w}胜${d.h2h.d}平${d.h2h.l}负，进${d.h2h.gf}失${d.h2h.ga}`);
+    if (d.h2hAvg >= 3) p.push(`交锋场均${d.h2hAvg.toFixed(1)}球，对攻倾向`);
+    else if (d.h2hAvg <= 1.5) p.push(`交锋场均${d.h2hAvg.toFixed(1)}球，偏防守`);
+    if (d.h2hFav === h) p.push(`历史交锋占优`);
+    else if (d.h2hFav === a) p.push(`历史交锋处于下风`);
+    else if (d.h2h.n >= 3 && d.h2h.d >= d.h2h.n * 0.4) p.push(`交锋平局率高`);
+  }
+  if (d.leans.length) p.push(`综合：${d.leans.join('，')}`);
 
   return p.join('；') + '。';
+}
+
+// Mode 1: 简明结论
+function genAnalysisBrief(d) {
+  const p = [];
+  const { h, a } = d;
+  if (d.rankGap !== null && d.rankGap > 2) p.push(`${d.rankFav}排名领先${d.rankGap}位`);
+  if (d.oddsFav) p.push(`机构看好${d.oddsFav}`);
+  else if (d.ph) p.push(`赔率势均力敌`);
+  if (d.rqFav) p.push(`盘口倾向${d.rqFav}`);
+  if (d.hS && d.ht > 0) p.push(`${h}状态${d.hStatus}${d.hStreak ? '（' + d.hStreak + '）' : ''}`);
+  if (d.aS && d.at > 0) p.push(`${a}状态${d.aStatus}${d.aStreak ? '（' + d.aStreak + '）' : ''}`);
+  if (d.expTotal) p.push(d.expTotal >= 3 ? '倾向大球' : d.expTotal <= 2 ? '倾向小球' : '进球数中性');
+  if (d.h2h) {
+    if (d.h2hFav === h) p.push(`交锋${h}占优`);
+    else if (d.h2hFav === a) p.push(`交锋${a}占优`);
+    else p.push(`交锋均势`);
+  }
+  if (d.leans.length) p.push(d.leans.join('，'));
+  return p.length ? p.join('；') + '。' : '数据不足，暂无分析。';
+}
+
+// Mode 2: 数据视角
+function genAnalysisData(d) {
+  const p = [];
+  const { h, a } = d;
+  if (d.rankGap !== null) p.push(`排名：${h}#${d.hr} vs ${a}#${d.ar}（差${d.rankGap}位）`);
+  if (d.ph) p.push(`隐含概率：主${d.ph}% 平${d.pd}% 客${d.pa}%`);
+  if (d.rq) p.push(`盘口：${d.rq}（${d.rqText}）`);
+  if (d.hS && d.ht > 0) p.push(`${h}近${d.ht}场：${d.hS.w}-${d.hS.d}-${d.hS.l} 进${d.hS.gf}/${d.hS.ga} 场均进${d.hAvgG}/失${d.hAvgC} 胜率${(d.hRate*100).toFixed(0)}%`);
+  if (d.aS && d.at > 0) p.push(`${a}近${d.at}场：${d.aS.w}-${d.aS.d}-${d.aS.l} 进${d.aS.gf}/${d.aS.ga} 场均进${d.aAvgG}/失${d.aAvgC} 胜率${(d.aRate*100).toFixed(0)}%`);
+  if (!isNaN(d.hScoredHome)) p.push(`${h}主场场均进${d.hScoredHome}/失${d.hConcededHome||'-'}`);
+  if (!isNaN(d.aScoredAway)) p.push(`${a}客场场均进${d.aScoredAway}/失${d.aConcededAway||'-'}`);
+  if (d.expTotal) p.push(`预期总进球：${d.expTotal.toFixed(1)}（${d.expTotal>=3?'大球':d.expTotal<=2?'小球':'中性'}）`);
+  if (d.h2h) p.push(`交锋${d.h2h.n}次：${d.h2h.w}-${d.h2h.d}-${d.h2h.l} 进${d.h2h.gf}/${d.h2h.ga} 场均${d.h2hAvg.toFixed(1)}球`);
+  return p.join(' | ') + '。';
+}
+
+// Mode 3: 通俗解读
+function genAnalysisCasual(d) {
+  const p = [];
+  const { h, a } = d;
+  if (d.rankGap !== null) {
+    if (d.rankGap <= 2) p.push(`${h}和${a}排名挨得近`);
+    else p.push(`${d.rankFav}排名高出${d.rankGap}位，纸面实力有差距`);
+  }
+  if (d.oddsFav) p.push(`赔率上看机构更偏向${d.oddsFav}`);
+  else if (d.ph) p.push(`赔率两边差不多，谁赢都不意外`);
+  if (d.rqFav) p.push(`盘口也给了${d.rqFav}面子`);
+  if (d.hS && d.ht > 0) {
+    p.push(`${h}最近${d.ht}场拿了${d.hS.w}胜${d.hS.d}平${d.hS.l}负`);
+    if (d.hStreak) p.push(`正处于${d.hStreak}`);
+    if (d.hStatus === '出色') p.push(`状态挺猛的`);
+    else if (d.hStatus === '低迷') p.push(`状态不太行`);
+    if (d.hS.ga === 0 && d.ht >= 3) p.push(`而且防守不错，几场没丢球`);
+  }
+  if (d.aS && d.at > 0) {
+    p.push(`${a}那边${d.aS.w}胜${d.aS.d}平${d.aS.l}负`);
+    if (d.aStreak) p.push(`正${d.aStreak}`);
+    if (d.aStatus === '出色') p.push(`势头很旺`);
+    else if (d.aStatus === '低迷') p.push(`有点萎靡`);
+  }
+  if (d.expTotal) {
+    if (d.expTotal >= 3) p.push(`俩队进球都不少，这场有望打成对攻`);
+    else if (d.expTotal <= 2) p.push(`双方进球不多，可能比较沉闷`);
+  }
+  if (d.h2h) {
+    if (d.h2hFav === h) p.push(`以前交手${h}赢得多，有点心理优势`);
+    else if (d.h2hFav === a) p.push(`历史交锋${a}占上风`);
+    else p.push(`之前互有胜负`);
+    if (d.h2hAvg <= 1.5) p.push(`不过交锋一般进球不多`);
+    else if (d.h2hAvg >= 3) p.push(`交锋经常打出大比分`);
+  }
+  if (d.leans.length) p.push(`总的来说，${d.leans.join('，')}`);
+  return p.join('，') + '。';
 }
 
 function detectStreak(f) {
@@ -1280,7 +1434,8 @@ function render() {
       const hS = formStats(an.home_recent_5_matches, m.home_team);
       const aS = formStats(an.away_recent_5_matches, m.away_team);
       const h2h = h2hSummary(an.h2h_matches, m.home_team, m.away_team);
-      const txt = genAnalysis(m, hS, aS, h2h, an);
+      const anMode = getAnalysisMode(id);
+      const txt = genAnalysis(m, hS, aS, h2h, an, anMode);
       const pred = getPred(id);
       const rql = rqLabel(m.rangqiu);
 
@@ -1404,8 +1559,8 @@ function render() {
   </div>
 
   <!-- Key Analysis -->
-  <div class="sec-title"><span class="dot"></span>关键分析</div>
-  <div class="analysis-block">${txt}</div>
+  <div class="sec-title"><span class="dot"></span><span class="label-text">关键分析</span><span class="analysis-mode-tag" id="anTag_${id}">「${ANALYSIS_MODES[anMode]}」</span><button class="btn-refresh-an" onclick="refreshAnalysis('${id}')">🔄 换一种</button></div>
+  <div class="analysis-block" id="anBlock_${id}">${txt}</div>
 
   <!-- H2H -->
   <div class="sec-title"><span class="dot"></span>交锋记录（近6次）</div>
@@ -1497,7 +1652,7 @@ async function exportMatch(id) {
   const hS = formStats(an.home_recent_5_matches, m.home_team);
   const aS = formStats(an.away_recent_5_matches, m.away_team);
   const h2h = h2hSummary(an.h2h_matches, m.home_team, m.away_team);
-  const txt = genAnalysis(m, hS, aS, h2h);
+  const txt = genAnalysis(m, hS, aS, h2h, an, getAnalysisMode(id));
 
   const resultLabel = pred.result==='home'?'主胜':pred.result==='draw'?'平局':pred.result==='away'?'客胜':'—';
   const goalsLabel = pred.goals || '—';
