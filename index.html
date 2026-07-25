@@ -495,6 +495,38 @@
     opacity: 0.9;
   }
 
+  /* Prediction Summary (Top) */
+  .pred-summary {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .pred-badge {
+    padding: 6px 16px;
+    border-radius: 4px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: #fff;
+    min-width: 60px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .pred-badge.home { background: var(--red); }
+  .pred-badge.draw { background: var(--yellow); color: #333; }
+  .pred-badge.away { background: var(--green); }
+  .pred-badge.empty { background: #e0e0e0; color: #999; }
+  .pred-meta {
+    display: flex;
+    gap: 10px;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    flex-wrap: wrap;
+  }
+  .pred-meta span { background: #f0f2f5; padding: 5px 10px; border-radius: 4px; }
+  .pred-meta b { color: var(--text); font-weight: 700; }
+
   /* ===== Export Modal ===== */
   .export-overlay {
     display: none;
@@ -948,6 +980,48 @@ function render() {
     </div>
   </div>
 
+  <!-- Prediction Panel (Top) -->
+  <div class="pred-strip">
+    <div class="pred-strip-title">
+      <span>🎯 预测结果</span>
+      <span style="font-size:0.65rem;color:var(--text-muted);font-weight:400;">填写后自动保存</span>
+    </div>
+    <div class="pred-summary">
+      <div class="pred-badge ${pred.result||'empty'}" id="predBadge_${id}">
+        ${pred.result==='home'?'主胜':pred.result==='draw'?'平局':pred.result==='away'?'客胜':'未选'}
+      </div>
+      <div class="pred-meta">
+        <span>进球数：<b id="predGoals_${id}">${pred.goals||'-'}</b></span>
+        <span>比分参考：<b id="predScores_${id}">${(pred.scores||[]).filter(Boolean).join(' / ')||'-'}</b></span>
+      </div>
+    </div>
+    <div class="pred-row">
+      <span class="pred-lbl">胜负</span>
+      <div class="btn-group" id="resBtns_${id}">
+        <button class="btn-sm home ${pred.result==='home'?'active':''}" onclick="setResult('${id}','home')">主胜</button>
+        <button class="btn-sm draw ${pred.result==='draw'?'active':''}" onclick="setResult('${id}','draw')">平局</button>
+        <button class="btn-sm away ${pred.result==='away'?'active':''}" onclick="setResult('${id}','away')">客胜</button>
+      </div>
+    </div>
+    <div class="pred-row">
+      <span class="pred-lbl">进球</span>
+      <div class="btn-group" id="goalBtns_${id}">
+        <button class="btn-sm goals ${pred.goals==='0-1球'?'active':''}" onclick="setGoals('${id}','0-1球')">0-1球</button>
+        <button class="btn-sm goals ${pred.goals==='2-3球'?'active':''}" onclick="setGoals('${id}','2-3球')">2-3球</button>
+        <button class="btn-sm goals ${pred.goals==='4-6球'?'active':''}" onclick="setGoals('${id}','4-6球')">4-6球</button>
+        <button class="btn-sm goals ${pred.goals==='7+球'?'active':''}" onclick="setGoals('${id}','7+球')">7+球</button>
+      </div>
+    </div>
+    <div class="pred-row">
+      <span class="pred-lbl">比分</span>
+      <input class="score-inp" placeholder="X-X" value="${(pred.scores||['','',''])[0]}" onchange="setScore('${id}',0,this.value)">
+      <input class="score-inp" placeholder="X-X" value="${(pred.scores||['','',''])[1]}" onchange="setScore('${id}',1,this.value)">
+      <input class="score-inp" placeholder="X-X" value="${(pred.scores||['','',''])[2]}" onchange="setScore('${id}',2,this.value)">
+      <input class="note-inp" placeholder="分析备注..." value="${pred.note||''}" onchange="setPred('${id}','note',this.value)">
+    </div>
+    <button class="btn-export" onclick="exportMatch('${id}')">📸 导出为图片</button>
+  </div>
+
   <!-- Recent Form -->
   <div class="sec-title"><span class="dot"></span>球队近况（近5场）</div>
   <div class="form-grid">
@@ -1011,37 +1085,6 @@ function render() {
     </table>
   </div>
 
-  <!-- Prediction Panel -->
-  <div class="pred-strip">
-    <div class="pred-strip-title">
-      <span>🎯 预测填写</span>
-    </div>
-    <div class="pred-row">
-      <span class="pred-lbl">胜负</span>
-      <div class="btn-group" id="resBtns_${id}">
-        <button class="btn-sm home ${pred.result==='home'?'active':''}" onclick="setResult('${id}','home')">主胜</button>
-        <button class="btn-sm draw ${pred.result==='draw'?'active':''}" onclick="setResult('${id}','draw')">平局</button>
-        <button class="btn-sm away ${pred.result==='away'?'active':''}" onclick="setResult('${id}','away')">客胜</button>
-      </div>
-    </div>
-    <div class="pred-row">
-      <span class="pred-lbl">进球</span>
-      <div class="btn-group" id="goalBtns_${id}">
-        <button class="btn-sm goals ${pred.goals==='0-1球'?'active':''}" onclick="setGoals('${id}','0-1球')">0-1球</button>
-        <button class="btn-sm goals ${pred.goals==='2-3球'?'active':''}" onclick="setGoals('${id}','2-3球')">2-3球</button>
-        <button class="btn-sm goals ${pred.goals==='4-6球'?'active':''}" onclick="setGoals('${id}','4-6球')">4-6球</button>
-        <button class="btn-sm goals ${pred.goals==='7+球'?'active':''}" onclick="setGoals('${id}','7+球')">7+球</button>
-      </div>
-    </div>
-    <div class="pred-row">
-      <span class="pred-lbl">比分</span>
-      <input class="score-inp" placeholder="X-X" value="${(pred.scores||['','',''])[0]}" onchange="setScore('${id}',0,this.value)">
-      <input class="score-inp" placeholder="X-X" value="${(pred.scores||['','',''])[1]}" onchange="setScore('${id}',1,this.value)">
-      <input class="score-inp" placeholder="X-X" value="${(pred.scores||['','',''])[2]}" onchange="setScore('${id}',2,this.value)">
-      <input class="note-inp" placeholder="分析备注..." value="${pred.note||''}" onchange="setPred('${id}','note',this.value)">
-    </div>
-    <button class="btn-export" onclick="exportMatch('${id}')">📸 导出为图片</button>
-  </div>
 </div>`;
     }
   }
@@ -1049,6 +1092,19 @@ function render() {
 }
 
 // ===== Prediction Handlers =====
+function updatePredSummary(id) {
+  const pred = getPred(id);
+  const badge = document.getElementById('predBadge_'+id);
+  const goals = document.getElementById('predGoals_'+id);
+  const scores = document.getElementById('predScores_'+id);
+  if (badge) {
+    badge.className = 'pred-badge ' + (pred.result || 'empty');
+    badge.textContent = pred.result==='home'?'主胜':pred.result==='draw'?'平局':pred.result==='away'?'客胜':'未选';
+  }
+  if (goals) goals.textContent = pred.goals || '-';
+  if (scores) scores.textContent = (pred.scores||[]).filter(Boolean).join(' / ') || '-';
+}
+
 function setResult(id, val) {
   setPred(id, 'result', val);
   // Update buttons
@@ -1058,6 +1114,7 @@ function setResult(id, val) {
       b.classList.toggle('active', b.textContent === (val==='home'?'主胜':val==='draw'?'平局':'客胜'));
     });
   }
+  updatePredSummary(id);
 }
 function setGoals(id, val) {
   setPred(id, 'goals', val);
@@ -1067,6 +1124,7 @@ function setGoals(id, val) {
       b.classList.toggle('active', b.textContent === val);
     });
   }
+  updatePredSummary(id);
 }
 function setScore(id, idx, val) {
   const p = loadPreds();
@@ -1074,6 +1132,7 @@ function setScore(id, idx, val) {
   if (!p[id].scores) p[id].scores = ['','',''];
   p[id].scores[idx] = val;
   savePreds(p);
+  updatePredSummary(id);
 }
 
 // ===== Export =====
