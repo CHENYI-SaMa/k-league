@@ -675,6 +675,122 @@
   }
   .btn-bg-clear:active { background: #f5dada; }
 
+  /* ===== Export Mode Tabs ===== */
+  .export-tabs {
+    display: flex;
+    gap: 4px;
+    background: #e8edfb;
+    border-radius: 6px;
+    padding: 3px;
+  }
+  .exp-tab {
+    padding: 6px 14px;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #555;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .exp-tab.active {
+    background: #1a1a2e;
+    color: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+  .exp-tab:active { transform: scale(0.96); }
+
+  /* ===== Import Modal ===== */
+  .import-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 10001;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+  }
+  .import-overlay.show { display: flex; }
+  .import-panel {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px 16px;
+    width: 100%;
+    max-width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .import-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1a1a2e;
+    margin-bottom: 4px;
+  }
+  .import-subtitle {
+    font-size: 0.72rem;
+    color: #999;
+    margin-bottom: 14px;
+  }
+  .import-format-box {
+    background: #f8f9fb;
+    border: 1px solid #e8eaed;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    font-size: 0.72rem;
+    color: #555;
+    line-height: 1.7;
+  }
+  .import-format-box b { color: #1a1a2e; }
+  .import-format-box code {
+    display: block;
+    background: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin: 4px 0;
+    font-family: 'Courier New', monospace;
+    color: #2980b9;
+    font-size: 0.7rem;
+    white-space: pre-wrap;
+  }
+  #importText {
+    width: 100%;
+    min-height: 160px;
+    border: 1px solid #d0d4d8;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 0.78rem;
+    font-family: 'Courier New', monospace;
+    line-height: 1.6;
+    resize: vertical;
+    margin-bottom: 14px;
+    color: #1a1a1a;
+  }
+  .import-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .import-buttons button {
+    flex: 1;
+    min-width: 80px;
+    padding: 10px 8px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.1s;
+  }
+  .import-buttons button:active { transform: scale(0.97); }
+  .btn-import-cancel { background: #eee; color: #555; }
+  .btn-import-copy { background: #e8edfb; color: #1a1a2e; border: 1px solid #c8d6f0; }
+  .btn-import-go { background: #27ae60; color: #fff; }
+
   /* ===== Background Editor ===== */
   .bg-editor-overlay {
     display: none;
@@ -973,7 +1089,10 @@
   </div>
   <div class="header-meta">
     <span id="updateLabel">数据加载中…</span>
-    <button class="btn-refresh" onclick="location.reload()">🔄 刷新数据</button>
+    <div style="display:flex;gap:6px;">
+      <button class="btn-refresh" onclick="openImportModal()">📥 导入预测</button>
+      <button class="btn-refresh" onclick="location.reload()">🔄 刷新数据</button>
+    </div>
   </div>
 </div>
 
@@ -991,11 +1110,17 @@
 <!-- Export Preview Overlay -->
 <div class="export-overlay" id="exportOverlay">
   <div style="width:750px;max-width:98vw;">
-    <div style="display:flex;justify-content:flex-end;margin-bottom:8px;gap:8px;flex-wrap:wrap;">
-      <button class="btn-bg-upload" onclick="document.getElementById('bgInput').click()">🖼 背景图</button>
-      <button class="btn-bg-clear" id="btnBgClear" onclick="clearBg()" style="display:none;">🗑 清除背景</button>
-      <button class="btn-close-export" onclick="closeExport()">✕ 关闭</button>
-      <button class="btn-download" id="btnDownload" onclick="downloadImage()">⬇ 下载图片</button>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px;flex-wrap:wrap;">
+      <div class="export-tabs">
+        <button class="exp-tab active" id="tabFull" onclick="switchExportMode('full')">📊 完整</button>
+        <button class="exp-tab" id="tabPred" onclick="switchExportMode('pred')">🎯 仅预测</button>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn-bg-upload" onclick="document.getElementById('bgInput').click()">🖼 背景图</button>
+        <button class="btn-bg-clear" id="btnBgClear" onclick="clearBg()" style="display:none;">🗑 清除背景</button>
+        <button class="btn-close-export" onclick="closeExport()">✕ 关闭</button>
+        <button class="btn-download" id="btnDownload" onclick="downloadImage()">⬇ 下载图片</button>
+      </div>
     </div>
     <input type="file" id="bgInput" accept="image/*" style="display:none" onchange="handleBgUpload(event)">
     <div class="export-card" id="exportCard">
@@ -1035,6 +1160,30 @@
   </div>
 </div>
 
+<!-- Import Prediction Modal -->
+<div class="import-overlay" id="importOverlay">
+  <div class="import-panel">
+    <div class="import-title">📥 一键导入预测</div>
+    <div class="import-subtitle">粘贴文字，系统自动识别编号、胜平负、比分、进球数</div>
+    <div class="import-format-box">
+      <b>支持的格式（每行一场）：</b>
+      <code>001|主胜|2-3球|1-0|2-1|3-1|防守反击</code>
+      <code>002 平局 0-1球 0-0 1-1</code>
+      <code>第3场 客胜 4-6球 1-2 2-3</code>
+      <b>胜平负：</b>主胜/平局/客胜，或 胜/平/负，或 3/1/0<br>
+      <b>进球数：</b>0-1球 / 2-3球 / 4-6球 / 7+球<br>
+      <b>比分：</b>X-X 或 X:X（最多3个）<br>
+      <span style="color:#999;">分隔符可用空格、|、逗号、制表符；编号可带前导0</span>
+    </div>
+    <textarea id="importText" placeholder="在此粘贴预测数据…&#10;001 | 主胜 | 2-3球 | 1-0 | 2-1 | 3-1&#10;002 平局 0-1球 0-0 1-1&#10;003 客胜 4-6球 1-2 2-3"></textarea>
+    <div class="import-buttons">
+      <button class="btn-import-cancel" onclick="closeImportModal()">取消</button>
+      <button class="btn-import-copy" onclick="copyAllPredsAsText()">📋 复制现有</button>
+      <button class="btn-import-go" onclick="doImport()">✓ 智能识别并导入</button>
+    </div>
+  </div>
+</div>
+
 <script>
 // ===== State =====
 let allData = [];
@@ -1042,6 +1191,8 @@ let currentLeague = '全部';
 let currentDate = '全部';
 const STORAGE_KEY = 'k_league_preds_v2';
 let exportImageDataUrl = null;
+let currentExportId = null;
+let currentExportMode = 'full';
 
 // ===== Data =====
 async function loadData() {
@@ -1719,26 +1870,15 @@ function clearPred(id) {
 }
 
 // ===== Export =====
-async function exportMatch(id) {
-  const m = allData.find(x => x.fixture_id === id);
-  if (!m) return;
-
-  const pred = getPred(id);
-  const an = m.analysis||{};
-  const hS = formStats(an.home_recent_5_matches, m.home_team);
-  const aS = formStats(an.away_recent_5_matches, m.away_team);
-  const h2h = h2hSummary(an.h2h_matches, m.home_team, m.away_team);
-  const txt = genAnalysis(m, hS, aS, h2h, an, getAnalysisMode(id));
-
+function buildExportHtml(m, pred, an, hS, aS, h2h, txt, mode) {
   const resultLabel = pred.result==='home'?'主胜':pred.result==='draw'?'平局':pred.result==='away'?'客胜':'—';
   const goalsLabel = pred.goals || '—';
   const scoresLabel = (pred.scores||[]).filter(Boolean).join(' / ') || '—';
   const noteLabel = pred.note || '';
+  const resColor = resultLabel==='主胜'?'#c0392b':resultLabel==='客胜'?'#27ae60':resultLabel==='平局'?'#f39c12':'#999';
 
-  // Build export HTML
-  const exportHtml = `
-    <div class="exp-block">
-      <!-- Header -->
+  // Shared header
+  const header = `
       <div class="exp-header">
         <div class="exp-num">${m.match_num}</div>
         <div class="exp-league">${m.league||''} · ${m.match_date||''} ${m.match_time||''}</div>
@@ -1750,15 +1890,16 @@ async function exportMatch(id) {
           ${teamLogoSpan(m,'away')?`<img src="${teamLogoUrl(m.away_team_id)}" style="width:32px;height:32px;object-fit:contain;vertical-align:middle;" onerror="this.style.display='none'">`:''}
         </div>
         <div class="exp-time"></div>
-      </div>
+      </div>`;
 
-      <!-- Prediction Stamp (Top) -->
+  // Shared prediction stamp
+  const predStamp = `
       <div class="exp-pred-stamp">
         <div class="stamp-title">📊 今日比赛预测结果</div>
         <div class="stamp-row">
           <div class="stamp-item">
             <div class="stamp-lbl">预测结果</div>
-            <div class="stamp-val" style="color:${resultLabel==='主胜'?'#c0392b':resultLabel==='客胜'?'#27ae60':resultLabel==='平局'?'#f39c12':'#999'};">${resultLabel}</div>
+            <div class="stamp-val" style="color:${resColor};">${resultLabel}</div>
           </div>
           <div class="stamp-item">
             <div class="stamp-lbl">进球数</div>
@@ -1770,7 +1911,18 @@ async function exportMatch(id) {
           </div>
         </div>
         ${noteLabel?`<div style="text-align:center;width:100%;margin-top:6px;"><div class="stamp-lbl">分析</div><div style="font-size:13px;color:#555;margin-top:2px;">${noteLabel}</div></div>`:''}
-      </div>
+      </div>`;
+
+  // ===== Pred-only mode: Header + Prediction stamp + footer =====
+  if (mode === 'pred') {
+    return `<div class="exp-block">${header}${predStamp}<div style="padding:16px;text-align:center;font-size:11px;color:#aaa;border-top:1px solid #eee;">数据来源：500彩票网 · 仅供参考</div></div>`;
+  }
+
+  // ===== Full mode =====
+  return `
+    <div class="exp-block">
+      ${header}
+      ${predStamp}
 
       <!-- Recent Form -->
       <div class="exp-section-title">📋 球队近况（近5场）</div>
@@ -1845,6 +1997,28 @@ async function exportMatch(id) {
 
     </div>
   `;
+}
+
+async function exportMatch(id, mode) {
+  mode = mode || currentExportMode || 'full';
+  const m = allData.find(x => x.fixture_id === id);
+  if (!m) return;
+
+  currentExportId = id;
+  currentExportMode = mode;
+
+  const pred = getPred(id);
+  const an = m.analysis||{};
+  const hS = formStats(an.home_recent_5_matches, m.home_team);
+  const aS = formStats(an.away_recent_5_matches, m.away_team);
+  const h2h = h2hSummary(an.h2h_matches, m.home_team, m.away_team);
+  const txt = genAnalysis(m, hS, aS, h2h, an, getAnalysisMode(id));
+
+  const exportHtml = buildExportHtml(m, pred, an, hS, aS, h2h, txt, mode);
+
+  // Update tab states
+  document.getElementById('tabFull').classList.toggle('active', mode === 'full');
+  document.getElementById('tabPred').classList.toggle('active', mode === 'pred');
 
   // Show in overlay
   const card = document.getElementById('exportCard');
@@ -1870,9 +2044,162 @@ async function exportMatch(id) {
   }
 }
 
+function switchExportMode(mode) {
+  if (!currentExportId) return;
+  if (mode === currentExportMode) return;
+  exportMatch(currentExportId, mode);
+}
+
 function closeExport() {
   document.getElementById('exportOverlay').classList.remove('show');
   exportImageDataUrl = null;
+  currentExportId = null;
+  currentExportMode = 'full';
+}
+
+// ===== Smart Import =====
+function openImportModal() {
+  document.getElementById('importOverlay').classList.add('show');
+}
+function closeImportModal() {
+  document.getElementById('importOverlay').classList.remove('show');
+}
+
+function normalizeGoals(t) {
+  if (/7\s*\+?\s*球|7球以上/.test(t)) return '7+球';
+  if (/0[-~～]1\s*球/.test(t)) return '0-1球';
+  if (/2[-~～]3\s*球/.test(t)) return '2-3球';
+  if (/4[-~～]6\s*球/.test(t)) return '4-6球';
+  return t;
+}
+
+// Smart-parse one line into { matchNum, result, goals, scores[], note }
+function parseImportLine(line) {
+  if (!line || !line.trim()) return null;
+  let s = line.trim();
+
+  // Extract match number at start: "001", "1.", "第1场", "1)"
+  let matchNum = null;
+  const numMatch = s.match(/^(?:第\s*)?(\d{1,4})\s*(?:场|\.|、|\)|）)?/);
+  if (numMatch) {
+    matchNum = numMatch[1];
+    s = s.slice(numMatch[0].length);
+  }
+
+  // Tokenize remaining by separators
+  const tokens = s.split(/[|\t,，;；]+|\s+/).map(t => t.trim()).filter(Boolean);
+
+  let result = null, goals = null, scores = [], noteParts = [];
+  for (const tok of tokens) {
+    // Goals: X-Y球 / X~Y球 / 7+球 / N球以上
+    if (/\d+[-~～]\d+\s*球/.test(tok) || /7\s*\+\s*球/.test(tok) || /7球以上/.test(tok) || /\d+\s*球以上/.test(tok)) {
+      goals = normalizeGoals(tok);
+      continue;
+    }
+    // Score: X-Y / X:Y / X：Y (digits only)
+    const scoreMatch = tok.match(/^(\d+)[-:：](\d+)$/);
+    if (scoreMatch) {
+      if (scores.length < 3) scores.push(tok.replace(/[:：]/g, '-'));
+      continue;
+    }
+    // Result keywords
+    if (/主胜/.test(tok) || tok === '胜') { result = 'home'; continue; }
+    if (/平局/.test(tok) || tok === '平') { result = 'draw'; continue; }
+    if (/客胜/.test(tok) || tok === '负') { result = 'away'; continue; }
+    // Numeric result codes: 3=home, 1=draw, 0=away
+    if (tok === '3') { result = 'home'; continue; }
+    if (tok === '1') { result = 'draw'; continue; }
+    if (tok === '0') { result = 'away'; continue; }
+    // Skip placeholders
+    if (tok === '-' || tok === '—' || tok === '/') continue;
+    // Treat as note
+    noteParts.push(tok);
+  }
+
+  if (!matchNum && !result && !goals && scores.length === 0) return null;
+  return { matchNum, result, goals, scores, note: noteParts.join(' ') };
+}
+
+function findMatchByNum(num) {
+  if (!num) return null;
+  const clean = num.replace(/^0+/, '');
+  return allData.find(m => {
+    const mn = (m.match_num || '').replace(/^0+/, '');
+    return mn && mn === clean;
+  });
+}
+
+function doImport() {
+  const text = document.getElementById('importText').value;
+  if (!text.trim()) { showToast('请先粘贴预测数据'); return; }
+
+  const lines = text.split(/\n/);
+  const preds = loadPreds();
+  let imported = 0, skipped = 0;
+  const errLines = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    const parsed = parseImportLine(lines[i]);
+    if (!parsed) continue;
+    const m = findMatchByNum(parsed.matchNum);
+    if (!m) {
+      skipped++;
+      if (parsed.matchNum) errLines.push(`编号 ${parsed.matchNum}`);
+      continue;
+    }
+    const id = m.fixture_id;
+    if (!preds[id]) preds[id] = {};
+    if (parsed.result) preds[id].result = parsed.result;
+    if (parsed.goals) preds[id].goals = parsed.goals;
+    if (parsed.scores.length) {
+      // Merge: keep existing empty slots, fill new
+      const old = preds[id].scores || ['','',''];
+      for (let j = 0; j < 3; j++) {
+        if (parsed.scores[j]) old[j] = parsed.scores[j];
+      }
+      preds[id].scores = old;
+    }
+    if (parsed.note) preds[id].note = parsed.note;
+    imported++;
+  }
+
+  savePreds(preds);
+  const msg = `✅ 导入 ${imported} 场` + (skipped ? `，跳过 ${skipped} 场（编号未匹配）` : '');
+  showToast(msg);
+  render();
+  if (imported > 0 && skipped === 0) {
+    setTimeout(() => closeImportModal(), 800);
+  } else if (errLines.length) {
+    console.log('未匹配的编号:', errLines.join(', '));
+  }
+}
+
+function copyAllPredsAsText() {
+  const preds = loadPreds();
+  const lines = [];
+  for (const m of allData) {
+    const p = preds[m.fixture_id];
+    if (!p) continue;
+    const hasData = p.result || p.goals || (p.scores||[]).some(Boolean);
+    if (!hasData) continue;
+    const num = m.match_num || '';
+    const res = p.result==='home'?'主胜':p.result==='draw'?'平局':p.result==='away'?'客胜':'';
+    const goals = p.goals || '';
+    const scores = (p.scores||[]).filter(Boolean).join(' | ');
+    const note = p.note || '';
+    lines.push([num, res, goals, scores, note].filter(Boolean).join(' | '));
+  }
+  if (!lines.length) { showToast('暂无预测数据可复制'); return; }
+  const text = lines.join('\n');
+  const ta = document.getElementById('importText');
+  ta.value = text;
+  ta.select();
+  try {
+    document.execCommand('copy');
+    showToast('✅ 已复制到剪贴板并填入文本框');
+  } catch {
+    showToast('已填入文本框，可手动复制');
+  }
 }
 
 // ===== Background Image (localStorage + Editor) =====
@@ -2084,6 +2411,10 @@ async function init() {
 // Close export overlay on background click
 document.getElementById('exportOverlay').addEventListener('click', function(e) {
   if (e.target === this) closeExport();
+});
+// Close import overlay on background click
+document.getElementById('importOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeImportModal();
 });
 
 init();
