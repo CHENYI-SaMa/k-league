@@ -714,6 +714,14 @@
     overflow: hidden;
     border: 1px solid #e8edfb;
   }
+  .exp-block .exp-section-title,
+  .exp-block .exp-header,
+  .exp-block .exp-matchup,
+  .exp-block .stamp-title,
+  .exp-block .stamp-lbl,
+  .exp-block .stamp-val {
+    text-shadow: 0 1px 4px rgba(255,255,255,0.85), 0 0 2px rgba(255,255,255,0.6);
+  }
   .exp-header {
     text-align: center;
     padding: 22px 16px 16px;
@@ -790,7 +798,7 @@
     font-size: 12px;
   }
   .exp-form-table th {
-    background: #f5f6f8;
+    background: rgba(255,255,255,0.92);
     padding: 6px 8px;
     text-align: center;
     font-weight: 600;
@@ -801,10 +809,11 @@
   .exp-form-table td {
     padding: 5px 8px;
     text-align: center;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    background: rgba(255,255,255,0.88);
   }
   .exp-stat-box {
-    background: #f8f9fb;
+    background: rgba(255,255,255,0.92);
     padding: 10px 14px;
     border-radius: 6px;
     border: 1px solid #e8e8e8;
@@ -956,10 +965,11 @@
         <span class="bg-ctrl-val" id="bgScaleVal">100%</span>
       </div>
       <div class="bg-ctrl-row">
-        <span class="bg-ctrl-lbl">透明度</span>
-        <input type="range" id="bgOpacity" min="0" max="95" value="80" oninput="drawBgPreview()">
-        <span class="bg-ctrl-val" id="bgOpacityVal">80%</span>
+        <span class="bg-ctrl-lbl">遮罩浓度</span>
+        <input type="range" id="bgOpacity" min="50" max="95" value="85" oninput="drawBgPreview()">
+        <span class="bg-ctrl-val" id="bgOpacityVal">85%</span>
       </div>
+      <div style="font-size:0.7rem;color:#ffd9d9;text-align:center;margin-top:4px;line-height:1.4;">数值越大背景越淡、文字越清晰<br>看不清文字就往右拉</div>
     </div>
     <div class="bg-editor-buttons">
       <button class="btn-bg-cancel" onclick="closeBgEditor()">取消</button>
@@ -1542,7 +1552,7 @@ function handleBgUpload(e) {
       _bgEditorImg = img;
       _bgOffX = 0; _bgOffY = 0;
       document.getElementById('bgScale').value = 100;
-      document.getElementById('bgOpacity').value = 80;
+      document.getElementById('bgOpacity').value = 85;
       // auto-fit scale so image covers preview height
       const canvas = document.getElementById('bgEditorCanvas');
       const fitScale = Math.max(canvas.height / img.width, canvas.width / img.height);
