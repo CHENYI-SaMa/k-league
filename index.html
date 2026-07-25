@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>韩职联 K League 赛事分析</title>
+<style>
+  :root {
+    --bg: #e8ecf1;
+    --card-bg: #fff;
+    --text: #222;
+    --muted: #888;
+    --border: #d8dce0;
+    --red: #d63031;
+    --green: #00b894;
+    --yellow: #fdcb6e;
+    --blue: #0984e3;
+    --radius: 6px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* ===== Header ===== */
+  .top-bar {
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    color: #fff;
+    text-align: center;
+    padding: 14px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+  .top-bar h1 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .top-bar .sub {
+    font-size: 0.75rem;
+    color: #8ab4f8;
+    margin-top: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+  }
+  .btn-refresh {
+    margin-top: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fff;
+    padding: 5px 16px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-refresh:hover { background: rgba(255,255,255,0.25); }
+  .btn-refresh.loading { opacity: 0.6; pointer-events: none; }
+
+  /* ===== Date divider ===== */
+  .date-bar {
+    text-align: center;
+    padding: 18px 16px 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #555;
+  }
+
+  /* ===== Match Card ===== */
+  .match-card {
+    background: var(--card-bg);
+    margin: 0 12px 16px;
+    border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+    overflow: hidden;
+    border: 1px solid #e0e3e6;
+  }
+
+  /* ---- Match Header ---- */
+  .match-head {
+    display: flex;
+    align-items: center;
+    padding: 12px 14px;
+    gap: 10px;
+    border-bottom: 1px solid #eee;
+    background: #fafbfc;
+  }
+  .match-num {
+    background: var(--red);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    min-width: 52px;
+    text-align: center;
+  }
+  .match-teams {
+    flex: 1;
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .match-teams .rank {
+    font-size: 0.68rem;
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .match-teams .vs {
+    font-size: 0.7rem;
+    color: #ccc;
+    margin: 0 2px;
+  }
+  .match-time {
+    font-size: 0.78rem;
+    color: var(--red);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* ---- Odds ---- */
+  .odds-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 8px 14px;
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.75rem;
+  }
+  .odds-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .odds-item .lbl {
+    color: var(--muted);
+  }
+  .odds-item .val {
+    color: var(--red);
+    font-weight: 700;
+    background: #fff5f5;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-size: 0.78rem;
+  }
+
+  /* ===== Section Title ===== */
+  .sec-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 10px 14px 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #333;
+  }
+  .sec-title::before {
+    content: '';
+    display: inline-block;
+    width: 3px;
+    height: 14px;
+    background: var(--red);
+    border-radius: 2px;
+  }
+
+  /* ===== Two-column recent form ===== */
+  .recent-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: #eee;
+    margin: 0 1px;
+  }
+  @media (max-width: 480px) {
+    .recent-grid { grid-template-columns: 1fr; }
+  }
+  .recent-col {
+    background: #fff;
+    padding: 0 10px 10px;
+  }
+  .recent-col .team-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 6px 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .form-dots {
+    display: inline-flex;
+    gap: 2px;
+  }
+  .form-dot {
+    width: 16px; height: 16px;
+    border-radius: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.5rem;
+    color: #fff;
+    font-weight: 700;
+  }
+  .form-dot.w { background: var(--red); }
+  .form-dot.d { background: var(--yellow); color: #333; }
+  .form-dot.l { background: var(--green); }
+
+  table.mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.72rem;
+  }
+  table.mini-table th {
+    background: #f5f6f8;
+    color: #888;
+    padding: 4px 4px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 0.68rem;
+    border-bottom: 1px solid #e8e8e8;
+  }
+  table.mini-table td {
+    padding: 4px 4px;
+    text-align: center;
+    border-bottom: 1px solid #f5f5f5;
+  }
+  table.mini-table .w { color: var(--red); font-weight: 700; }
+  table.mini-table .d { color: #d4a017; font-weight: 700; }
+  table.mini-table .l { color: var(--green); font-weight: 700; }
+
+  /* ===== Stats ===== */
+  .stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 4px 14px 12px;
+  }
+  @media (max-width: 480px) {
+    .stats-row { grid-template-columns: 1fr; }
+  }
+  .stat-box {
+    background: #f8f9fb;
+    border-radius: var(--radius);
+    padding: 10px 12px;
+  }
+  .stat-box .st-team {
+    font-size: 0.76rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .stat-box .st-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.73rem;
+    padding: 2px 0;
+  }
+  .stat-box .st-row .sv { font-weight: 700; }
+  .stat-box .st-row .sv.red { color: var(--red); }
+  .stat-box .st-row .sv.green { color: var(--green); }
+
+  /* ===== Analysis ===== */
+  .analysis-block {
+    margin: 0 14px 12px;
+    background: #fffdf5;
+    border-left: 3px solid var(--yellow);
+    padding: 10px 12px;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.76rem;
+    color: #555;
+    line-height: 1.7;
+  }
+
+  /* ===== H2H ===== */
+  .h2h-section { padding: 0 14px 12px; }
+  .h2h-summary {
+    font-size: 0.76rem;
+    color: #666;
+    margin-bottom: 8px;
+  }
+  table.h2h-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.73rem;
+  }
+  table.h2h-table th {
+    background: #f5f6f8;
+    padding: 5px 4px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.7rem;
+    color: #888;
+  }
+  table.h2h-table td {
+    padding: 5px 4px;
+    text-align: center;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  table.h2h-table .w { color: var(--red); font-weight: 700; }
+  table.h2h-table .d { color: #d4a017; font-weight: 700; }
+  table.h2h-table .l { color: var(--green); font-weight: 700; }
+
+  /* ===== Footer ===== */
+  .footer {
+    text-align: center;
+    padding: 20px 16px 30px;
+    font-size: 0.7rem;
+    color: #bbb;
+  }
+
+  /* ===== Empty / Error state ===== */
+  .empty-box {
+    text-align: center;
+    padding: 60px 20px;
+    color: #999;
+  }
+  .empty-box .icon { font-size: 2.5rem; display: block; margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <h1>⚽ 韩职联（K League）赛事分析</h1>
+  <div class="sub">
+    <span id="updateLabel">数据加载中…</span>
+  </div>
+  <button class="btn-refresh" onclick="location.reload()" id="btnRefresh">🔄 刷新</button>
+</div>
+
+<div id="app"></div>
+<div class="footer">数据来源：500彩票网 · 仅供参考</div>
+
+<script>
+// ===== Data Loader =====
+async function loadData() {
+  try {
+    const resp = await fetch('data.json?' + Date.now());
+    if (!resp.ok) throw new Error('Not found');
+    return await resp.json();
+  } catch {
+    return null;
+  }
+}
+
+// ===== Compute form stats =====
+function formStats(matches, team) {
+  let w=0,d=0,l=0,gf=0,ga=0,f=[];
+  for (const m of matches||[]) {
+    const [s1,s2] = m.score.split(':').map(Number);
+    if (m.home.includes(team) || team.includes(m.home)) {
+      gf+=s1; ga+=s2;
+      if (s1>s2) { w++; f.push('W'); }
+      else if (s2>s1) { l++; f.push('L'); }
+      else { d++; f.push('D'); }
+    } else {
+      gf+=s2; ga+=s1;
+      if (s2>s1) { w++; f.push('W'); }
+      else if (s1>s2) { l++; f.push('L'); }
+      else { d++; f.push('D'); }
+    }
+  }
+  return {w,d,l,gf,ga,f};
+}
+
+// ===== H2H summary =====
+function h2hSummary(h2h, homeT, awayT) {
+  if (!h2h||!h2h.length) return null;
+  let w=0,d=0,l=0,gf=0,ga=0;
+  for (const m of h2h) {
+    const [s1,s2] = m.score.split(':').map(Number);
+    if (m.home.includes(homeT)) {
+      gf+=s1; ga+=s2;
+      if (s1>s2) w++; else if (s2>s1) l++; else d++;
+    } else {
+      gf+=s2; ga+=s1;
+      if (s2>s1) w++; else if (s1>s2) l++; else d++;
+    }
+  }
+  return {n:h2h.length,w,d,l,gf,ga};
+}
+
+// ===== Render helpers =====
+function rqLabel(v) {
+  if (v==='0') return '平手';
+  if (v==='1') return '客让1球(+1)';
+  if (v==='-1') return '主让1球(-1)';
+  if (v.startsWith('-')) return '主让'+v.slice(1)+'球('+v+')';
+  return '客让'+v+'球(+'+v+')';
+}
+
+function formDots(f) {
+  if (!f||!f.length) return '';
+  return [...f].reverse().map(x=>{
+    const cls=x==='W'?'w':x==='D'?'d':'l';
+    const t=x==='W'?'胜':x==='D'?'平':'负';
+    return `<span class="form-dot ${cls}">${t}</span>`;
+  }).join('');
+}
+
+function rc(r) {
+  if (r==='胜') return 'w';
+  if (r==='平') return 'd';
+  if (r==='负') return 'l';
+  return '';
+}
+
+// ===== Generate analysis =====
+function genAnalysis(m, hS, aS, h2h) {
+  const p=[];
+  const h=m.home_team, a=m.away_team;
+  if (hS) {
+    const t=hS.w+hS.d+hS.l;
+    if (t>0) {
+      p.push(`${h}近${t}场${hS.w}胜${hS.d}平${hS.l}负，进${hS.gf}球失${hS.ga}球`);
+      if (hS.w<=1&&t>=3) p.push(`胜率偏低，状态一般`);
+      else if ((hS.w*3+hS.d)/t>=2) p.push(`状态出色`);
+    }
+  }
+  if (aS) {
+    const t=aS.w+aS.d+aS.l;
+    if (t>0) {
+      p.push(`${a}近${t}场${aS.w}胜${aS.d}平${aS.l}负，进${aS.gf}球失${aS.ga}球`);
+      if (aS.l<=1&&t>=3) p.push(`不败率高，状态稳定`);
+    }
+  }
+  if (h2h) {
+    p.push(`近${h2h.n}次交锋${h}${h2h.w}胜${h2h.d}平${h2h.l}负`);
+    if (h2h.l>h2h.w) p.push(`${h}历史交锋处于下风`);
+    else if (h2h.w>h2h.l) p.push(`${h}历史交锋占优`);
+  }
+  return p.join('；')+'。';
+}
+
+// ===== Main Render =====
+async function render() {
+  const app=document.getElementById('app');
+  const data=await loadData();
+
+  if (!data||!data.length) {
+    app.innerHTML='<div class="empty-box"><span class="icon">📭</span><p>暂无数据</p><p style="font-size:0.75rem">请先运行 python scraper.py</p></div>';
+    return;
+  }
+
+  // Update time
+  const now=new Date();
+  document.getElementById('updateLabel').textContent=
+    '更新于 '+now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0')+' '+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+
+  // Group by date
+  const grp={};
+  for (const m of data) {
+    const d=m.match_date||'?';
+    if (!grp[d]) grp[d]=[];
+    grp[d].push(m);
+  }
+
+  const dayMap=['周日','周一','周二','周三','周四','周五','周六'];
+  let html='';
+
+  for (const dt of Object.keys(grp).sort()) {
+    const d=new Date(dt);
+    const dy=dayMap[d.getDay()];
+    html+=`<div class="date-bar">📅 ${dt} ${dy}（${grp[dt].length}场）</div>`;
+
+    for (const m of grp[dt]) {
+      const an=m.analysis||{};
+      const hS=formStats(an.home_recent_5_matches,m.home_team);
+      const aS=formStats(an.away_recent_5_matches,m.away_team);
+      const h2h=h2hSummary(an.h2h_matches,m.home_team,m.away_team);
+      const txt=genAnalysis(m,hS,aS,h2h);
+      const rql=rqLabel(m.rangqiu);
+
+      html+=`<div class="match-card">
+  <!-- Header -->
+  <div class="match-head">
+    <span class="match-num">${m.match_num}</span>
+    <div class="match-teams">
+      <span>${m.home_team}<span class="rank">[${m.home_rank}]</span></span>
+      <span class="vs">VS</span>
+      <span><span class="rank">[${m.away_rank}]</span>${m.away_team}</span>
+    </div>
+    <span class="match-time">${m.match_time||''}</span>
+  </div>
+  <!-- Odds -->
+  <div class="odds-strip">
+    <div class="odds-item"><span class="lbl">不让球 胜/平/负</span><span class="val">${(m.odds_nspf||[]).join(' / ')}</span></div>
+    <div class="odds-item"><span class="lbl">让球(${rql})</span><span class="val">${(m.odds_spf||[]).join(' / ')}</span></div>
+  </div>
+  <!-- Recent Form -->
+  <div class="sec-title">📋 球队近况（近5场）</div>
+  <div class="recent-grid">
+    <div class="recent-col">
+      <div class="team-label">🏠 ${m.home_team}<span class="form-dots">${formDots(hS.f)}</span></div>
+      <table class="mini-table">
+        <tr><th>日期</th><th>对手</th><th>比分</th><th>赛果</th></tr>
+        ${(an.home_recent_5_matches||[]).map(r=>{
+          const opp=r.home.includes(m.home_team)||(m.home_team).includes(r.home)?r.away:r.home;
+          return `<tr><td>${r.date}</td><td>${opp}</td><td>${r.score}</td><td class="${rc(r.result)}">${r.result}</td></tr>`;
+        }).join('')}
+      </table>
+    </div>
+    <div class="recent-col">
+      <div class="team-label">🛫 ${m.away_team}<span class="form-dots">${formDots(aS.f)}</span></div>
+      <table class="mini-table">
+        <tr><th>日期</th><th>对手</th><th>比分</th><th>赛果</th></tr>
+        ${(an.away_recent_5_matches||[]).map(r=>{
+          const opp=r.home.includes(m.away_team)||(m.away_team).includes(r.home)?r.away:r.home;
+          return `<tr><td>${r.date}</td><td>${opp}</td><td>${r.score}</td><td class="${rc(r.result)}">${r.result}</td></tr>`;
+        }).join('')}
+      </table>
+    </div>
+  </div>
+  <!-- Stats -->
+  <div class="sec-title">📊 近5场攻防数据</div>
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="st-team">🏠 ${m.home_team}</div>
+      <div class="st-row"><span>进球 / 失球</span><span><span class="sv red">${hS.gf}</span> / <span class="sv green">${hS.ga}</span></span></div>
+      <div class="st-row"><span>场均进球</span><span class="sv">${(hS.gf/5).toFixed(1)}</span></div>
+      <div class="st-row"><span>场均失球</span><span class="sv">${(hS.ga/5).toFixed(1)}</span></div>
+      <div class="st-row"><span>赛季场均进球</span><span class="sv">${an.home_avg_scored||'-'}</span></div>
+      <div class="st-row"><span>赛季场均失球</span><span class="sv">${an.home_avg_conceded||'-'}</span></div>
+    </div>
+    <div class="stat-box">
+      <div class="st-team">🛫 ${m.away_team}</div>
+      <div class="st-row"><span>进球 / 失球</span><span><span class="sv red">${aS.gf}</span> / <span class="sv green">${aS.ga}</span></span></div>
+      <div class="st-row"><span>场均进球</span><span class="sv">${(aS.gf/5).toFixed(1)}</span></div>
+      <div class="st-row"><span>场均失球</span><span class="sv">${(aS.ga/5).toFixed(1)}</span></div>
+      <div class="st-row"><span>赛季场均进球</span><span class="sv">${an.away_avg_scored||'-'}</span></div>
+      <div class="st-row"><span>赛季场均失球</span><span class="sv">${an.away_avg_conceded||'-'}</span></div>
+    </div>
+  </div>
+  <!-- Analysis -->
+  <div class="sec-title">💡 关键分析</div>
+  <div class="analysis-block">${txt}</div>
+  <!-- H2H -->
+  <div class="sec-title">⚔️ 交锋记录（近6次）</div>
+  <div class="h2h-section">
+    ${h2h?`<div class="h2h-summary">${m.home_team} ${h2h.w}胜${h2h.d}平${h2h.l}负，进${h2h.gf}球失${h2h.ga}球</div>`:''}
+    <table class="h2h-table">
+      <tr><th>日期</th><th>主队</th><th>比分</th><th>客队</th><th>赛果</th></tr>
+      ${(an.h2h_matches||[]).map(r=>{
+        const cls=r.result==='胜'?'w':r.result==='平'?'d':'l';
+        return `<tr><td>${r.date}</td><td>${r.home}</td><td><b>${r.score}</b></td><td>${r.away}</td><td class="${cls}">${r.result}</td></tr>`;
+      }).join('')}
+    </table>
+  </div>
+</div>`;
+    }
+  }
+
+  app.innerHTML=html;
+}
+
+render();
+</script>
+</body>
+</html>
