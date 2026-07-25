@@ -9,7 +9,7 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 
 # Step 1: Run scraper
 print("=" * 50)
-print("STEP 1: Scraping latest K League data...")
+print("STEP 1: Scraping latest match data...")
 print("=" * 50)
 result = subprocess.run(
     [sys.executable, os.path.join(BASE, 'scraper.py')],
