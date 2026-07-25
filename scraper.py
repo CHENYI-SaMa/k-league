@@ -33,7 +33,7 @@ def fetch_html(url, encoding='gb2312', retries=2):
 
 
 def parse_main_page(html):
-    """Parse JCZQ main page for K League matches"""
+    """Parse JCZQ main page for all matches"""
     matches = []
     parts = html.split('data-fixtureid="')
     parts = parts[1:]
@@ -47,8 +47,11 @@ def parse_main_page(html):
             return m.group(1) if m else ''
         
         league = get_attr('simpleleague')
-        if '韩职' not in league:
-            continue
+        # Normalize long league names for display
+        league_display = {
+            '芬兰超级联赛': '芬超',
+            '韩国职业联赛': '韩职',
+        }.get(league, league)
         
         home = get_attr('homesxname')
         away = get_attr('awaysxname')
@@ -67,6 +70,7 @@ def parse_main_page(html):
         matches.append({
             'fixture_id': fixture_id,
             'match_num': match_num,
+            'league': league_display,
             'home_team': home,
             'away_team': away,
             'home_rank': home_rank,
@@ -267,10 +271,10 @@ def scrape_all():
     print('正在获取竞彩足球主页...')
     main_html = fetch_html(JCZQ_URL)
     
-    print('解析韩职联赛比赛列表...')
+    print('解析每日比赛列表...')
     matches = parse_main_page(main_html)
     
-    print(f'找到 {len(matches)} 场韩职比赛\n')
+    print(f'找到 {len(matches)} 场比赛\n')
     
     for i, match in enumerate(matches):
         fixture_id = match['fixture_id']
@@ -300,4 +304,5 @@ if __name__ == '__main__':
     with open('data.json', 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
     
-    print(f'\n✅ 保存 data.json ({len(data)} 场)')
+    leagues_count = len(set(m.get('league', '') for m in data))
+    print(f'\n✅ 保存 data.json ({len(data)} 场，{leagues_count} 个联赛)')

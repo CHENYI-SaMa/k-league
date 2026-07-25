@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>韩职联 K League 赛事分析</title>
+<title>今日赛事预测</title>
 <style>
   :root {
     --bg: #e8ecf1;
@@ -15,6 +15,7 @@
     --green: #00b894;
     --yellow: #fdcb6e;
     --blue: #0984e3;
+    --navy: #1a1a2e;
     --radius: 6px;
   }
 
@@ -26,54 +27,105 @@
     font-size: 14px;
     line-height: 1.5;
     -webkit-text-size-adjust: 100%;
+    padding-bottom: 24px;
   }
 
   /* ===== Header ===== */
   .top-bar {
     background: linear-gradient(135deg, #1a1a2e, #0f3460);
     color: #fff;
-    text-align: center;
-    padding: 14px 16px;
+    padding: 14px 16px 12px;
     position: sticky;
     top: 0;
     z-index: 99;
     box-shadow: 0 2px 10px rgba(0,0,0,0.2);
   }
   .top-bar h1 {
-    font-size: 1.15rem;
-    font-weight: 700;
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-align: center;
+  }
+  .top-bar .sub-title {
+    text-align: center;
+    font-size: 0.72rem;
+    color: #8ab4f8;
+    margin-top: 4px;
     letter-spacing: 1px;
   }
-  .top-bar .sub {
-    font-size: 0.75rem;
-    color: #8ab4f8;
-    margin-top: 2px;
+  .top-meta {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 12px;
+    margin-top: 12px;
+    font-size: 0.72rem;
+    color: #b0c4de;
   }
   .btn-refresh {
-    margin-top: 8px;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
     background: rgba(255,255,255,0.15);
     border: 1px solid rgba(255,255,255,0.25);
     color: #fff;
-    padding: 5px 16px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    cursor: pointer;
+  }
+
+  /* ===== Tabs ===== */
+  .tab-bar {
+    display: flex;
+    gap: 8px;
+    padding: 10px 12px;
+    background: #fff;
+    border-bottom: 1px solid #e0e3e6;
+    position: sticky;
+    top: 86px;
+    z-index: 98;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab {
+    flex: 0 0 auto;
+    padding: 6px 14px;
     border-radius: 20px;
     font-size: 0.78rem;
+    font-weight: 600;
+    color: #555;
+    background: #f0f2f5;
+    border: none;
     cursor: pointer;
-    transition: background 0.2s;
+    white-space: nowrap;
   }
-  .btn-refresh:hover { background: rgba(255,255,255,0.25); }
-  .btn-refresh.loading { opacity: 0.6; pointer-events: none; }
+  .tab.active { background: var(--navy); color: #fff; }
+
+  /* ===== View Toggle ===== */
+  .view-toggle {
+    display: flex;
+    gap: 0;
+    padding: 8px 12px;
+    background: #fff;
+    border-bottom: 1px solid #e0e3e6;
+  }
+  .view-btn {
+    flex: 1;
+    padding: 8px;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #666;
+    background: #f5f6f8;
+    border: none;
+    cursor: pointer;
+  }
+  .view-btn:first-child { border-radius: 6px 0 0 6px; }
+  .view-btn:last-child { border-radius: 0 6px 6px 0; }
+  .view-btn.active { background: var(--blue); color: #fff; }
 
   /* ===== Date divider ===== */
   .date-bar {
     text-align: center;
-    padding: 18px 16px 10px;
+    padding: 16px 16px 8px;
     font-size: 0.85rem;
     font-weight: 700;
     color: #555;
@@ -149,9 +201,7 @@
     align-items: center;
     gap: 6px;
   }
-  .odds-item .lbl {
-    color: var(--muted);
-  }
+  .odds-item .lbl { color: var(--muted); }
   .odds-item .val {
     color: var(--red);
     font-weight: 700;
@@ -203,10 +253,7 @@
     align-items: center;
     gap: 6px;
   }
-  .form-dots {
-    display: inline-flex;
-    gap: 2px;
-  }
+  .form-dots { display: inline-flex; gap: 2px; }
   .form-dot {
     width: 16px; height: 16px;
     border-radius: 2px;
@@ -315,6 +362,193 @@
   table.h2h-table .d { color: #d4a017; font-weight: 700; }
   table.h2h-table .l { color: var(--green); font-weight: 700; }
 
+  /* ===== Prediction View (参考模板图) ===== */
+  .pred-card {
+    background: var(--card-bg);
+    margin: 0 12px 14px;
+    border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+    overflow: hidden;
+    border: 1px solid #e0e3e6;
+  }
+  .pred-head {
+    display: flex;
+    align-items: center;
+    padding: 12px 14px;
+    background: #fafbfc;
+    border-bottom: 1px solid #eee;
+    gap: 12px;
+  }
+  .pred-num {
+    background: var(--navy);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 800;
+    padding: 6px 10px;
+    border-radius: 6px;
+    text-align: center;
+    min-width: 52px;
+  }
+  .pred-num .small {
+    display: block;
+    font-size: 0.5rem;
+    font-weight: 400;
+    letter-spacing: 1px;
+    opacity: 0.8;
+  }
+  .pred-teams {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .pred-team {
+    text-align: center;
+    flex: 1;
+  }
+  .pred-team .logo {
+    width: 42px; height: 42px;
+    background: #f0f2f5;
+    border-radius: 50%;
+    margin: 0 auto 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+  }
+  .pred-team .name { font-size: 0.85rem; font-weight: 700; }
+  .pred-team .en { font-size: 0.55rem; color: #999; text-transform: uppercase; }
+  .pred-vs {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #ccc;
+    font-style: italic;
+  }
+
+  .pred-body {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr;
+    gap: 8px;
+    padding: 12px 14px;
+    align-items: start;
+  }
+  @media (max-width: 400px) {
+    .pred-body { grid-template-columns: 70px 1fr 1fr; gap: 6px; padding: 10px; }
+  }
+  .pred-label {
+    font-size: 0.65rem;
+    color: #fff;
+    background: var(--blue);
+    padding: 3px 6px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .pred-result {
+    text-align: center;
+    border-right: 1px dashed #e0e0e0;
+    padding-right: 8px;
+  }
+  .pred-result .big {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.2;
+  }
+  .pred-result .sub {
+    font-size: 0.7rem;
+    color: #999;
+    margin-top: 4px;
+  }
+  .pred-scores {
+    border-right: 1px dashed #e0e0e0;
+    padding-right: 8px;
+  }
+  .score-boxes {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+  }
+  .score-box {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 6px 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    min-width: 42px;
+    text-align: center;
+    background: #fafbfc;
+  }
+  .pred-text {
+    font-size: 0.72rem;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  /* ===== Editable Prediction Form ===== */
+  .pred-form {
+    padding: 12px 14px;
+    background: #f8f9fb;
+    border-top: 1px solid #eee;
+  }
+  .form-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .form-row:last-child { margin-bottom: 0; }
+  .form-label {
+    font-size: 0.72rem;
+    color: #666;
+    min-width: 56px;
+    font-weight: 600;
+  }
+  .sel-group {
+    display: flex;
+    gap: 6px;
+    flex: 1;
+  }
+  .sel-btn {
+    flex: 1;
+    padding: 7px 4px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #555;
+    cursor: pointer;
+    text-align: center;
+  }
+  .sel-btn.active {
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
+  }
+  .score-input {
+    width: 54px;
+    padding: 7px 4px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+  .pred-note {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    resize: vertical;
+    min-height: 52px;
+    font-family: inherit;
+  }
+
   /* ===== Footer ===== */
   .footer {
     text-align: center;
@@ -330,22 +564,38 @@
     color: #999;
   }
   .empty-box .icon { font-size: 2.5rem; display: block; margin-bottom: 10px; }
+
+  .hidden { display: none !important; }
 </style>
 </head>
 <body>
 
 <div class="top-bar">
-  <h1>⚽ 韩职联（K League）赛事分析</h1>
-  <div class="sub">
+  <h1>⚽ 今日赛事预测</h1>
+  <div class="sub-title">每日焦点对决 · 数据分析推荐</div>
+  <div class="top-meta">
     <span id="updateLabel">数据加载中…</span>
+    <button class="btn-refresh" onclick="location.reload()" id="btnRefresh">🔄 刷新</button>
   </div>
-  <button class="btn-refresh" onclick="location.reload()" id="btnRefresh">🔄 刷新</button>
+</div>
+
+<div class="tab-bar" id="leagueTabs"></div>
+
+<div class="view-toggle">
+  <button class="view-btn active" data-view="data" onclick="switchView('data')">📊 数据分析</button>
+  <button class="view-btn" data-view="pred" onclick="switchView('pred')">🎯 预测填写</button>
 </div>
 
 <div id="app"></div>
-<div class="footer">数据来源：500彩票网 · 仅供参考</div>
+<div class="footer">数据来源：500彩票网 · 预测内容本地保存 · 仅供参考</div>
 
 <script>
+// ===== State =====
+let allData = [];
+let currentLeague = '全部';
+let currentView = 'data';
+const STORAGE_KEY = 'k_league_predictions_v1';
+
 // ===== Data Loader =====
 async function loadData() {
   try {
@@ -357,11 +607,32 @@ async function loadData() {
   }
 }
 
+// ===== Prediction Storage =====
+function loadPredictions() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+  } catch { return {}; }
+}
+function savePredictions(obj) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(obj));
+}
+function getPred(id) {
+  return loadPredictions()[id] || {};
+}
+function setPred(id, key, value) {
+  const preds = loadPredictions();
+  if (!preds[id]) preds[id] = {};
+  preds[id][key] = value;
+  savePredictions(preds);
+}
+
 // ===== Compute form stats =====
 function formStats(matches, team) {
   let w=0,d=0,l=0,gf=0,ga=0,f=[];
   for (const m of matches||[]) {
+    if (!m.score || !m.score.includes(':')) continue;
     const [s1,s2] = m.score.split(':').map(Number);
+    if (isNaN(s1)||isNaN(s2)) continue;
     if (m.home.includes(team) || team.includes(m.home)) {
       gf+=s1; ga+=s2;
       if (s1>s2) { w++; f.push('W'); }
@@ -382,7 +653,9 @@ function h2hSummary(h2h, homeT, awayT) {
   if (!h2h||!h2h.length) return null;
   let w=0,d=0,l=0,gf=0,ga=0;
   for (const m of h2h) {
+    if (!m.score || !m.score.includes(':')) continue;
     const [s1,s2] = m.score.split(':').map(Number);
+    if (isNaN(s1)||isNaN(s2)) continue;
     if (m.home.includes(homeT)) {
       gf+=s1; ga+=s2;
       if (s1>s2) w++; else if (s2>s1) l++; else d++;
@@ -394,7 +667,7 @@ function h2hSummary(h2h, homeT, awayT) {
   return {n:h2h.length,w,d,l,gf,ga};
 }
 
-// ===== Render helpers =====
+// ===== Helpers =====
 function rqLabel(v) {
   if (v==='0') return '平手';
   if (v==='1') return '客让1球(+1)';
@@ -419,7 +692,6 @@ function rc(r) {
   return '';
 }
 
-// ===== Generate analysis =====
 function genAnalysis(m, hS, aS, h2h) {
   const p=[];
   const h=m.home_team, a=m.away_team;
@@ -446,35 +718,49 @@ function genAnalysis(m, hS, aS, h2h) {
   return p.join('；')+'。';
 }
 
-// ===== Main Render =====
-async function render() {
-  const app=document.getElementById('app');
-  const data=await loadData();
+function getUniqueLeagues(data) {
+  const set = new Set(data.map(m => m.league || '其他').filter(Boolean));
+  return ['全部', ...Array.from(set).sort()];
+}
 
-  if (!data||!data.length) {
-    app.innerHTML='<div class="empty-box"><span class="icon">📭</span><p>暂无数据</p><p style="font-size:0.75rem">请先运行 python scraper.py</p></div>';
-    return;
-  }
+// ===== Render League Tabs =====
+function renderTabs() {
+  const tabs = document.getElementById('leagueTabs');
+  const leagues = getUniqueLeagues(allData);
+  tabs.innerHTML = leagues.map(l =>
+    `<button class="tab ${l===currentLeague?'active':''}" onclick="switchLeague('${l}')">${l}</button>`
+  ).join('');
+}
 
-  // Update time
-  const now=new Date();
-  document.getElementById('updateLabel').textContent=
-    '更新于 '+now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0')+' '+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+// ===== Switchers =====
+function switchLeague(l) {
+  currentLeague = l;
+  renderTabs();
+  render();
+}
 
-  // Group by date
+function switchView(v) {
+  currentView = v;
+  document.querySelectorAll('.view-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.view === v);
+  });
+  render();
+}
+
+// ===== Render Data View =====
+function renderDataView(filtered) {
+  const dayMap=['周日','周一','周二','周三','周四','周五','周六'];
+  let html='';
   const grp={};
-  for (const m of data) {
+  for (const m of filtered) {
     const d=m.match_date||'?';
     if (!grp[d]) grp[d]=[];
     grp[d].push(m);
   }
 
-  const dayMap=['周日','周一','周二','周三','周四','周五','周六'];
-  let html='';
-
   for (const dt of Object.keys(grp).sort()) {
     const d=new Date(dt);
-    const dy=dayMap[d.getDay()];
+    const dy=dayMap[d.getDay()]||'';
     html+=`<div class="date-bar">📅 ${dt} ${dy}（${grp[dt].length}场）</div>`;
 
     for (const m of grp[dt]) {
@@ -486,7 +772,6 @@ async function render() {
       const rql=rqLabel(m.rangqiu);
 
       html+=`<div class="match-card">
-  <!-- Header -->
   <div class="match-head">
     <span class="match-num">${m.match_num}</span>
     <div class="match-teams">
@@ -496,12 +781,10 @@ async function render() {
     </div>
     <span class="match-time">${m.match_time||''}</span>
   </div>
-  <!-- Odds -->
   <div class="odds-strip">
     <div class="odds-item"><span class="lbl">不让球 胜/平/负</span><span class="val">${(m.odds_nspf||[]).join(' / ')}</span></div>
     <div class="odds-item"><span class="lbl">让球(${rql})</span><span class="val">${(m.odds_spf||[]).join(' / ')}</span></div>
   </div>
-  <!-- Recent Form -->
   <div class="sec-title">📋 球队近况（近5场）</div>
   <div class="recent-grid">
     <div class="recent-col">
@@ -525,7 +808,6 @@ async function render() {
       </table>
     </div>
   </div>
-  <!-- Stats -->
   <div class="sec-title">📊 近5场攻防数据</div>
   <div class="stats-row">
     <div class="stat-box">
@@ -545,10 +827,8 @@ async function render() {
       <div class="st-row"><span>赛季场均失球</span><span class="sv">${an.away_avg_conceded||'-'}</span></div>
     </div>
   </div>
-  <!-- Analysis -->
   <div class="sec-title">💡 关键分析</div>
   <div class="analysis-block">${txt}</div>
-  <!-- H2H -->
   <div class="sec-title">⚔️ 交锋记录（近6次）</div>
   <div class="h2h-section">
     ${h2h?`<div class="h2h-summary">${m.home_team} ${h2h.w}胜${h2h.d}平${h2h.l}负，进${h2h.gf}球失${h2h.ga}球</div>`:''}
@@ -563,11 +843,184 @@ async function render() {
 </div>`;
     }
   }
-
-  app.innerHTML=html;
+  return html;
 }
 
-render();
+// ===== Render Prediction View =====
+function renderPredView(filtered) {
+  const dayMap=['周日','周一','周二','周三','周四','周五','周六'];
+  let html='';
+  const grp={};
+  for (const m of filtered) {
+    const d=m.match_date||'?';
+    if (!grp[d]) grp[d]=[];
+    grp[d].push(m);
+  }
+
+  for (const dt of Object.keys(grp).sort()) {
+    const d=new Date(dt);
+    const dy=dayMap[d.getDay()]||'';
+    html+=`<div class="date-bar">📅 ${dt} ${dy}（${grp[dt].length}场）</div>`;
+
+    for (const m of grp[dt]) {
+      const id = m.fixture_id;
+      const pred = getPred(id);
+      const resultOptions = [
+        {k:'home',l:'主胜'},
+        {k:'draw',l:'平'},
+        {k:'away',l:'客胜'}
+      ];
+      const goalsOptions = ['0-1球','2-3球','4-6球','7+球'];
+      const scores = pred.scores || ['','',''];
+      const hInitial = m.home_team.charAt(0);
+      const aInitial = m.away_team.charAt(0);
+
+      html+=`<div class="pred-card" data-id="${id}">
+  <div class="pred-head">
+    <div class="pred-num">${m.match_num.replace(/^周[六日一二三四五]/,'')}<span class="small">MATCH</span></div>
+    <div class="pred-teams">
+      <div class="pred-team">
+        <div class="logo">${hInitial}</div>
+        <div class="name">${m.home_team}</div>
+        <div class="en">${m.home_team}</div>
+      </div>
+      <div class="pred-vs">VS</div>
+      <div class="pred-team">
+        <div class="logo">${aInitial}</div>
+        <div class="name">${m.away_team}</div>
+        <div class="en">${m.away_team}</div>
+      </div>
+    </div>
+  </div>
+  <div class="pred-body">
+    <div class="pred-result">
+      <span class="pred-label">预测结果</span>
+      <div class="big">${pred.goals || '2-3球'}</div>
+      <div class="sub">${pred.result==='home'?'主胜':pred.result==='away'?'客胜':pred.result==='draw'?'平局':'未选'} ${pred.scores&&pred.scores[0]?'('+pred.scores[0]+')':''}</div>
+    </div>
+    <div class="pred-scores">
+      <span class="pred-label">比分参考</span>
+      <div class="score-boxes">
+        <div class="score-box">${scores[0] || '-'}</div>
+        <div class="score-box">${scores[1] || '-'}</div>
+        <div class="score-box">${scores[2] || '-'}</div>
+      </div>
+    </div>
+    <div class="pred-text">
+      <span class="pred-label">分析</span>
+      <div>${pred.note || '点击下方的预测填写，记录你的判断。'}</div>
+    </div>
+  </div>
+  <div class="pred-form">
+    <div class="form-row">
+      <span class="form-label">胜负</span>
+      <div class="sel-group">
+        ${resultOptions.map(o=>`<button class="sel-btn ${pred.result===o.k?'active':''}" onclick="setResult('${id}','${o.k}',this)">${o.l}</button>`).join('')}
+      </div>
+    </div>
+    <div class="form-row">
+      <span class="form-label">进球数</span>
+      <div class="sel-group">
+        ${goalsOptions.map(o=>`<button class="sel-btn ${pred.goals===o?'active':''}" onclick="setGoals('${id}','${o}',this)">${o}</button>`).join('')}
+      </div>
+    </div>
+    <div class="form-row">
+      <span class="form-label">比分</span>
+      <input class="score-input" placeholder="1-2" value="${scores[0]}" onchange="setScore('${id}',0,this.value)">
+      <input class="score-input" placeholder="1-1" value="${scores[1]}" onchange="setScore('${id}',1,this.value)">
+      <input class="score-input" placeholder="2-2" value="${scores[2]}" onchange="setScore('${id}',2,this.value)">
+    </div>
+    <div class="form-row">
+      <span class="form-label">备注</span>
+      <textarea class="pred-note" placeholder="写下你的分析理由..." onchange="setNote('${id}',this.value)">${pred.note||''}</textarea>
+    </div>
+  </div>
+</div>`;
+    }
+  }
+  return html;
+}
+
+// ===== Interaction Handlers =====
+function setResult(id, val, btn) {
+  setPred(id, 'result', val);
+  const card = document.querySelector(`.pred-card[data-id="${id}"]`);
+  card.querySelectorAll('.sel-btn').forEach(b => {
+    if (b === btn) b.classList.add('active');
+    else if (['主胜','平','客胜'].includes(b.textContent)) b.classList.remove('active');
+  });
+  updatePredDisplay(id);
+}
+
+function setGoals(id, val, btn) {
+  setPred(id, 'goals', val);
+  const card = document.querySelector(`.pred-card[data-id="${id}"]`);
+  card.querySelectorAll('.sel-btn').forEach(b => {
+    if (b === btn) b.classList.add('active');
+    else if (['0-1球','2-3球','4-6球','7+球'].includes(b.textContent)) b.classList.remove('active');
+  });
+  updatePredDisplay(id);
+}
+
+function setScore(id, idx, val) {
+  const preds = loadPredictions();
+  if (!preds[id]) preds[id] = {};
+  if (!preds[id].scores) preds[id].scores = ['','',''];
+  preds[id].scores[idx] = val;
+  savePredictions(preds);
+  updatePredDisplay(id);
+}
+
+function setNote(id, val) {
+  setPred(id, 'note', val);
+  updatePredDisplay(id);
+}
+
+function updatePredDisplay(id) {
+  const pred = getPred(id);
+  const card = document.querySelector(`.pred-card[data-id="${id}"]`);
+  if (!card) return;
+  const big = card.querySelector('.pred-result .big');
+  const sub = card.querySelector('.pred-result .sub');
+  const boxes = card.querySelectorAll('.score-box');
+  const text = card.querySelector('.pred-text div');
+  if (big) big.textContent = pred.goals || '2-3球';
+  if (sub) sub.textContent = (pred.result==='home'?'主胜':pred.result==='away'?'客胜':pred.result==='draw'?'平局':'未选') + (pred.scores&&pred.scores[0]?' ('+pred.scores[0]+')':'');
+  (pred.scores||['','','']).forEach((s,i)=>{ if(boxes[i]) boxes[i].textContent = s || '-'; });
+  if (text) text.textContent = pred.note || '点击下方的预测填写，记录你的判断。';
+}
+
+// ===== Main Render =====
+async function render() {
+  const app=document.getElementById('app');
+
+  if (!allData||!allData.length) {
+    app.innerHTML='<div class="empty-box"><span class="icon">📭</span><p>暂无数据</p><p style="font-size:0.75rem">请先运行 python scraper.py</p></div>';
+    return;
+  }
+
+  const now=new Date();
+  document.getElementById('updateLabel').textContent=
+    '更新于 '+now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0')+' '+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+
+  const filtered = currentLeague === '全部'
+    ? allData
+    : allData.filter(m => (m.league || '其他') === currentLeague);
+
+  if (currentView === 'data') {
+    app.innerHTML = renderDataView(filtered);
+  } else {
+    app.innerHTML = renderPredView(filtered);
+  }
+}
+
+async function init() {
+  allData = await loadData();
+  renderTabs();
+  render();
+}
+
+init();
 </script>
 </body>
 </html>
