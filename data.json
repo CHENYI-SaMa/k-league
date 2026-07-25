@@ -1,0 +1,913 @@
+[
+  {
+    "fixture_id": "1373225",
+    "match_num": "周六201",
+    "home_team": "金泉尚武",
+    "away_team": "大田市民",
+    "home_rank": "11",
+    "away_rank": "9",
+    "match_date": "2026-07-25",
+    "match_time": "18:30",
+    "rangqiu": "1",
+    "odds_nspf": [
+      "2.95",
+      "3.00",
+      "2.19"
+    ],
+    "odds_spf": [
+      "1.51",
+      "3.70",
+      "5.10"
+    ],
+    "analysis": {
+      "h2h_matches": [
+        {
+          "date": "26-03-14",
+          "home": "大田市民",
+          "away": "金泉尚武",
+          "score": "1:1",
+          "result": "平"
+        },
+        {
+          "date": "25-11-30",
+          "home": "金泉尚武",
+          "away": "大田市民",
+          "score": "0:3",
+          "result": "负"
+        },
+        {
+          "date": "25-08-31",
+          "home": "大田市民",
+          "away": "金泉尚武",
+          "score": "2:1",
+          "result": "负"
+        },
+        {
+          "date": "25-06-18",
+          "home": "大田市民",
+          "away": "金泉尚武",
+          "score": "0:0",
+          "result": "平"
+        },
+        {
+          "date": "25-04-19",
+          "home": "金泉尚武",
+          "away": "大田市民",
+          "score": "0:2",
+          "result": "负"
+        },
+        {
+          "date": "24-08-25",
+          "home": "金泉尚武",
+          "away": "大田市民",
+          "score": "2:2",
+          "result": "平"
+        }
+      ],
+      "home_recent_5_matches": [
+        {
+          "date": "26-07-22",
+          "home": "光州FC",
+          "away": "金泉尚武",
+          "score": "1:1",
+          "result": "平"
+        },
+        {
+          "date": "26-07-18",
+          "home": "江原FC",
+          "away": "金泉尚武",
+          "score": "2:0",
+          "result": "负"
+        },
+        {
+          "date": "26-07-11",
+          "home": "金泉尚武",
+          "away": "富川FC",
+          "score": "1:1",
+          "result": "平"
+        },
+        {
+          "date": "26-07-05",
+          "home": "金泉尚武",
+          "away": "济州SKFC",
+          "score": "1:1",
+          "result": "平"
+        },
+        {
+          "date": "26-05-17",
+          "home": "全北现代",
+          "away": "金泉尚武",
+          "score": "1:0",
+          "result": "负"
+        }
+      ],
+      "away_recent_5_matches": [
+        {
+          "date": "26-07-21",
+          "home": "全北现代",
+          "away": "大田市民",
+          "score": "0:0",
+          "result": "平"
+        },
+        {
+          "date": "26-07-18",
+          "home": "大田市民",
+          "away": "蔚山HD",
+          "score": "2:2",
+          "result": "平"
+        },
+        {
+          "date": "26-07-12",
+          "home": "济州SKFC",
+          "away": "大田市民",
+          "score": "0:0",
+          "result": "平"
+        },
+        {
+          "date": "26-07-04",
+          "home": "大田市民",
+          "away": "富川FC",
+          "score": "2:2",
+          "result": "平"
+        },
+        {
+          "date": "26-05-16",
+          "home": "大田市民",
+          "away": "FC首尔",
+          "score": "1:2",
+          "result": "负"
+        }
+      ],
+      "home_avg_scored": "0.95",
+      "home_avg_scored_home": "0.78",
+      "home_avg_scored_away": "1.10",
+      "home_avg_conceded": "1.37",
+      "home_avg_conceded_home": "1.56",
+      "home_avg_conceded_away": "1.20",
+      "away_avg_scored": "1.11",
+      "away_avg_scored_home": "0.70",
+      "away_avg_scored_away": "1.56",
+      "away_avg_conceded": "1.05",
+      "away_avg_conceded_home": "1.40",
+      "away_avg_conceded_away": "0.67"
+    }
+  },
+  {
+    "fixture_id": "1373237",
+    "match_num": "周六202",
+    "home_team": "浦项制铁",
+    "away_team": "全北现代",
+    "home_rank": "4",
+    "away_rank": "3",
+    "match_date": "2026-07-25",
+    "match_time": "18:30",
+    "rangqiu": "1",
+    "odds_nspf": [
+      "2.93",
+      "2.75",
+      "2.36"
+    ],
+    "odds_spf": [
+      "1.43",
+      "3.70",
+      "6.25"
+    ],
+    "analysis": {
+      "h2h_matches": [
+        {
+          "date": "26-04-26",
+          "home": "全北现代",
+          "away": "浦项铁人",
+          "score": "3:2",
+          "result": "负"
+        },
+        {
+          "date": "25-11-22",
+          "home": "浦项铁人",
+          "away": "全北现代",
+          "score": "0:0",
+          "result": "平"
+        },
+        {
+          "date": "25-08-24",
+          "home": "浦项铁人",
+          "away": "全北现代",
+          "score": "3:1",
+          "result": "胜"
+        },
+        {
+          "date": "25-07-19",
+          "home": "浦项铁人",
+          "away": "全北现代",
+          "score": "2:3",
+          "result": "负"
+        },
+        {
+          "date": "25-03-16",
+          "home": "全北现代",
+          "away": "浦项铁人",
+          "score": "2:2",
+          "result": "平"
+        },
+        {
+          "date": "24-08-17",
+          "home": "全北现代",
+          "away": "浦项铁人",
+          "score": "2:1",
+          "result": "负"
+        }
+      ],
+      "home_recent_5_matches": [
+        {
+          "date": "26-07-22",
+          "home": "FC首尔",
+          "away": "浦项铁人",
+          "score": "3:1",
+          "result": "负"
+        },
+        {
+          "date": "26-07-18",
+          "home": "济州SKFC",
+          "away": "浦项铁人",
+          "score": "2:1",
+          "result": "负"
+        },
+        {
+          "date": "26-07-11",
+          "home": "光州FC",
+          "away": "浦项铁人",
+          "score": "0:3",
+          "result": "胜"
+        },
+        {
+          "date": "26-07-04",
+          "home": "安养FC",
+          "away": "浦项铁人",
+          "score": "2:3",
+          "result": "胜"
+        },
+        {
+          "date": "26-05-17",
+          "home": "富川FC",
+          "away": "浦项铁人",
+          "score": "2:0",
+          "result": "负"
+        }
+      ],
+      "away_recent_5_matches": [
+        {
+          "date": "26-07-21",
+          "home": "全北现代",
+          "away": "大田市民",
+          "score": "0:0",
+          "result": "平"
+        },
+        {
+          "date": "26-07-18",
+          "home": "仁川联",
+          "away": "全北现代",
+          "score": "1:0",
+          "result": "负"
+        },
+        {
+          "date": "26-07-11",
+          "home": "蔚山HD",
+          "away": "全北现代",
+          "score": "1:3",
+          "result": "胜"
+        },
+        {
+          "date": "26-07-04",
+          "home": "全北现代",
+          "away": "江原FC",
+          "score": "1:2",
+          "result": "负"
+        },
+        {
+          "date": "26-05-17",
+          "home": "全北现代",
+          "away": "金泉尚武",
+          "score": "1:0",
+          "result": "胜"
+        }
+      ],
+      "home_avg_scored": "1.05",
+      "home_avg_scored_home": "0.50",
+      "home_avg_scored_away": "1.45",
+      "home_avg_conceded": "1.00",
+      "home_avg_conceded_home": "0.62",
+      "home_avg_conceded_away": "1.27",
+      "away_avg_scored": "1.32",
+      "away_avg_scored_home": "1.78",
+      "away_avg_scored_away": "0.90",
+      "away_avg_conceded": "0.84",
+      "away_avg_conceded_home": "1.11",
+      "away_avg_conceded_away": "0.60"
+    }
+  },
+  {
+    "fixture_id": "1373199",
+    "match_num": "周日201",
+    "home_team": "首尔FC",
+    "away_team": "蔚山现代",
+    "home_rank": "1",
+    "away_rank": "5",
+    "match_date": "2026-07-26",
+    "match_time": "18:30",
+    "rangqiu": "-1",
+    "odds_nspf": [
+      "1.65",
+      "3.55",
+      "4.15"
+    ],
+    "odds_spf": [
+      "3.00",
+      "3.45",
+      "1.98"
+    ],
+    "analysis": {
+      "h2h_matches": [
+        {
+          "date": "26-04-15",
+          "home": "蔚山HD",
+          "away": "FC首尔",
+          "score": "1:4",
+          "result": "胜"
+        },
+        {
+          "date": "25-08-24",
+          "home": "FC首尔",
+          "away": "蔚山HD",
+          "score": "3:2",
+          "result": "胜"
+        },
+        {
+          "date": "25-07-20",
+          "home": "FC首尔",
+          "away": "蔚山HD",
+          "score": "1:0",
+          "result": "胜"
+        },
+        {
+          "date": "25-04-05",
+          "home": "蔚山HD",
+          "away": "FC首尔",
+          "score": "0:0",
+          "result": "平"
+        },
+        {
+          "date": "24-11-10",
+          "home": "FC首尔",
+          "away": "蔚山HD",
+          "score": "1:1",
+          "result": "平"
+        },
+        {
+          "date": "24-07-13",
+          "home": "蔚山HD",
+          "away": "FC首尔",
+          "score": "1:0",
+          "result": "负"
+        }
+      ],
+      "home_recent_5_matches": [
+        {
+          "date": "26-07-22",
+          "home": "FC首尔",
+          "away": "浦项铁人",
+          "score": "3:1",
+          "result": "胜"
+        },
+        {
+          "date": "26-07-19",
+          "home": "富川FC",
+          "away": "FC首尔",
+          "score": "1:3",
+          "result": "胜"
+        },
+        {
+          "date": "26-07-12",
+          "home": "FC首尔",
+          "away": "江原FC",
+          "score": "0:0",
+          "result": "平"
+        },
+        {
+          "date": "26-07-05",
+          "home": "FC首尔",
+          "away": "仁川联",
+          "score": "1:0",
+          "result": "胜"
+        },
+        {
+          "date": "26-05-16",
+          "home": "大田市民",
+          "away": "FC首尔",
+          "score": "1:2",
+          "result": "胜"
+        }
+      ],
+      "away_recent_5_matches": [
+        {
+          "date": "26-07-21",
+          "home": "蔚山HD",
+          "away": "仁川联",
+          "score": "1:2",
+          "result": "负"
+        },
+        {
+          "date": "26-07-18",
+          "home": "大田市民",
+          "away": "蔚山HD",
+          "score": "2:2",
+          "result": "平"
+        },
+        {
+          "date": "26-07-11",
+          "home": "蔚山HD",
+          "away": "全北现代",
+          "score": "1:3",
+          "result": "负"
+        },
+        {
+          "date": "26-07-05",
+          "home": "光州FC",
+          "away": "蔚山HD",
+          "score": "1:1",
+          "result": "平"
+        },
+        {
+          "date": "26-05-17",
+          "home": "江原FC",
+          "away": "蔚山HD",
+          "score": "2:0",
+          "result": "负"
+        }
+      ],
+      "home_avg_scored": "1.79",
+      "home_avg_scored_home": "1.67",
+      "home_avg_scored_away": "1.90",
+      "home_avg_conceded": "0.74",
+      "home_avg_conceded_home": "0.56",
+      "home_avg_conceded_away": "0.90",
+      "away_avg_scored": "1.42",
+      "away_avg_scored_home": "1.50",
+      "away_avg_scored_away": "1.33",
+      "away_avg_conceded": "1.47",
+      "away_avg_conceded_home": "1.70",
+      "away_avg_conceded_away": "1.22"
+    }
+  },
+  {
+    "fixture_id": "1373236",
+    "match_num": "周日202",
+    "home_team": "仁川联",
+    "away_team": "富川FC",
+    "home_rank": "7",
+    "away_rank": "10",
+    "match_date": "2026-07-26",
+    "match_time": "18:30",
+    "rangqiu": "-1",
+    "odds_nspf": [
+      "1.56",
+      "3.35",
+      "5.30"
+    ],
+    "odds_spf": [
+      "3.07",
+      "3.05",
+      "2.10"
+    ],
+    "analysis": {
+      "h2h_matches": [
+        {
+          "date": "26-04-18",
+          "home": "富川FC",
+          "away": "仁川联",
+          "score": "2:2",
+          "result": "平"
+        },
+        {
+          "date": "25-09-07",
+          "home": "富川FC",
+          "away": "仁川联",
+          "score": "1:0",
+          "result": "负"
+        },
+        {
+          "date": "25-06-08",
+          "home": "仁川联",
+          "away": "富川FC",
+          "score": "1:0",
+          "result": "胜"
+        },
+        {
+          "date": "25-04-26",
+          "home": "富川FC",
+          "away": "仁川联",
+          "score": "1:3",
+          "result": "胜"
+        },
+        {
+          "date": "15-04-29",
+          "home": "仁川联",
+          "away": "富川FC",
+          "score": "2:0",
+          "result": "胜"
+        }
+      ],
+      "home_recent_5_matches": [
+        {
+          "date": "26-07-21",
+          "home": "蔚山HD",
+          "away": "仁川联",
+          "score": "1:2",
+          "result": "胜"
+        },
+        {
+          "date": "26-07-18",
+          "home": "仁川联",
+          "away": "全北现代",
+          "score": "1:0",
+          "result": "胜"
+        },
+        {
+          "date": "26-07-12",
+          "home": "仁川联",
+          "away": "安养FC",
+          "score": "0:1",
+          "result": "负"
+        },
+        {
+          "date": "26-07-05",
+          "home": "FC首尔",
+          "away": "仁川联",
+          "score": "1:0",
+          "result": "负"
+        },
+        {
+          "date": "26-05-16",
+          "home": "仁川联",
+          "away": "光州FC",
+          "score": "4:0",
+          "result": "胜"
+        }
+      ],
+      "away_recent_5_matches": [
+        {
+          "date": "26-07-22",
+          "home": "富川FC",
+          "away": "安养FC",
+          "score": "2:3",
+          "result": "负"
+        },
+        {
+          "date": "26-07-19",
+          "home": "富川FC",
+          "away": "FC首尔",
+          "score": "1:3",
+          "result": "负"
+        },
+        {
+          "date": "26-07-11",
+          "home": "金泉尚武",
+          "away": "富川FC",
+          "score": "1:1",
+          "result": "平"
+        },
+        {
+          "date": "26-07-04",
+          "home": "大田市民",
+          "away": "富川FC",
+          "score": "2:2",
+          "result": "平"
+        },
+        {
+          "date": "26-05-17",
+          "home": "富川FC",
+          "away": "浦项铁人",
+          "score": "2:0",
+          "result": "胜"
+        }
+      ],
+      "home_avg_scored": "1.26",
+      "home_avg_scored_home": "1.10",
+      "home_avg_scored_away": "1.44",
+      "home_avg_conceded": "1.05",
+      "home_avg_conceded_home": "1.10",
+      "home_avg_conceded_away": "1.00",
+      "away_avg_scored": "0.89",
+      "away_avg_scored_home": "0.90",
+      "away_avg_scored_away": "0.89",
+      "away_avg_conceded": "1.26",
+      "away_avg_conceded_home": "1.40",
+      "away_avg_conceded_away": "1.11"
+    }
+  },
+  {
+    "fixture_id": "1373200",
+    "match_num": "周日203",
+    "home_team": "光州FC",
+    "away_team": "济州SK",
+    "home_rank": "12",
+    "away_rank": "8",
+    "match_date": "2026-07-26",
+    "match_time": "18:30",
+    "rangqiu": "1",
+    "odds_nspf": [
+      "3.65",
+      "3.00",
+      "1.92"
+    ],
+    "odds_spf": [
+      "1.68",
+      "3.45",
+      "4.10"
+    ],
+    "analysis": {
+      "h2h_matches": [
+        {
+          "date": "26-03-01",
+          "home": "济州SKFC",
+          "away": "光州FC",
+          "score": "0:0",
+          "result": "平"
+        },
+        {
+          "date": "25-11-02",
+          "home": "光州FC",
+          "away": "济州SKFC",
+          "score": "2:0",
+          "result": "胜"
+        },
+        {
+          "date": "25-08-30",
+          "home": "济州SKFC",
+          "away": "光州FC",
+          "score": "0:1",
+          "result": "胜"
+        },
+        {
+          "date": "25-06-18",
+          "home": "济州SKFC",
+          "away": "光州FC",
+          "score": "0:1",
+          "result": "胜"
+        },
+        {
+          "date": "25-04-06",
+          "home": "光州FC",
+          "away": "济州SKFC",
+          "score": "1:0",
+          "result": "胜"
+        },
+        {
+          "date": "24-11-10",
+          "home": "济州SKFC",
+          "away": "光州FC",
+          "score": "0:0",
+          "result": "平"
+        }
+      ],
+      "home_recent_5_matches": [
+        {
+          "date": "26-07-22",
+          "home": "光州FC",
+          "away": "金泉尚武",
+          "score": "1:1",
+          "result": "平"
+        },
+        {
+          "date": "26-07-19",
+          "home": "安养FC",
+          "away": "光州FC",
+          "score": "1:1",
+          "result": "平"
+        },
+        {
+          "date": "26-07-11",
+          "home": "光州FC",
+          "away": "浦项铁人",
+          "score": "0:3",
+          "result": "负"
+        },
+        {
+          "date": "26-07-05",
+          "home": "光州FC",
+          "away": "蔚山HD",
+          "score": "1:1",
+          "result": "平"
+        },
+        {
+          "date": "26-05-16",
+          "home": "仁川联",
+          "away": "光州FC",
+          "score": "4:0",
+          "result": "负"
+        }
+      ],
+      "away_recent_5_matches": [
+        {
+          "date": "26-07-21",
+          "home": "济州SKFC",
+          "away": "江原FC",
+          "score": "1:1",
+          "result": "平"
+        },
+        {
+          "date": "26-07-18",
+          "home": "济州SKFC",
+          "away": "浦项铁人",
+          "score": "2:1",
+          "result": "胜"
+        },
+        {
+          "date": "26-07-12",
+          "home": "济州SKFC",
+          "away": "大田市民",
+          "score": "0:0",
+          "result": "平"
+        },
+        {
+          "date": "26-07-05",
+          "home": "金泉尚武",
+          "away": "济州SKFC",
+          "score": "1:1",
+          "result": "平"
+        },
+        {
+          "date": "26-05-17",
+          "home": "济州SKFC",
+          "away": "安养FC",
+          "score": "1:2",
+          "result": "负"
+        }
+      ],
+      "home_avg_scored": "0.53",
+      "home_avg_scored_home": "0.70",
+      "home_avg_scored_away": "0.33",
+      "home_avg_conceded": "2.26",
+      "home_avg_conceded_home": "1.90",
+      "home_avg_conceded_away": "2.67",
+      "away_avg_scored": "0.89",
+      "away_avg_scored_home": "0.82",
+      "away_avg_scored_away": "1.00",
+      "away_avg_conceded": "1.00",
+      "away_avg_conceded_home": "1.09",
+      "away_avg_conceded_away": "0.88"
+    }
+  },
+  {
+    "fixture_id": "1373202",
+    "match_num": "周日204",
+    "home_team": "安养FC",
+    "away_team": "江原FC",
+    "home_rank": "6",
+    "away_rank": "2",
+    "match_date": "2026-07-26",
+    "match_time": "18:30",
+    "rangqiu": "1",
+    "odds_nspf": [
+      "4.00",
+      "2.95",
+      "1.85"
+    ],
+    "odds_spf": [
+      "1.74",
+      "3.30",
+      "4.00"
+    ],
+    "analysis": {
+      "h2h_matches": [
+        {
+          "date": "26-03-15",
+          "home": "江原FC",
+          "away": "安养FC",
+          "score": "1:1",
+          "result": "平"
+        },
+        {
+          "date": "25-10-05",
+          "home": "江原FC",
+          "away": "安养FC",
+          "score": "1:1",
+          "result": "平"
+        },
+        {
+          "date": "25-05-28",
+          "home": "江原FC",
+          "away": "安养FC",
+          "score": "1:3",
+          "result": "胜"
+        },
+        {
+          "date": "25-04-06",
+          "home": "安养FC",
+          "away": "江原FC",
+          "score": "2:0",
+          "result": "胜"
+        },
+        {
+          "date": "16-09-28",
+          "home": "江原FC",
+          "away": "安养FC",
+          "score": "3:0",
+          "result": "负"
+        },
+        {
+          "date": "16-09-03",
+          "home": "安养FC",
+          "away": "江原FC",
+          "score": "0:0",
+          "result": "平"
+        }
+      ],
+      "home_recent_5_matches": [
+        {
+          "date": "26-07-22",
+          "home": "富川FC",
+          "away": "安养FC",
+          "score": "2:3",
+          "result": "胜"
+        },
+        {
+          "date": "26-07-19",
+          "home": "安养FC",
+          "away": "光州FC",
+          "score": "1:1",
+          "result": "平"
+        },
+        {
+          "date": "26-07-12",
+          "home": "仁川联",
+          "away": "安养FC",
+          "score": "0:1",
+          "result": "胜"
+        },
+        {
+          "date": "26-07-04",
+          "home": "安养FC",
+          "away": "浦项铁人",
+          "score": "2:3",
+          "result": "负"
+        },
+        {
+          "date": "26-05-17",
+          "home": "济州SKFC",
+          "away": "安养FC",
+          "score": "1:2",
+          "result": "胜"
+        }
+      ],
+      "away_recent_5_matches": [
+        {
+          "date": "26-07-21",
+          "home": "济州SKFC",
+          "away": "江原FC",
+          "score": "1:1",
+          "result": "平"
+        },
+        {
+          "date": "26-07-18",
+          "home": "江原FC",
+          "away": "金泉尚武",
+          "score": "2:0",
+          "result": "胜"
+        },
+        {
+          "date": "26-07-13",
+          "home": "江原FC",
+          "away": "越南",
+          "score": "1:2",
+          "result": "负"
+        },
+        {
+          "date": "26-07-12",
+          "home": "FC首尔",
+          "away": "江原FC",
+          "score": "0:0",
+          "result": "平"
+        },
+        {
+          "date": "26-07-04",
+          "home": "全北现代",
+          "away": "江原FC",
+          "score": "1:2",
+          "result": "胜"
+        }
+      ],
+      "home_avg_scored": "1.37",
+      "home_avg_scored_home": "1.11",
+      "home_avg_scored_away": "1.60",
+      "home_avg_conceded": "1.16",
+      "home_avg_conceded_home": "1.33",
+      "home_avg_conceded_away": "1.00",
+      "away_avg_scored": "1.26",
+      "away_avg_scored_home": "1.56",
+      "away_avg_scored_away": "1.00",
+      "away_avg_conceded": "0.63",
+      "away_avg_conceded_home": "0.67",
+      "away_avg_conceded_away": "0.60"
+    }
+  }
+]
