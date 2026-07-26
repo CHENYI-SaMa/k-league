@@ -1161,6 +1161,50 @@
     color: #999;
   }
   .empty-box .icon { font-size: 2.5rem; display: block; margin-bottom: 12px; }
+
+  /* ===== Font Zoom Control ===== */
+  .zoom-control {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 4px 8px;
+  }
+  .zoom-btn {
+    width: 26px; height: 26px;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: transparent;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .zoom-btn:active { background: rgba(255,255,255,0.2); transform: scale(0.9); }
+  .zoom-label {
+    font-size: 0.65rem;
+    color: #90a4ce;
+    white-space: nowrap;
+    min-width: 32px;
+    text-align: center;
+    font-weight: 600;
+  }
+  .zoom-reset {
+    font-size: 0.55rem;
+    color: #90a4ce;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: all 0.15s;
+  }
+  .zoom-reset:hover { color: #fff; background: rgba(255,255,255,0.1); }
 </style>
 </head>
 <body>
@@ -1173,7 +1217,13 @@
   </div>
   <div class="header-meta">
     <span id="updateLabel">数据加载中…</span>
-    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+      <div class="zoom-control">
+        <button class="zoom-btn" onclick="changeZoom(-5)" title="缩小字体">−</button>
+        <span class="zoom-label" id="zoomLabel">100%</span>
+        <button class="zoom-btn" onclick="changeZoom(+5)" title="放大字体">+</button>
+        <span class="zoom-reset" onclick="resetZoom()" title="恢复默认">↺</span>
+      </div>
       <button class="btn-refresh btn-toggle-on" id="btnHideFinished" onclick="toggleHideFinished()">🙈 已完赛</button>
       <button class="btn-refresh" onclick="openImportModal()">📥 导入预测</button>
       <button class="btn-refresh" onclick="location.reload()">🔄 刷新数据</button>
@@ -1276,9 +1326,25 @@ let currentLeague = '全部';
 let currentDate = '全部';
 let hideFinished = true;
 const STORAGE_KEY = 'k_league_preds_v2';
+const ZOOM_KEY = 'k_league_zoom';
 let exportImageDataUrl = null;
 let currentExportId = null;
 let currentExportMode = 'full';
+
+// ===== Font Zoom =====
+function getZoom() {
+  return parseInt(localStorage.getItem(ZOOM_KEY) || '100');
+}
+function applyZoom(v) {
+  v = Math.max(80, Math.min(150, v));
+  localStorage.setItem(ZOOM_KEY, v);
+  document.body.style.zoom = (v / 100).toString();
+  const label = document.getElementById('zoomLabel');
+  if (label) label.textContent = v + '%';
+}
+function changeZoom(delta) { applyZoom(getZoom() + delta); }
+function resetZoom() { applyZoom(100); }
+applyZoom(getZoom());
 
 // ===== Data =====
 async function loadData() {
