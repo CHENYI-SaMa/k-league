@@ -2023,9 +2023,27 @@ function buildRadarSvg(hS, aS, an) {
   svg+=`<polygon points="${hPoints}" fill="rgba(192,57,43,0.22)" stroke="#c0392b" stroke-width="2.2"/>`;
   // Away polygon
   svg+=`<polygon points="${aPoints}" fill="rgba(39,174,96,0.22)" stroke="#27ae60" stroke-width="2.2"/>`;
-  // Dots
-  hR.forEach((v,i)=>{const f=v/maxV[i];svg+=`<circle cx="${(cx+r*f*Math.cos(ang[i])).toFixed(1)}" cy="${(cy+r*f*Math.sin(ang[i])).toFixed(1)}" r="3.5" fill="#c0392b"/>`;});
-  aR.forEach((v,i)=>{const f=v/maxV[i];svg+=`<circle cx="${(cx+r*f*Math.cos(ang[i])).toFixed(1)}" cy="${(cy+r*f*Math.sin(ang[i])).toFixed(1)}" r="3.5" fill="#27ae60"/>`;});
+  // Dots + value labels (perpendicular offset to separate home/away)
+  hR.forEach((v,i)=>{
+    const f=v/maxV[i];
+    const dx=cx+r*f*Math.cos(ang[i]);
+    const dy=cy+r*f*Math.sin(ang[i]);
+    svg+=`<circle cx="${dx.toFixed(1)}" cy="${dy.toFixed(1)}" r="4" fill="#c0392b" stroke="#fff" stroke-width="1.5"/>`;
+    // Offset perpendicular clockwise
+    const px=dx+13*Math.cos(ang[i]+Math.PI/2);
+    const py=dy+13*Math.sin(ang[i]+Math.PI/2);
+    svg+=`<text x="${px.toFixed(1)}" y="${py.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#c0392b">${v}</text>`;
+  });
+  aR.forEach((v,i)=>{
+    const f=v/maxV[i];
+    const dx=cx+r*f*Math.cos(ang[i]);
+    const dy=cy+r*f*Math.sin(ang[i]);
+    svg+=`<circle cx="${dx.toFixed(1)}" cy="${dy.toFixed(1)}" r="4" fill="#27ae60" stroke="#fff" stroke-width="1.5"/>`;
+    // Offset perpendicular counter-clockwise
+    const px=dx+13*Math.cos(ang[i]-Math.PI/2);
+    const py=dy+13*Math.sin(ang[i]-Math.PI/2);
+    svg+=`<text x="${px.toFixed(1)}" y="${py.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#27ae60">${v}</text>`;
+  });
   // Labels
   lbls.forEach((lbl,i)=>{
     const lx=cx+(r+28)*Math.cos(ang[i]), ly=cy+(r+28)*Math.sin(ang[i]);
