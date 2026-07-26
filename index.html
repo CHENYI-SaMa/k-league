@@ -1637,6 +1637,12 @@ function teamLogoSpan(m, side) {
 }
 
 // ===== Match Finished Check =====
+function getMatchWeek(m) {
+  const num = m.match_num || '';
+  const match = num.match(/^([\u4e00-\u9fa5]+)/);
+  return match ? match[1] : '其他';
+}
+
 function isMatchFinished(m) {
   if (!m.match_date || !m.match_time) return false;
   const start = new Date(m.match_date + 'T' + m.match_time + ':00');
@@ -1665,7 +1671,7 @@ function renderTabs() {
   bar.innerHTML = leagues.map(l => {
     const cnt = allData.filter(m => {
       const leagueOk = l === '全部' || (m.league || '其他') === l;
-      const dateOk = currentDate === '全部' || m.match_date === currentDate;
+      const dateOk = currentDate === '全部' || getMatchWeek(m) === currentDate;
       const finishedOk = !hideFinished || !isMatchFinished(m);
       return leagueOk && dateOk && finishedOk;
     }).length;
@@ -1681,16 +1687,21 @@ function switchLeague(l) {
 }
 
 function getDateTabs() {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
   const tabs = [{key: '全部', label: '全部'}];
-  for (let i = 0; i <= 2; i++) {
-    const d = new Date(today);
-    d.setDate(today.getDate() + i);
-    const ymd = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-    const dayMap = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
-    const label = i === 0 ? '今天' : i === 1 ? '明天' : '后天';
-    tabs.push({key: ymd, label: label + ' ' + dayMap[d.getDay()]});
+  const weekMap = {};
+  for (const m of allData) {
+    const w = getMatchWeek(m);
+    if (!weekMap[w]) {
+      weekMap[w] = {
+        key: w,
+        label: w,
+        sortTime: (m.match_date || '') + (m.match_time || '')
+      };
+    }
+  }
+  const weeks = Object.values(weekMap).sort((a, b) => a.sortTime.localeCompare(b.sortTime));
+  for (const w of weeks) {
+    tabs.push({key: w.key, label: w.label});
   }
   return tabs;
 }
@@ -1701,7 +1712,7 @@ function renderDateTabs() {
   bar.innerHTML = tabs.map(t => {
     const cnt = allData.filter(m => {
       const leagueOk = currentLeague === '全部' || (m.league || '其他') === currentLeague;
-      const dateOk = t.key === '全部' || m.match_date === t.key;
+      const dateOk = t.key === '全部' || getMatchWeek(m) === t.key;
       const finishedOk = !hideFinished || !isMatchFinished(m);
       return leagueOk && dateOk && finishedOk;
     }).length;
@@ -1731,7 +1742,7 @@ function render() {
 
   const filtered = allData.filter(m => {
     const leagueOk = currentLeague === '全部' || (m.league || '其他') === currentLeague;
-    const dateOk = currentDate === '全部' || m.match_date === currentDate;
+    const dateOk = currentDate === '全部' || getMatchWeek(m) === currentDate;
     const finishedOk = !hideFinished || !isMatchFinished(m);
     return leagueOk && dateOk && finishedOk;
   });
@@ -1739,7 +1750,7 @@ function render() {
   if (!filtered.length) {
     const finishedCount = allData.filter(m => {
       const leagueOk = currentLeague === '全部' || (m.league || '其他') === currentLeague;
-      const dateOk = currentDate === '全部' || m.match_date === currentDate;
+      const dateOk = currentDate === '全部' || getMatchWeek(m) === currentDate;
       return leagueOk && dateOk && isMatchFinished(m);
     }).length;
     const hint = (hideFinished && finishedCount > 0)
@@ -1749,21 +1760,25 @@ function render() {
     return;
   }
 
-  const dayMap = ['周日','周一','周二','周三','周四','周五','周六'];
   const grp = {};
   for (const m of filtered) {
-    const d = m.match_date||'?';
-    if (!grp[d]) grp[d] = [];
-    grp[d].push(m);
+    const w = getMatchWeek(m);
+    if (!grp[w]) grp[w] = [];
+    grp[w].push(m);
   }
 
-  let html = '';
-  for (const dt of Object.keys(grp).sort()) {
-    const d = new Date(dt);
-    const dy = dayMap[d.getDay()]||'';
-    html += `<div style="text-align:center;padding:14px 0 8px;font-size:0.85rem;font-weight:700;color:#555;">📅 ${dt} ${dy}（${grp[dt].length}场）</div>`;
+  const weekOrder = Object.keys(grp).sort((a, b) => {
+    const ta = (grp[a][0].match_date||'') + (grp[a][0].match_time||'');
+    const tb = (grp[b][0].match_date||'') + (grp[b][0].match_time||'');
+    return ta.localeCompare(tb);
+  });
 
-    for (const m of grp[dt]) {
+  let html = '';
+  for (const w of weekOrder) {
+    grp[w].sort((a, b) => ((a.match_date||'')+(a.match_time||'')).localeCompare((b.match_date||'')+(b.match_time||'')));
+    html += `<div style="text-align:center;padding:14px 0 8px;font-size:0.85rem;font-weight:700;color:#555;">📅 ${w}（${grp[w].length}场）</div>`;
+
+    for (const m of grp[w]) {
       const id = m.fixture_id;
       const an = m.analysis||{};
       const hS = formStats(an.home_recent_5_matches, m.home_team);
