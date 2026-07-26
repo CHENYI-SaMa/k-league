@@ -1,1716 +1,19 @@
 [
   {
-    "fixture_id": "1373225",
-    "match_num": "周六201",
-    "league": "韩职",
-    "home_team": "金泉尚武",
-    "away_team": "大田市民",
-    "home_team_id": "1615",
-    "away_team_id": "1611",
-    "home_rank": "11",
-    "away_rank": "9",
-    "match_date": "2026-07-25",
-    "match_time": "18:30",
-    "rangqiu": "1",
-    "odds_nspf": [
-      "2.95",
-      "3.10",
-      "2.14"
-    ],
-    "odds_spf": [
-      "1.53",
-      "3.60",
-      "5.05"
-    ],
-    "analysis": {
-      "h2h_matches": [
-        {
-          "date": "26-03-14",
-          "home": "大田市民",
-          "away": "金泉尚武",
-          "score": "1:1",
-          "result": "平"
-        },
-        {
-          "date": "25-11-30",
-          "home": "金泉尚武",
-          "away": "大田市民",
-          "score": "0:3",
-          "result": "负"
-        },
-        {
-          "date": "25-08-31",
-          "home": "大田市民",
-          "away": "金泉尚武",
-          "score": "2:1",
-          "result": "负"
-        },
-        {
-          "date": "25-06-18",
-          "home": "大田市民",
-          "away": "金泉尚武",
-          "score": "0:0",
-          "result": "平"
-        },
-        {
-          "date": "25-04-19",
-          "home": "金泉尚武",
-          "away": "大田市民",
-          "score": "0:2",
-          "result": "负"
-        },
-        {
-          "date": "24-08-25",
-          "home": "金泉尚武",
-          "away": "大田市民",
-          "score": "2:2",
-          "result": "平"
-        }
-      ],
-      "home_recent_5_matches": [
-        {
-          "date": "26-07-22",
-          "home": "光州FC",
-          "away": "金泉尚武",
-          "score": "1:1",
-          "result": "平"
-        },
-        {
-          "date": "26-07-18",
-          "home": "江原FC",
-          "away": "金泉尚武",
-          "score": "2:0",
-          "result": "负"
-        },
-        {
-          "date": "26-07-11",
-          "home": "金泉尚武",
-          "away": "富川FC",
-          "score": "1:1",
-          "result": "平"
-        },
-        {
-          "date": "26-07-05",
-          "home": "金泉尚武",
-          "away": "济州SKFC",
-          "score": "1:1",
-          "result": "平"
-        },
-        {
-          "date": "26-05-17",
-          "home": "全北现代",
-          "away": "金泉尚武",
-          "score": "1:0",
-          "result": "负"
-        }
-      ],
-      "away_recent_5_matches": [
-        {
-          "date": "26-07-21",
-          "home": "全北现代",
-          "away": "大田市民",
-          "score": "0:0",
-          "result": "平"
-        },
-        {
-          "date": "26-07-18",
-          "home": "大田市民",
-          "away": "蔚山HD",
-          "score": "2:2",
-          "result": "平"
-        },
-        {
-          "date": "26-07-12",
-          "home": "济州SKFC",
-          "away": "大田市民",
-          "score": "0:0",
-          "result": "平"
-        },
-        {
-          "date": "26-07-04",
-          "home": "大田市民",
-          "away": "富川FC",
-          "score": "2:2",
-          "result": "平"
-        },
-        {
-          "date": "26-05-16",
-          "home": "大田市民",
-          "away": "FC首尔",
-          "score": "1:2",
-          "result": "负"
-        }
-      ],
-      "home_avg_scored": "0.95",
-      "home_avg_scored_home": "0.78",
-      "home_avg_scored_away": "1.10",
-      "home_avg_conceded": "1.37",
-      "home_avg_conceded_home": "1.56",
-      "home_avg_conceded_away": "1.20",
-      "away_avg_scored": "1.11",
-      "away_avg_scored_home": "0.70",
-      "away_avg_scored_away": "1.56",
-      "away_avg_conceded": "1.05",
-      "away_avg_conceded_home": "1.40",
-      "away_avg_conceded_away": "0.67"
-    }
-  },
-  {
-    "fixture_id": "1373237",
-    "match_num": "周六202",
-    "league": "韩职",
-    "home_team": "浦项制铁",
-    "away_team": "全北现代",
-    "home_team_id": "1608",
-    "away_team_id": "1609",
-    "home_rank": "4",
-    "away_rank": "3",
-    "match_date": "2026-07-25",
-    "match_time": "18:30",
-    "rangqiu": "1",
-    "odds_nspf": [
-      "3.00",
-      "2.78",
-      "2.29"
-    ],
-    "odds_spf": [
-      "1.47",
-      "3.56",
-      "5.95"
-    ],
-    "analysis": {
-      "h2h_matches": [
-        {
-          "date": "26-04-26",
-          "home": "全北现代",
-          "away": "浦项铁人",
-          "score": "3:2",
-          "result": "负"
-        },
-        {
-          "date": "25-11-22",
-          "home": "浦项铁人",
-          "away": "全北现代",
-          "score": "0:0",
-          "result": "平"
-        },
-        {
-          "date": "25-08-24",
-          "home": "浦项铁人",
-          "away": "全北现代",
-          "score": "3:1",
-          "result": "胜"
-        },
-        {
-          "date": "25-07-19",
-          "home": "浦项铁人",
-          "away": "全北现代",
-          "score": "2:3",
-          "result": "负"
-        },
-        {
-          "date": "25-03-16",
-          "home": "全北现代",
-          "away": "浦项铁人",
-          "score": "2:2",
-          "result": "平"
-        },
-        {
-          "date": "24-08-17",
-          "home": "全北现代",
-          "away": "浦项铁人",
-          "score": "2:1",
-          "result": "负"
-        }
-      ],
-      "home_recent_5_matches": [
-        {
-          "date": "26-07-22",
-          "home": "FC首尔",
-          "away": "浦项铁人",
-          "score": "3:1",
-          "result": "负"
-        },
-        {
-          "date": "26-07-18",
-          "home": "济州SKFC",
-          "away": "浦项铁人",
-          "score": "2:1",
-          "result": "负"
-        },
-        {
-          "date": "26-07-11",
-          "home": "光州FC",
-          "away": "浦项铁人",
-          "score": "0:3",
-          "result": "胜"
-        },
-        {
-          "date": "26-07-04",
-          "home": "安养FC",
-          "away": "浦项铁人",
-          "score": "2:3",
-          "result": "胜"
-        },
-        {
-          "date": "26-05-17",
-          "home": "富川FC",
-          "away": "浦项铁人",
-          "score": "2:0",
-          "result": "负"
-        }
-      ],
-      "away_recent_5_matches": [
-        {
-          "date": "26-07-21",
-          "home": "全北现代",
-          "away": "大田市民",
-          "score": "0:0",
-          "result": "平"
-        },
-        {
-          "date": "26-07-18",
-          "home": "仁川联",
-          "away": "全北现代",
-          "score": "1:0",
-          "result": "负"
-        },
-        {
-          "date": "26-07-11",
-          "home": "蔚山HD",
-          "away": "全北现代",
-          "score": "1:3",
-          "result": "胜"
-        },
-        {
-          "date": "26-07-04",
-          "home": "全北现代",
-          "away": "江原FC",
-          "score": "1:2",
-          "result": "负"
-        },
-        {
-          "date": "26-05-17",
-          "home": "全北现代",
-          "away": "金泉尚武",
-          "score": "1:0",
-          "result": "胜"
-        }
-      ],
-      "home_avg_scored": "1.05",
-      "home_avg_scored_home": "0.50",
-      "home_avg_scored_away": "1.45",
-      "home_avg_conceded": "1.00",
-      "home_avg_conceded_home": "0.62",
-      "home_avg_conceded_away": "1.27",
-      "away_avg_scored": "1.32",
-      "away_avg_scored_home": "1.78",
-      "away_avg_scored_away": "0.90",
-      "away_avg_conceded": "0.84",
-      "away_avg_conceded_home": "1.11",
-      "away_avg_conceded_away": "0.60"
-    }
-  },
-  {
-    "fixture_id": "1362713",
-    "match_num": "周六203",
-    "league": "瑞超",
-    "home_team": "代格福什",
-    "away_team": "佐加顿斯",
-    "home_team_id": "245",
-    "away_team_id": "1355",
-    "home_rank": "14",
-    "away_rank": "6",
-    "match_date": "2026-07-25",
-    "match_time": "21:00",
-    "rangqiu": "1",
-    "odds_nspf": [
-      "5.10",
-      "4.10",
-      "1.45"
-    ],
-    "odds_spf": [
-      "2.32",
-      "3.45",
-      "2.45"
-    ],
-    "analysis": {
-      "h2h_matches": [
-        {
-          "date": "26-03-21",
-          "home": "尤尔加登",
-          "away": "代格福什",
-          "score": "2:1",
-          "result": "负"
-        },
-        {
-          "date": "25-10-04",
-          "home": "代格福什",
-          "away": "尤尔加登",
-          "score": "1:1",
-          "result": "平"
-        },
-        {
-          "date": "25-07-06",
-          "home": "尤尔加登",
-          "away": "代格福什",
-          "score": "5:1",
-          "result": "负"
-        },
-        {
-          "date": "24-03-10",
-          "home": "尤尔加登",
-          "away": "代格福什",
-          "score": "3:0",
-          "result": "负"
-        },
-        {
-          "date": "23-08-27",
-          "home": "尤尔加登",
-          "away": "代格福什",
-          "score": "4:1",
-          "result": "负"
-        },
-        {
-          "date": "23-04-30",
-          "home": "代格福什",
-          "away": "尤尔加登",
-          "score": "2:1",
-          "result": "胜"
-        }
-      ],
-      "home_recent_5_matches": [
-        {
-          "date": "26-07-19",
-          "home": "哈马比",
-          "away": "代格福什",
-          "score": "4:0",
-          "result": "负"
-        },
-        {
-          "date": "26-07-12",
-          "home": "瓦斯特拉斯",
-          "away": "代格福什",
-          "score": "2:0",
-          "result": "负"
-        },
-        {
-          "date": "26-07-04",
-          "home": "代格福什",
-          "away": "马尔默",
-          "score": "0:1",
-          "result": "负"
-        },
-        {
-          "date": "26-06-26",
-          "home": "利勒斯特罗姆",
-          "away": "代格福什",
-          "score": "2:3",
-          "result": "胜"
-        },
-        {
-          "date": "26-05-31",
-          "home": "代格福什",
-          "away": "布洛马波卡纳",
-          "score": "2:2",
-          "result": "平"
-        }
-      ],
-      "away_recent_5_matches": [
-        {
-          "date": "26-07-21",
-          "home": "奥尔格里特",
-          "away": "尤尔加登",
-          "score": "0:0",
-          "result": "平"
-        },
-        {
-          "date": "26-07-14",
-          "home": "尤尔加登",
-          "away": "哈姆斯塔德",
-          "score": "3:0",
-          "result": "胜"
-        },
-        {
-          "date": "26-07-07",
-          "home": "赫根",
-          "away": "尤尔加登",
-          "score": "2:4",
-          "result": "胜"
-        },
-        {
-          "date": "26-06-26",
-          "home": "天狼星",
-          "away": "尤尔加登",
-          "score": "1:1",
-          "result": "平"
-        },
-        {
-          "date": "26-05-23",
-          "home": "尤尔加登",
-          "away": "布洛马波卡纳",
-          "score": "1:2",
-          "result": "负"
-        }
-      ],
-      "home_avg_scored": "0.92",
-      "home_avg_scored_home": "0.86",
-      "home_avg_scored_away": "1.00",
-      "home_avg_conceded": "1.77",
-      "home_avg_conceded_home": "1.86",
-      "home_avg_conceded_away": "1.67",
-      "away_avg_scored": "2.17",
-      "away_avg_scored_home": "2.29",
-      "away_avg_scored_away": "2.00",
-      "away_avg_conceded": "1.25",
-      "away_avg_conceded_home": "1.29",
-      "away_avg_conceded_away": "1.20"
-    }
-  },
-  {
-    "fixture_id": "1363651",
-    "match_num": "周六204",
-    "league": "芬超",
-    "home_team": "玛丽港",
-    "away_team": "AC奥卢",
-    "home_team_id": "2326",
-    "away_team_id": "363",
-    "home_rank": "12",
-    "away_rank": "4",
-    "match_date": "2026-07-25",
-    "match_time": "21:30",
-    "rangqiu": "1",
-    "odds_nspf": [
-      "5.55",
-      "4.35",
-      "1.39"
-    ],
-    "odds_spf": [
-      "2.50",
-      "3.30",
-      "2.35"
-    ],
-    "analysis": {
-      "h2h_matches": [
-        {
-          "date": "26-06-18",
-          "home": "奥卢",
-          "away": "玛丽港",
-          "score": "2:1",
-          "result": "负"
-        },
-        {
-          "date": "25-10-18",
-          "home": "玛丽港",
-          "away": "奥卢",
-          "score": "2:0",
-          "result": "胜"
-        },
-        {
-          "date": "25-07-26",
-          "home": "玛丽港",
-          "away": "奥卢",
-          "score": "0:1",
-          "result": "负"
-        },
-        {
-          "date": "25-05-17",
-          "home": "奥卢",
-          "away": "玛丽港",
-          "score": "0:1",
-          "result": "胜"
-        },
-        {
-          "date": "24-10-19",
-          "home": "奥卢",
-          "away": "玛丽港",
-          "score": "1:2",
-          "result": "胜"
-        },
-        {
-          "date": "24-09-01",
-          "home": "玛丽港",
-          "away": "奥卢",
-          "score": "2:1",
-          "result": "胜"
-        }
-      ],
-      "home_recent_5_matches": [
-        {
-          "date": "26-07-21",
-          "home": "玛丽港",
-          "away": "拉赫蒂",
-          "score": "0:2",
-          "result": "负"
-        },
-        {
-          "date": "26-07-11",
-          "home": "格尼斯坦",
-          "away": "玛丽港",
-          "score": "4:2",
-          "result": "负"
-        },
-        {
-          "date": "26-07-04",
-          "home": "VPS瓦萨",
-          "away": "玛丽港",
-          "score": "4:0",
-          "result": "负"
-        },
-        {
-          "date": "26-06-27",
-          "home": "玛丽港",
-          "away": "图尔库国际",
-          "score": "0:2",
-          "result": "负"
-        },
-        {
-          "date": "26-06-24",
-          "home": "玛丽港",
-          "away": "赫尔辛基",
-          "score": "0:4",
-          "result": "负"
-        }
-      ],
-      "away_recent_5_matches": [
-        {
-          "date": "26-07-18",
-          "home": "奥卢",
-          "away": "格尼斯坦",
-          "score": "0:2",
-          "result": "负"
-        },
-        {
-          "date": "26-07-11",
-          "home": "TPS图尔库",
-          "away": "奥卢",
-          "score": "3:0",
-          "result": "负"
-        },
-        {
-          "date": "26-06-28",
-          "home": "奥卢",
-          "away": "拉赫蒂",
-          "score": "1:1",
-          "result": "平"
-        },
-        {
-          "date": "26-06-23",
-          "home": "VPS瓦萨",
-          "away": "奥卢",
-          "score": "5:1",
-          "result": "负"
-        },
-        {
-          "date": "26-06-18",
-          "home": "奥卢",
-          "away": "玛丽港",
-          "score": "2:1",
-          "result": "胜"
-        }
-      ],
-      "home_avg_scored": "0.50",
-      "home_avg_scored_home": "0.50",
-      "home_avg_scored_away": "0.50",
-      "home_avg_conceded": "2.19",
-      "home_avg_conceded_home": "2.00",
-      "home_avg_conceded_away": "2.38",
-      "away_avg_scored": "1.25",
-      "away_avg_scored_home": "1.29",
-      "away_avg_scored_away": "1.22",
-      "away_avg_conceded": "1.25",
-      "away_avg_conceded_home": "0.71",
-      "away_avg_conceded_away": "1.67"
-    }
-  },
-  {
-    "fixture_id": "1364264",
-    "match_num": "周六205",
-    "league": "挪超",
-    "home_team": "克里斯蒂",
-    "away_team": "斯达",
-    "home_team_id": "4338",
-    "away_team_id": "508",
-    "home_rank": "15",
-    "away_rank": "16",
-    "match_date": "2026-07-25",
-    "match_time": "22:00",
-    "rangqiu": "-1",
-    "odds_nspf": [
-      "1.88",
-      "3.50",
-      "3.22"
-    ],
-    "odds_spf": [
-      "3.86",
-      "3.50",
-      "1.71"
-    ],
-    "analysis": {
-      "h2h_matches": [
-        {
-          "date": "23-08-05",
-          "home": "克里斯蒂安松",
-          "away": "斯达",
-          "score": "1:1",
-          "result": "平"
-        },
-        {
-          "date": "23-04-16",
-          "home": "斯达",
-          "away": "克里斯蒂安松",
-          "score": "4:0",
-          "result": "负"
-        },
-        {
-          "date": "20-09-20",
-          "home": "斯达",
-          "away": "克里斯蒂安松",
-          "score": "1:2",
-          "result": "胜"
-        },
-        {
-          "date": "20-08-09",
-          "home": "克里斯蒂安松",
-          "away": "斯达",
-          "score": "3:2",
-          "result": "胜"
-        },
-        {
-          "date": "18-09-02",
-          "home": "克里斯蒂安松",
-          "away": "斯达",
-          "score": "1:1",
-          "result": "平"
-        },
-        {
-          "date": "18-06-24",
-          "home": "斯达",
-          "away": "克里斯蒂安松",
-          "score": "2:0",
-          "result": "负"
-        }
-      ],
-      "home_recent_5_matches": [
-        {
-          "date": "26-07-18",
-          "home": "克里斯蒂安松",
-          "away": "萨普斯堡",
-          "score": "0:0",
-          "result": "平"
-        },
-        {
-          "date": "26-07-12",
-          "home": "罗森博格",
-          "away": "克里斯蒂安松",
-          "score": "3:0",
-          "result": "负"
-        },
-        {
-          "date": "26-07-03",
-          "home": "布兰",
-          "away": "克里斯蒂安松",
-          "score": "1:2",
-          "result": "胜"
-        },
-        {
-          "date": "26-06-27",
-          "home": "克里斯蒂安松",
-          "away": "奥勒松",
-          "score": "0:3",
-          "result": "负"
-        },
-        {
-          "date": "26-05-30",
-          "home": "瓦勒伦加",
-          "away": "克里斯蒂安松",
-          "score": "3:1",
-          "result": "负"
-        }
-      ],
-      "away_recent_5_matches": [
-        {
-          "date": "26-07-18",
-          "home": "斯达",
-          "away": "罗森博格",
-          "score": "0:3",
-          "result": "负"
-        },
-        {
-          "date": "26-07-12",
-          "home": "布兰",
-          "away": "斯达",
-          "score": "2:1",
-          "result": "负"
-        },
-        {
-          "date": "26-07-04",
-          "home": "博德闪耀",
-          "away": "斯达",
-          "score": "4:0",
-          "result": "负"
-        },
-        {
-          "date": "26-05-30",
-          "home": "腓特烈斯塔",
-          "away": "斯达",
-          "score": "2:1",
-          "result": "负"
-        },
-        {
-          "date": "26-05-25",
-          "home": "斯达",
-          "away": "瓦勒伦加",
-          "score": "2:0",
-          "result": "胜"
-        }
-      ],
-      "home_avg_scored": "0.85",
-      "home_avg_scored_home": "1.17",
-      "home_avg_scored_away": "0.57",
-      "home_avg_conceded": "1.62",
-      "home_avg_conceded_home": "1.33",
-      "home_avg_conceded_away": "1.86",
-      "away_avg_scored": "1.00",
-      "away_avg_scored_home": "1.00",
-      "away_avg_scored_away": "1.00",
-      "away_avg_conceded": "2.36",
-      "away_avg_conceded_home": "1.67",
-      "away_avg_conceded_away": "2.88"
-    }
-  },
-  {
-    "fixture_id": "1363656",
-    "match_num": "周六206",
-    "league": "芬超",
-    "home_team": "库奥皮奥",
-    "away_team": "瓦萨",
-    "home_team_id": "841",
-    "away_team_id": "434",
-    "home_rank": "1",
-    "away_rank": "3",
-    "match_date": "2026-07-25",
-    "match_time": "22:00",
-    "rangqiu": "-1",
-    "odds_nspf": [
-      "1.90",
-      "3.30",
-      "3.33"
-    ],
-    "odds_spf": [
-      "3.92",
-      "3.50",
-      "1.70"
-    ],
-    "analysis": {
-      "h2h_matches": [
-        {
-          "date": "26-06-13",
-          "home": "VPS瓦萨",
-          "away": "古比斯",
-          "score": "1:1",
-          "result": "平"
-        },
-        {
-          "date": "26-06-10",
-          "home": "古比斯",
-          "away": "VPS瓦萨",
-          "score": "0:0",
-          "result": "平"
-        },
-        {
-          "date": "26-01-31",
-          "home": "古比斯",
-          "away": "VPS瓦萨",
-          "score": "3:1",
-          "result": "胜"
-        },
-        {
-          "date": "25-07-19",
-          "home": "VPS瓦萨",
-          "away": "古比斯",
-          "score": "1:1",
-          "result": "平"
-        },
-        {
-          "date": "25-05-25",
-          "home": "古比斯",
-          "away": "VPS瓦萨",
-          "score": "0:2",
-          "result": "负"
-        },
-        {
-          "date": "25-02-01",
-          "home": "古比斯",
-          "away": "VPS瓦萨",
-          "score": "2:0",
-          "result": "胜"
-        }
-      ],
-      "home_recent_5_matches": [
-        {
-          "date": "26-07-22",
-          "home": "萨巴赫",
-          "away": "古比斯",
-          "score": "1:0",
-          "result": "负"
-        },
-        {
-          "date": "26-07-18",
-          "home": "塞那乔其",
-          "away": "古比斯",
-          "score": "0:2",
-          "result": "胜"
-        },
-        {
-          "date": "26-07-14",
-          "home": "古比斯",
-          "away": "华达",
-          "score": "0:2",
-          "result": "负"
-        },
-        {
-          "date": "26-07-08",
-          "home": "华达",
-          "away": "古比斯",
-          "score": "0:2",
-          "result": "胜"
-        },
-        {
-          "date": "26-06-27",
-          "home": "赫尔辛基",
-          "away": "古比斯",
-          "score": "0:4",
-          "result": "胜"
-        }
-      ],
-      "away_recent_5_matches": [
-        {
-          "date": "26-07-18",
-          "home": "赫尔辛基",
-          "away": "VPS瓦萨",
-          "score": "2:1",
-          "result": "负"
-        },
-        {
-          "date": "26-07-11",
-          "home": "VPS瓦萨",
-          "away": "塞那乔其",
-          "score": "1:0",
-          "result": "胜"
-        },
-        {
-          "date": "26-07-04",
-          "home": "VPS瓦萨",
-          "away": "玛丽港",
-          "score": "4:0",
-          "result": "胜"
-        },
-        {
-          "date": "26-06-30",
-          "home": "VPS瓦萨",
-          "away": "图尔库国际",
-          "score": "2:3",
-          "result": "负"
-        },
-        {
-          "date": "26-06-28",
-          "home": "格尼斯坦",
-          "away": "VPS瓦萨",
-          "score": "1:1",
-          "result": "平"
-        }
-      ],
-      "home_avg_scored": "1.81",
-      "home_avg_scored_home": "1.88",
-      "home_avg_scored_away": "1.75",
-      "home_avg_conceded": "0.94",
-      "home_avg_conceded_home": "1.00",
-      "home_avg_conceded_away": "0.88",
-      "away_avg_scored": "1.44",
-      "away_avg_scored_home": "2.12",
-      "away_avg_scored_away": "0.75",
-      "away_avg_conceded": "0.81",
-      "away_avg_conceded_home": "0.75",
-      "away_avg_conceded_away": "0.88"
-    }
-  },
-  {
-    "fixture_id": "1362716",
-    "match_num": "周六207",
-    "league": "瑞超",
-    "home_team": "卡尔马",
-    "away_team": "米亚尔比",
-    "home_team_id": "913",
-    "away_team_id": "2465",
-    "home_rank": "12",
-    "away_rank": "10",
-    "match_date": "2026-07-25",
-    "match_time": "23:30",
-    "rangqiu": "-1",
-    "odds_nspf": [
-      "2.50",
-      "3.30",
-      "2.35"
-    ],
-    "odds_spf": [
-      "5.50",
-      "4.30",
-      "1.40"
-    ],
-    "analysis": {
-      "h2h_matches": [
-        {
-          "date": "26-02-21",
-          "home": "米亚尔比",
-          "away": "卡尔马",
-          "score": "2:0",
-          "result": "负"
-        },
-        {
-          "date": "26-01-17",
-          "home": "米亚尔比",
-          "away": "卡尔马",
-          "score": "4:0",
-          "result": "负"
-        },
-        {
-          "date": "24-10-20",
-          "home": "卡尔马",
-          "away": "米亚尔比",
-          "score": "0:3",
-          "result": "负"
-        },
-        {
-          "date": "24-04-30",
-          "home": "米亚尔比",
-          "away": "卡尔马",
-          "score": "3:2",
-          "result": "负"
-        },
-        {
-          "date": "23-09-03",
-          "home": "卡尔马",
-          "away": "米亚尔比",
-          "score": "0:2",
-          "result": "负"
-        },
-        {
-          "date": "23-07-04",
-          "home": "米亚尔比",
-          "away": "卡尔马",
-          "score": "1:1",
-          "result": "平"
-        }
-      ],
-      "home_recent_5_matches": [
-        {
-          "date": "26-07-21",
-          "home": "卡尔马",
-          "away": "马尔默",
-          "score": "2:2",
-          "result": "平"
-        },
-        {
-          "date": "26-07-12",
-          "home": "哈马比",
-          "away": "卡尔马",
-          "score": "2:0",
-          "result": "负"
-        },
-        {
-          "date": "26-07-05",
-          "home": "卡尔马",
-          "away": "奥尔格里特",
-          "score": "3:0",
-          "result": "胜"
-        },
-        {
-          "date": "26-06-27",
-          "home": "卡尔马",
-          "away": "布洛马波卡纳",
-          "score": "2:0",
-          "result": "胜"
-        },
-        {
-          "date": "26-06-22",
-          "home": "索尔纳",
-          "away": "卡尔马",
-          "score": "0:2",
-          "result": "胜"
-        }
-      ],
-      "away_recent_5_matches": [
-        {
-          "date": "26-07-22",
-          "home": "米亚尔比",
-          "away": "林肯红魔",
-          "score": "3:0",
-          "result": "胜"
-        },
-        {
-          "date": "26-07-18",
-          "home": "米亚尔比",
-          "away": "瓦斯特拉斯",
-          "score": "0:0",
-          "result": "平"
-        },
-        {
-          "date": "26-07-11",
-          "home": "米亚尔比",
-          "away": "索尔纳",
-          "score": "1:2",
-          "result": "负"
-        },
-        {
-          "date": "26-07-04",
-          "home": "天狼星",
-          "away": "米亚尔比",
-          "score": "4:4",
-          "result": "平"
-        },
-        {
-          "date": "26-06-27",
-          "home": "哥本哈根",
-          "away": "米亚尔比",
-          "score": "5:3",
-          "result": "负"
-        }
-      ],
-      "home_avg_scored": "1.23",
-      "home_avg_scored_home": "1.71",
-      "home_avg_scored_away": "0.67",
-      "home_avg_conceded": "1.46",
-      "home_avg_conceded_home": "0.86",
-      "home_avg_conceded_away": "2.17",
-      "away_avg_scored": "1.46",
-      "away_avg_scored_home": "1.00",
-      "away_avg_scored_away": "1.86",
-      "away_avg_conceded": "1.31",
-      "away_avg_conceded_home": "0.83",
-      "away_avg_conceded_away": "1.71"
-    }
-  },
-  {
-    "fixture_id": "1362370",
-    "match_num": "周六208",
-    "league": "巴甲",
-    "home_team": "巴竞技",
-    "away_team": "巴西国际",
-    "home_team_id": "1571",
-    "away_team_id": "1582",
-    "home_rank": "3",
-    "away_rank": "14",
-    "match_date": "2026-07-26",
-    "match_time": "05:30",
-    "rangqiu": "-1",
-    "odds_nspf": [
-      "1.79",
-      "3.18",
-      "3.90"
-    ],
-    "odds_spf": [
-      "4.05",
-      "3.12",
-      "1.78"
-    ],
-    "analysis": {
-      "h2h_matches": [
-        {
-          "date": "26-01-29",
-          "home": "巴西国际",
-          "away": "巴拉纳竞技",
-          "score": "0:1",
-          "result": "胜"
-        },
-        {
-          "date": "24-08-12",
-          "home": "巴西国际",
-          "away": "巴拉纳竞技",
-          "score": "2:2",
-          "result": "平"
-        },
-        {
-          "date": "24-04-22",
-          "home": "巴拉纳竞技",
-          "away": "巴西国际",
-          "score": "1:0",
-          "result": "胜"
-        },
-        {
-          "date": "23-09-22",
-          "home": "巴拉纳竞技",
-          "away": "巴西国际",
-          "score": "2:1",
-          "result": "胜"
-        },
-        {
-          "date": "23-05-11",
-          "home": "巴西国际",
-          "away": "巴拉纳竞技",
-          "score": "0:2",
-          "result": "胜"
-        },
-        {
-          "date": "22-11-06",
-          "home": "巴西国际",
-          "away": "巴拉纳竞技",
-          "score": "2:0",
-          "result": "负"
-        }
-      ],
-      "home_recent_5_matches": [
-        {
-          "date": "26-07-23",
-          "home": "圣保罗",
-          "away": "巴拉纳竞技",
-          "score": "1:2",
-          "result": "胜"
-        },
-        {
-          "date": "26-07-11",
-          "home": "布拉干蒂诺RB",
-          "away": "巴拉纳竞技",
-          "score": "2:1",
-          "result": "负"
-        },
-        {
-          "date": "26-07-09",
-          "home": "博卡青年",
-          "away": "巴拉纳竞技",
-          "score": "1:0",
-          "result": "负"
-        },
-        {
-          "date": "26-05-31",
-          "home": "巴拉纳竞技",
-          "away": "米拉索",
-          "score": "1:0",
-          "result": "胜"
-        },
-        {
-          "date": "26-05-25",
-          "home": "雷莫",
-          "away": "巴拉纳竞技",
-          "score": "1:2",
-          "result": "胜"
-        }
-      ],
-      "away_recent_5_matches": [
-        {
-          "date": "26-07-23",
-          "home": "巴西国际",
-          "away": "克鲁塞罗",
-          "score": "1:2",
-          "result": "负"
-        },
-        {
-          "date": "26-05-31",
-          "home": "布拉干蒂诺RB",
-          "away": "巴西国际",
-          "score": "3:1",
-          "result": "负"
-        },
-        {
-          "date": "26-05-24",
-          "home": "维多利亚",
-          "away": "巴西国际",
-          "score": "2:0",
-          "result": "负"
-        },
-        {
-          "date": "26-05-17",
-          "home": "巴西国际",
-          "away": "瓦斯科达伽马",
-          "score": "4:1",
-          "result": "胜"
-        },
-        {
-          "date": "26-05-13",
-          "home": "巴西国际",
-          "away": "巴西竞技",
-          "score": "3:2",
-          "result": "胜"
-        }
-      ],
-      "home_avg_scored": "1.37",
-      "home_avg_scored_home": "1.70",
-      "home_avg_scored_away": "1.00",
-      "home_avg_conceded": "1.00",
-      "home_avg_conceded_home": "0.60",
-      "home_avg_conceded_away": "1.44",
-      "away_avg_scored": "1.16",
-      "away_avg_scored_home": "1.20",
-      "away_avg_scored_away": "1.11",
-      "away_avg_conceded": "1.26",
-      "away_avg_conceded_home": "1.10",
-      "away_avg_conceded_away": "1.44"
-    }
-  },
-  {
-    "fixture_id": "1362299",
-    "match_num": "周六209",
-    "league": "巴甲",
-    "home_team": "桑托斯",
-    "away_team": "沙佩科",
-    "home_team_id": "472",
-    "away_team_id": "6184",
-    "home_rank": "15",
-    "away_rank": "20",
-    "match_date": "2026-07-26",
-    "match_time": "05:30",
-    "rangqiu": "-1",
-    "odds_nspf": [
-      "1.23",
-      "5.00",
-      "8.60"
-    ],
-    "odds_spf": [
-      "1.86",
-      "3.55",
-      "3.22"
-    ],
-    "analysis": {
-      "h2h_matches": [
-        {
-          "date": "26-01-29",
-          "home": "沙佩科恩斯",
-          "away": "桑托斯",
-          "score": "4:2",
-          "result": "负"
-        },
-        {
-          "date": "24-10-17",
-          "home": "沙佩科恩斯",
-          "away": "桑托斯",
-          "score": "3:2",
-          "result": "负"
-        },
-        {
-          "date": "24-07-02",
-          "home": "桑托斯",
-          "away": "沙佩科恩斯",
-          "score": "1:0",
-          "result": "胜"
-        },
-        {
-          "date": "21-11-18",
-          "home": "桑托斯",
-          "away": "沙佩科恩斯",
-          "score": "2:0",
-          "result": "胜"
-        },
-        {
-          "date": "21-08-02",
-          "home": "沙佩科恩斯",
-          "away": "桑托斯",
-          "score": "0:1",
-          "result": "胜"
-        },
-        {
-          "date": "19-12-02",
-          "home": "桑托斯",
-          "away": "沙佩科恩斯",
-          "score": "2:0",
-          "result": "胜"
-        }
-      ],
-      "home_recent_5_matches": [
-        {
-          "date": "26-07-22",
-          "home": "委内瑞拉中央大学",
-          "away": "桑托斯",
-          "score": "1:4",
-          "result": "胜"
-        },
-        {
-          "date": "26-07-17",
-          "home": "博塔弗戈",
-          "away": "桑托斯",
-          "score": "2:1",
-          "result": "负"
-        },
-        {
-          "date": "26-07-04",
-          "home": "桑托斯",
-          "away": "圣若昂大学",
-          "score": "3:0",
-          "result": "胜"
-        },
-        {
-          "date": "26-05-31",
-          "home": "桑托斯",
-          "away": "维多利亚",
-          "score": "3:1",
-          "result": "胜"
-        },
-        {
-          "date": "26-05-27",
-          "home": "桑托斯",
-          "away": "昆卡竞技",
-          "score": "3:0",
-          "result": "胜"
-        }
-      ],
-      "away_recent_5_matches": [
-        {
-          "date": "26-07-23",
-          "home": "沙佩科恩斯",
-          "away": "弗拉门戈",
-          "score": "0:4",
-          "result": "负"
-        },
-        {
-          "date": "26-07-18",
-          "home": "巴伊亚",
-          "away": "沙佩科恩斯",
-          "score": "2:0",
-          "result": "负"
-        },
-        {
-          "date": "26-07-05",
-          "home": "格雷米奥",
-          "away": "沙佩科恩斯",
-          "score": "1:2",
-          "result": "胜"
-        },
-        {
-          "date": "26-06-01",
-          "home": "帕尔梅拉斯",
-          "away": "沙佩科恩斯",
-          "score": "1:0",
-          "result": "负"
-        },
-        {
-          "date": "26-05-25",
-          "home": "克鲁塞罗",
-          "away": "沙佩科恩斯",
-          "score": "2:1",
-          "result": "负"
-        }
-      ],
-      "home_avg_scored": "1.42",
-      "home_avg_scored_home": "1.50",
-      "home_avg_scored_away": "1.33",
-      "home_avg_conceded": "1.63",
-      "home_avg_conceded_home": "1.20",
-      "home_avg_conceded_away": "2.11",
-      "away_avg_scored": "0.89",
-      "away_avg_scored_home": "1.30",
-      "away_avg_scored_away": "0.44",
-      "away_avg_conceded": "2.05",
-      "away_avg_conceded_home": "2.40",
-      "away_avg_conceded_away": "1.67"
-    }
-  },
-  {
-    "fixture_id": "1358481",
-    "match_num": "周六210",
-    "league": "美职足",
-    "home_team": "圣迭戈FC",
-    "away_team": "达拉斯",
-    "home_team_id": "15301",
-    "away_team_id": "750",
-    "home_rank": "22",
-    "away_rank": "7",
-    "match_date": "2026-07-26",
-    "match_time": "09:30",
-    "rangqiu": "-1",
-    "odds_nspf": [
-      "2.16",
-      "3.65",
-      "2.55"
-    ],
-    "odds_spf": [
-      "4.30",
-      "4.12",
-      "1.53"
-    ],
-    "analysis": {
-      "h2h_matches": [
-        {
-          "date": "26-03-15",
-          "home": "达拉斯FC",
-          "away": "圣地亚哥FC",
-          "score": "3:3",
-          "result": "平"
-        },
-        {
-          "date": "25-06-29",
-          "home": "达拉斯FC",
-          "away": "圣地亚哥FC",
-          "score": "2:3",
-          "result": "胜"
-        },
-        {
-          "date": "25-05-04",
-          "home": "圣地亚哥FC",
-          "away": "达拉斯FC",
-          "score": "5:0",
-          "result": "胜"
-        }
-      ],
-      "home_recent_5_matches": [
-        {
-          "date": "26-07-23",
-          "home": "科罗拉多急流",
-          "away": "圣地亚哥FC",
-          "score": "1:0",
-          "result": "负"
-        },
-        {
-          "date": "26-05-24",
-          "home": "圣地亚哥FC",
-          "away": "温哥华白浪",
-          "score": "2:4",
-          "result": "负"
-        },
-        {
-          "date": "26-05-17",
-          "home": "圣地亚哥FC",
-          "away": "辛辛那提FC",
-          "score": "3:3",
-          "result": "平"
-        },
-        {
-          "date": "26-05-14",
-          "home": "圣地亚哥FC",
-          "away": "奥斯汀FC",
-          "score": "5:0",
-          "result": "胜"
-        },
-        {
-          "date": "26-05-10",
-          "home": "西雅图海湾人",
-          "away": "圣地亚哥FC",
-          "score": "1:1",
-          "result": "平"
-        }
-      ],
-      "away_recent_5_matches": [
-        {
-          "date": "26-07-23",
-          "home": "波特兰伐木工",
-          "away": "达拉斯FC",
-          "score": "2:2",
-          "result": "平"
-        },
-        {
-          "date": "26-05-24",
-          "home": "科罗拉多急流",
-          "away": "达拉斯FC",
-          "score": "1:2",
-          "result": "胜"
-        },
-        {
-          "date": "26-05-17",
-          "home": "圣何塞地震",
-          "away": "达拉斯FC",
-          "score": "2:3",
-          "result": "胜"
-        },
-        {
-          "date": "26-05-14",
-          "home": "达拉斯FC",
-          "away": "温哥华白浪",
-          "score": "2:3",
-          "result": "负"
-        },
-        {
-          "date": "26-05-10",
-          "home": "达拉斯FC",
-          "away": "皇家盐湖城",
-          "score": "3:1",
-          "result": "胜"
-        }
-      ],
-      "home_avg_scored": "1.88",
-      "home_avg_scored_home": "2.56",
-      "home_avg_scored_away": "1.00",
-      "home_avg_conceded": "1.75",
-      "home_avg_conceded_home": "1.67",
-      "home_avg_conceded_away": "1.86",
-      "away_avg_scored": "2.00",
-      "away_avg_scored_home": "2.00",
-      "away_avg_scored_away": "2.00",
-      "away_avg_conceded": "1.50",
-      "away_avg_conceded_home": "1.78",
-      "away_avg_conceded_away": "1.14"
-    }
-  },
-  {
-    "fixture_id": "1358487",
-    "match_num": "周六211",
-    "league": "美职足",
-    "home_team": "圣何塞",
-    "away_team": "洛城银河",
-    "home_team_id": "499",
-    "away_team_id": "1044",
-    "home_rank": "4",
-    "away_rank": "18",
-    "match_date": "2026-07-26",
-    "match_time": "10:30",
-    "rangqiu": "-1",
-    "odds_nspf": [
-      "1.67",
-      "3.95",
-      "3.60"
-    ],
-    "odds_spf": [
-      "2.98",
-      "3.66",
-      "1.92"
-    ],
-    "analysis": {
-      "h2h_matches": [
-        {
-          "date": "25-06-29",
-          "home": "圣何塞地震",
-          "away": "洛杉矶银河",
-          "score": "1:1",
-          "result": "平"
-        },
-        {
-          "date": "25-05-29",
-          "home": "洛杉矶银河",
-          "away": "圣何塞地震",
-          "score": "0:1",
-          "result": "胜"
-        },
-        {
-          "date": "24-08-01",
-          "home": "圣何塞地震",
-          "away": "洛杉矶银河",
-          "score": "1:2",
-          "result": "负"
-        },
-        {
-          "date": "24-06-30",
-          "home": "圣何塞地震",
-          "away": "洛杉矶银河",
-          "score": "0:3",
-          "result": "负"
-        },
-        {
-          "date": "24-04-22",
-          "home": "洛杉矶银河",
-          "away": "圣何塞地震",
-          "score": "4:3",
-          "result": "负"
-        },
-        {
-          "date": "24-03-03",
-          "home": "圣何塞地震",
-          "away": "洛杉矶银河",
-          "score": "1:3",
-          "result": "负"
-        }
-      ],
-      "home_recent_5_matches": [
-        {
-          "date": "26-07-23",
-          "home": "圣何塞地震",
-          "away": "奥兰多城",
-          "score": "0:4",
-          "result": "负"
-        },
-        {
-          "date": "26-07-04",
-          "home": "圣何塞地震",
-          "away": "蒂华纳",
-          "score": "1:2",
-          "result": "负"
-        },
-        {
-          "date": "26-05-24",
-          "home": "波特兰伐木工",
-          "away": "圣何塞地震",
-          "score": "1:3",
-          "result": "胜"
-        },
-        {
-          "date": "26-05-21",
-          "home": "科罗拉多急流",
-          "away": "圣何塞地震",
-          "score": "2:0",
-          "result": "负"
-        },
-        {
-          "date": "26-05-17",
-          "home": "圣何塞地震",
-          "away": "达拉斯FC",
-          "score": "2:3",
-          "result": "负"
-        }
-      ],
-      "away_recent_5_matches": [
-        {
-          "date": "26-07-23",
-          "home": "洛杉矶银河",
-          "away": "圣路易斯城",
-          "score": "1:3",
-          "result": "负"
-        },
-        {
-          "date": "26-07-18",
-          "home": "洛杉矶银河",
-          "away": "洛杉矶FC",
-          "score": "0:3",
-          "result": "负"
-        },
-        {
-          "date": "26-07-12",
-          "home": "洛杉矶银河",
-          "away": "墨西哥美洲",
-          "score": "1:0",
-          "result": "胜"
-        },
-        {
-          "date": "26-07-04",
-          "home": "洛杉矶银河",
-          "away": "萨尔瓦多",
-          "score": "0:3",
-          "result": "负"
-        },
-        {
-          "date": "26-05-24",
-          "home": "洛杉矶银河",
-          "away": "休斯敦迪纳摩",
-          "score": "1:1",
-          "result": "平"
-        }
-      ],
-      "home_avg_scored": "2.12",
-      "home_avg_scored_home": "2.00",
-      "home_avg_scored_away": "2.25",
-      "home_avg_conceded": "1.19",
-      "home_avg_conceded_home": "1.25",
-      "home_avg_conceded_away": "1.12",
-      "away_avg_scored": "1.35",
-      "away_avg_scored_home": "1.22",
-      "away_avg_scored_away": "1.50",
-      "away_avg_conceded": "1.65",
-      "away_avg_conceded_home": "1.56",
-      "away_avg_conceded_away": "1.75"
-    }
-  },
-  {
     "fixture_id": "1373199",
     "match_num": "周日201",
     "league": "韩职",
     "home_team": "首尔FC",
     "away_team": "蔚山现代",
-    "home_team_id": "1606",
-    "away_team_id": "1603",
     "home_rank": "1",
-    "away_rank": "5",
+    "away_rank": "4",
     "match_date": "2026-07-26",
     "match_time": "18:30",
     "rangqiu": "-1",
     "odds_nspf": [
-      "1.65",
+      "1.63",
       "3.55",
-      "4.15"
+      "4.26"
     ],
     "odds_spf": [
       "3.00",
@@ -1856,10 +159,8 @@
     "league": "韩职",
     "home_team": "仁川联",
     "away_team": "富川FC",
-    "home_team_id": "1612",
-    "away_team_id": "7075",
     "home_rank": "7",
-    "away_rank": "10",
+    "away_rank": "11",
     "match_date": "2026-07-26",
     "match_time": "18:30",
     "rangqiu": "-1",
@@ -1869,9 +170,9 @@
       "5.30"
     ],
     "odds_spf": [
-      "3.07",
-      "3.05",
-      "2.10"
+      "3.06",
+      "3.00",
+      "2.13"
     ],
     "analysis": {
       "h2h_matches": [
@@ -2005,8 +306,6 @@
     "league": "韩职",
     "home_team": "光州FC",
     "away_team": "济州SK",
-    "home_team_id": "6477",
-    "away_team_id": "3410",
     "home_rank": "12",
     "away_rank": "8",
     "match_date": "2026-07-26",
@@ -2161,21 +460,19 @@
     "league": "韩职",
     "home_team": "安养FC",
     "away_team": "江原FC",
-    "home_team_id": "4544",
-    "away_team_id": "5739",
     "home_rank": "6",
-    "away_rank": "2",
+    "away_rank": "3",
     "match_date": "2026-07-26",
     "match_time": "18:30",
     "rangqiu": "1",
     "odds_nspf": [
-      "4.00",
-      "2.95",
-      "1.85"
+      "4.12",
+      "2.94",
+      "1.83"
     ],
     "odds_spf": [
-      "1.74",
-      "3.30",
+      "1.75",
+      "3.25",
       "4.00"
     ],
     "analysis": {
@@ -2317,22 +614,20 @@
     "league": "瑞超",
     "home_team": "布鲁马波",
     "away_team": "哈马比",
-    "home_team_id": "1764",
-    "away_team_id": "852",
-    "home_rank": "11",
+    "home_rank": "12",
     "away_rank": "2",
     "match_date": "2026-07-26",
     "match_time": "20:00",
     "rangqiu": "1",
     "odds_nspf": [
-      "6.05",
-      "4.70",
-      "1.33"
+      "6.32",
+      "4.80",
+      "1.31"
     ],
     "odds_spf": [
-      "2.70",
+      "2.77",
       "3.70",
-      "2.05"
+      "2.01"
     ],
     "analysis": {
       "h2h_matches": [
@@ -2473,22 +768,20 @@
     "league": "瑞超",
     "home_team": "天狼星",
     "away_team": "哥德堡",
-    "home_team_id": "4067",
-    "away_team_id": "823",
     "home_rank": "1",
     "away_rank": "13",
     "match_date": "2026-07-26",
     "match_time": "20:00",
     "rangqiu": "-1",
     "odds_nspf": [
-      "1.33",
-      "4.80",
-      "5.90"
+      "1.31",
+      "4.88",
+      "6.20"
     ],
     "odds_spf": [
-      "2.00",
-      "3.80",
-      "2.73"
+      "1.97",
+      "3.83",
+      "2.77"
     ],
     "analysis": {
       "h2h_matches": [
@@ -2629,22 +922,20 @@
     "league": "芬超",
     "home_team": "国际图尔",
     "away_team": "赫尔辛基火花",
-    "home_team_id": "1327",
-    "away_team_id": "2687",
     "home_rank": "2",
     "away_rank": "6",
     "match_date": "2026-07-26",
     "match_time": "20:00",
     "rangqiu": "-1",
     "odds_nspf": [
-      "1.71",
+      "1.66",
       "3.65",
-      "3.70"
+      "3.95"
     ],
     "odds_spf": [
-      "3.15",
-      "3.50",
-      "1.90"
+      "3.10",
+      "3.37",
+      "1.96"
     ],
     "analysis": {
       "h2h_matches": [
@@ -2785,8 +1076,6 @@
     "league": "芬超",
     "home_team": "坦佩雷山猫",
     "away_team": "拉赫蒂",
-    "home_team_id": "2667",
-    "away_team_id": "956",
     "home_rank": "9",
     "away_rank": "7",
     "match_date": "2026-07-26",
@@ -2941,22 +1230,20 @@
     "league": "挪超",
     "home_team": "布兰",
     "away_team": "瓦勒伦加",
-    "home_team_id": "722",
-    "away_team_id": "1242",
     "home_rank": "6",
     "away_rank": "9",
     "match_date": "2026-07-26",
     "match_time": "20:30",
     "rangqiu": "-1",
     "odds_nspf": [
-      "1.61",
-      "4.10",
-      "3.80"
+      "1.59",
+      "4.12",
+      "3.88"
     ],
     "odds_spf": [
-      "2.79",
-      "3.70",
-      "2.00"
+      "2.74",
+      "3.62",
+      "2.05"
     ],
     "analysis": {
       "h2h_matches": [
@@ -3097,22 +1384,20 @@
     "league": "芬超",
     "home_team": "赫尔辛基",
     "away_team": "TPS图尔",
-    "home_team_id": "866",
-    "away_team_id": "415",
     "home_rank": "5",
     "away_rank": "8",
     "match_date": "2026-07-26",
     "match_time": "22:00",
     "rangqiu": "-1",
     "odds_nspf": [
-      "1.55",
-      "4.00",
-      "4.30"
+      "1.45",
+      "4.18",
+      "5.00"
     ],
     "odds_spf": [
-      "2.64",
-      "3.60",
-      "2.12"
+      "2.40",
+      "3.55",
+      "2.32"
     ],
     "analysis": {
       "h2h_matches": [
@@ -3253,8 +1538,6 @@
     "league": "瑞超",
     "home_team": "盖斯",
     "away_team": "哈尔姆斯",
-    "home_team_id": "288",
-    "away_team_id": "848",
     "home_rank": "8",
     "away_rank": "16",
     "match_date": "2026-07-26",
@@ -3409,22 +1692,20 @@
     "league": "瑞超",
     "home_team": "马尔默",
     "away_team": "埃夫斯堡",
-    "home_team_id": "1051",
-    "away_team_id": "563",
     "home_rank": "7",
     "away_rank": "9",
     "match_date": "2026-07-26",
     "match_time": "22:30",
     "rangqiu": "-1",
     "odds_nspf": [
-      "1.77",
-      "3.60",
-      "3.50"
+      "1.74",
+      "3.65",
+      "3.56"
     ],
     "odds_spf": [
-      "3.25",
-      "3.65",
-      "1.83"
+      "3.18",
+      "3.60",
+      "1.86"
     ],
     "analysis": {
       "h2h_matches": [
@@ -3565,8 +1846,6 @@
     "league": "挪超",
     "home_team": "萨普斯堡",
     "away_team": "汉坎",
-    "home_team_id": "3418",
-    "away_team_id": "861",
     "home_rank": "7",
     "away_rank": "8",
     "match_date": "2026-07-26",
@@ -3721,22 +2000,20 @@
     "league": "挪超",
     "home_team": "奥斯KFUM",
     "away_team": "莫尔德",
-    "home_team_id": "5263",
-    "away_team_id": "1109",
     "home_rank": "13",
     "away_rank": "5",
     "match_date": "2026-07-26",
     "match_time": "23:00",
     "rangqiu": "1",
     "odds_nspf": [
-      "2.74",
-      "3.50",
-      "2.09"
+      "2.80",
+      "3.55",
+      "2.04"
     ],
     "odds_spf": [
-      "1.57",
+      "1.59",
       "3.95",
-      "4.20"
+      "4.05"
     ],
     "analysis": {
       "h2h_matches": [
@@ -3877,8 +2154,6 @@
     "league": "挪超",
     "home_team": "桑纳菲",
     "away_team": "博德闪耀",
-    "home_team_id": "3470",
-    "away_team_id": "703",
     "home_rank": "11",
     "away_rank": "2",
     "match_date": "2026-07-26",
@@ -4033,22 +2308,20 @@
     "league": "挪超",
     "home_team": "奥勒松",
     "away_team": "维京",
-    "home_team_id": "546",
-    "away_team_id": "1259",
     "home_rank": "14",
     "away_rank": "1",
     "match_date": "2026-07-27",
     "match_time": "01:15",
     "rangqiu": "1",
     "odds_nspf": [
-      "5.00",
-      "4.55",
-      "1.41"
+      "5.15",
+      "4.63",
+      "1.39"
     ],
     "odds_spf": [
-      "2.45",
+      "2.52",
       "3.75",
-      "2.20"
+      "2.15"
     ],
     "analysis": {
       "h2h_matches": [
@@ -4189,22 +2462,20 @@
     "league": "巴甲",
     "home_team": "弗拉门戈",
     "away_team": "圣保罗",
-    "home_team_id": "1577",
-    "away_team_id": "1385",
     "home_rank": "2",
     "away_rank": "12",
     "match_date": "2026-07-27",
     "match_time": "05:30",
     "rangqiu": "-1",
     "odds_nspf": [
-      "1.37",
-      "4.15",
-      "6.30"
+      "1.35",
+      "4.25",
+      "6.50"
     ],
     "odds_spf": [
-      "2.25",
-      "3.30",
-      "2.62"
+      "2.20",
+      "3.35",
+      "2.66"
     ],
     "analysis": {
       "h2h_matches": [
@@ -4345,8 +2616,6 @@
     "league": "巴甲",
     "home_team": "格雷米奥",
     "away_team": "弗鲁米嫩",
-    "home_team_id": "1580",
-    "away_team_id": "1578",
     "home_rank": "16",
     "away_rank": "4",
     "match_date": "2026-07-27",
@@ -4501,10 +2770,8 @@
     "league": "瑞超",
     "home_team": "赫根",
     "away_team": "索尔纳",
-    "home_team_id": "850",
-    "away_team_id": "215",
-    "home_rank": "3",
-    "away_rank": "5",
+    "home_rank": "4",
+    "away_rank": "6",
     "match_date": "2026-07-28",
     "match_time": "01:00",
     "rangqiu": "-1",
@@ -4657,8 +2924,6 @@
     "league": "挪超",
     "home_team": "罗森博格",
     "away_team": "腓特烈",
-    "home_team_id": "1035",
-    "away_team_id": "1362",
     "home_rank": "10",
     "away_rank": "12",
     "match_date": "2026-07-28",
