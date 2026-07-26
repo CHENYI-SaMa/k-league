@@ -1007,6 +1007,43 @@
     border-left: 3px solid #c0392b;
     color: #222;
   }
+  .radar-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 10px 0 14px;
+  }
+  .radar-side {
+    width: 115px;
+    flex: 0 0 115px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #333;
+  }
+  .radar-side-title {
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 6px;
+    text-align: center;
+    padding: 3px 0;
+    border-radius: 4px;
+  }
+  .radar-side-home .radar-side-title { background: #fdeaea; color: #c0392b; }
+  .radar-side-away .radar-side-title { background: #e6f7ed; color: #27ae60; }
+  .radar-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-bottom: 1px dashed #eee;
+  }
+  .radar-row:last-child { border-bottom: none; }
+  .radar-row-label { color: #666; }
+  .radar-row-val { font-weight: 700; }
+  .radar-side-home .radar-row-val { color: #c0392b; }
+  .radar-side-away .radar-row-val { color: #27ae60; }
+  .radar-center { flex: 1 1 auto; min-width: 0; }
+  .radar-center svg { width: 100%; display: block; }
   .exp-form-table {
     width: 100%;
     border-collapse: collapse;
@@ -1993,7 +2030,7 @@ function clearPred(id) {
 }
 
 // ===== Export =====
-function buildRadarSvg(hS, aS, an) {
+function buildRadarSvg(hS, aS, an, homeTeam, awayTeam) {
   const hR = [
     hS.gf, parseFloat((hS.gf/5).toFixed(1)),
     hS.ga, parseFloat((hS.ga/5).toFixed(1)),
@@ -2059,7 +2096,16 @@ function buildRadarSvg(hS, aS, an) {
   svg+=`<rect x="70" y="400" width="10" height="10" fill="#c0392b" rx="2"/><text x="86" y="410" font-size="11" fill="#555" dominant-baseline="middle">主队</text>`;
   svg+=`<rect x="130" y="400" width="10" height="10" fill="#27ae60" rx="2"/><text x="146" y="410" font-size="11" fill="#555" dominant-baseline="middle">客队</text>`;
   svg+=`</svg>`;
-  return svg;
+
+  // Side stats panels
+  const statLabels = ['进球 / 失球', '场均进球', '场均失球', '赛季场均进球', '赛季场均失球'];
+  const homeVals = [`${hS.gf} / ${hS.ga}`, (hS.gf/5).toFixed(1), (hS.ga/5).toFixed(1), an.home_avg_scored||'-', an.home_avg_conceded||'-'];
+  const awayVals = [`${aS.gf} / ${aS.ga}`, (aS.gf/5).toFixed(1), (aS.ga/5).toFixed(1), an.away_avg_scored||'-', an.away_avg_conceded||'-'];
+  const sideStats = (title, vals, cls) => {
+    let rows = vals.map((v,i)=>`<div class="radar-row"><span class="radar-row-label">${statLabels[i]}</span><span class="radar-row-val">${v}</span></div>`).join('');
+    return `<div class="radar-side ${cls}"><div class="radar-side-title">${title}</div>${rows}</div>`;
+  };
+  return `<div class="radar-wrap">${sideStats(homeTeam||'主队', homeVals, 'radar-side-home')}<div class="radar-center">${svg}</div>${sideStats(awayTeam||'客队', awayVals, 'radar-side-away')}</div>`;
 }
 
 function buildExportHtml(m, pred, an, hS, aS, h2h, txt, mode) {
@@ -2146,7 +2192,7 @@ function buildExportHtml(m, pred, an, hS, aS, h2h, txt, mode) {
 
       <!-- Stats Radar -->
       <div class="exp-section-title">📊 近5场攻防数据</div>
-      ${buildRadarSvg(hS, aS, an)}
+      ${buildRadarSvg(hS, aS, an, m.home_team, m.away_team)}
 
       <!-- Analysis -->
       <div class="exp-section-title">💡 关键分析</div>
