@@ -1993,6 +1993,57 @@ function clearPred(id) {
 }
 
 // ===== Export =====
+function buildRadarSvg(hS, aS, an) {
+  const hR = [
+    hS.gf, parseFloat((hS.gf/5).toFixed(1)),
+    hS.ga, parseFloat((hS.ga/5).toFixed(1)),
+    parseFloat(an.home_avg_scored)||0, parseFloat(an.home_avg_conceded)||0
+  ];
+  const aR = [
+    aS.gf, parseFloat((aS.gf/5).toFixed(1)),
+    aS.ga, parseFloat((aS.ga/5).toFixed(1)),
+    parseFloat(an.away_avg_scored)||0, parseFloat(an.away_avg_conceded)||0
+  ];
+  const lbls = ['进球','场均进球','失球','场均失球','赛季场均\n进球','赛季场均\n失球'];
+  const maxV = hR.map((v,i)=>Math.max(v,aR[i],0.1));
+  const cx=220,cy=210,r=140;
+  const ang=[-Math.PI/2,-Math.PI/6,Math.PI/6,Math.PI/2,5*Math.PI/6,-5*Math.PI/6];
+
+  const pts=(d)=>d.map((v,i)=>{const f=v/maxV[i];return (cx+r*f*Math.cos(ang[i])).toFixed(1)+','+(cy+r*f*Math.sin(ang[i])).toFixed(1);}).join(' ');
+  const grid=(l)=>{let p='';for(let i=0;i<6;i++)p+=(cx+r*l*Math.cos(ang[i])).toFixed(1)+','+(cy+r*l*Math.sin(ang[i])).toFixed(1)+' ';return p.trim();};
+
+  const hPoints=pts(hR), aPoints=pts(aR);
+
+  let svg='<svg viewBox="0 0 440 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:460px;display:block;margin:12px auto;">';
+  // Grid
+  [0.25,0.5,0.75,1].forEach(l=>svg+=`<polygon points="${grid(l)}" fill="none" stroke="${l===1?'#c0c0c0':'#e8e8e8'}" stroke-width="${l===1?1.2:0.6}"/>`);
+  // Axes
+  for(let i=0;i<6;i++)svg+=`<line x1="${cx}" y1="${cy}" x2="${(cx+r*Math.cos(ang[i])).toFixed(1)}" y2="${(cy+r*Math.sin(ang[i])).toFixed(1)}" stroke="#e0e0e0" stroke-width="0.8"/>`;
+  // Home polygon
+  svg+=`<polygon points="${hPoints}" fill="rgba(192,57,43,0.22)" stroke="#c0392b" stroke-width="2.2"/>`;
+  // Away polygon
+  svg+=`<polygon points="${aPoints}" fill="rgba(39,174,96,0.22)" stroke="#27ae60" stroke-width="2.2"/>`;
+  // Dots
+  hR.forEach((v,i)=>{const f=v/maxV[i];svg+=`<circle cx="${(cx+r*f*Math.cos(ang[i])).toFixed(1)}" cy="${(cy+r*f*Math.sin(ang[i])).toFixed(1)}" r="3.5" fill="#c0392b"/>`;});
+  aR.forEach((v,i)=>{const f=v/maxV[i];svg+=`<circle cx="${(cx+r*f*Math.cos(ang[i])).toFixed(1)}" cy="${(cy+r*f*Math.sin(ang[i])).toFixed(1)}" r="3.5" fill="#27ae60"/>`;});
+  // Labels
+  lbls.forEach((lbl,i)=>{
+    const lx=cx+(r+28)*Math.cos(ang[i]), ly=cy+(r+28)*Math.sin(ang[i]);
+    const lines=lbl.split('\n');
+    if(lines.length===1){
+      svg+=`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="700" fill="#333">${lines[0]}</text>`;
+    }else{
+      svg+=`<text x="${lx.toFixed(1)}" y="${(ly-7).toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="700" fill="#333">${lines[0]}</text>`;
+      svg+=`<text x="${lx.toFixed(1)}" y="${(ly+7).toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="700" fill="#333">${lines[1]}</text>`;
+    }
+  });
+  // Legend
+  svg+=`<rect x="70" y="400" width="10" height="10" fill="#c0392b" rx="2"/><text x="86" y="410" font-size="11" fill="#555" dominant-baseline="middle">主队</text>`;
+  svg+=`<rect x="130" y="400" width="10" height="10" fill="#27ae60" rx="2"/><text x="146" y="410" font-size="11" fill="#555" dominant-baseline="middle">客队</text>`;
+  svg+=`</svg>`;
+  return svg;
+}
+
 function buildExportHtml(m, pred, an, hS, aS, h2h, txt, mode) {
   const resultLabel = pred.result==='home'?'主胜':pred.result==='draw'?'平局':pred.result==='away'?'客胜':'—';
   const goalsLabel = pred.goals || '—';
@@ -2075,32 +2126,9 @@ function buildExportHtml(m, pred, an, hS, aS, h2h, txt, mode) {
         </tr>
       </table>
 
-      <!-- Stats -->
+      <!-- Stats Radar -->
       <div class="exp-section-title">📊 近5场攻防数据</div>
-      <table style="width:100%;border-collapse:collapse;margin-bottom:10px;">
-        <tr>
-          <td style="width:50%;padding-right:10px;vertical-align:top;">
-            <div class="exp-stat-box">
-              <div style="font-weight:700;font-size:15px;margin-bottom:6px;">🏠 ${m.home_team}</div>
-              <div class="s-row"><span>进球 / 失球</span><span style="font-weight:700;">${hS.gf} / ${hS.ga}</span></div>
-              <div class="s-row"><span>场均进球</span><span style="font-weight:700;">${(hS.gf/5).toFixed(1)}</span></div>
-              <div class="s-row"><span>场均失球</span><span style="font-weight:700;">${(hS.ga/5).toFixed(1)}</span></div>
-              <div class="s-row"><span>赛季场均进球</span><span style="font-weight:700;">${an.home_avg_scored||'-'}</span></div>
-              <div class="s-row"><span>赛季场均失球</span><span style="font-weight:700;">${an.home_avg_conceded||'-'}</span></div>
-            </div>
-          </td>
-          <td style="width:50%;padding-left:10px;vertical-align:top;">
-            <div class="exp-stat-box">
-              <div style="font-weight:700;font-size:15px;margin-bottom:6px;">🛫 ${m.away_team}</div>
-              <div class="s-row"><span>进球 / 失球</span><span style="font-weight:700;">${aS.gf} / ${aS.ga}</span></div>
-              <div class="s-row"><span>场均进球</span><span style="font-weight:700;">${(aS.gf/5).toFixed(1)}</span></div>
-              <div class="s-row"><span>场均失球</span><span style="font-weight:700;">${(aS.ga/5).toFixed(1)}</span></div>
-              <div class="s-row"><span>赛季场均进球</span><span style="font-weight:700;">${an.away_avg_scored||'-'}</span></div>
-              <div class="s-row"><span>赛季场均失球</span><span style="font-weight:700;">${an.away_avg_conceded||'-'}</span></div>
-            </div>
-          </td>
-        </tr>
-      </table>
+      ${buildRadarSvg(hS, aS, an)}
 
       <!-- Analysis -->
       <div class="exp-section-title">💡 关键分析</div>
