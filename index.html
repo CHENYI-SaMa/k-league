@@ -398,6 +398,23 @@
   }
   .stat-card .sc-row .sc-val { font-weight: 700; color: var(--text); }
 
+  /* Collapsible Sections (Form, Stats, Analysis, H2H) */
+  .collapsible-section {
+    max-height: 3000px;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease, margin 0.3s ease, opacity 0.2s ease, border-width 0.3s ease;
+    opacity: 1;
+  }
+  .collapsible-section.collapsed {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-width: 0;
+    opacity: 0;
+  }
+
   /* Analysis Block */
   .analysis-block {
     margin: 0 14px 12px;
@@ -410,19 +427,6 @@
     line-height: 1.7;
     border: 1px solid #fff3cd;
     border-left: 3px solid var(--yellow);
-    max-height: 3000px;
-    overflow: hidden;
-    transition: max-height 0.3s ease, padding 0.3s ease, margin 0.3s ease, opacity 0.2s ease;
-    opacity: 1;
-  }
-  .analysis-block.collapsed {
-    max-height: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    border-width: 0;
-    opacity: 0;
   }
   .sec-title.clickable {
     cursor: pointer;
@@ -1362,16 +1366,18 @@ function refreshAnalysis(id) {
   expandAnalysis(id);
 }
 
-function toggleAnalysis(id) {
-  const block = document.getElementById('anBlock_' + id);
+function toggleSection(id, type) {
+  const block = document.getElementById(type + 'Block_' + id);
   if (!block) return;
   const willCollapse = !block.classList.contains('collapsed');
   block.classList.toggle('collapsed', willCollapse);
-  const arrow = document.getElementById('anArrow_' + id);
+  const arrow = document.getElementById(type + 'Arrow_' + id);
   if (arrow) arrow.classList.toggle('collapsed', willCollapse);
-  const hint = document.getElementById('anHint_' + id);
+  const hint = document.getElementById(type + 'Hint_' + id);
   if (hint) hint.textContent = willCollapse ? '点击展开' : '点击收起';
 }
+
+function toggleAnalysis(id) { toggleSection(id, 'an'); }
 
 function expandAnalysis(id) {
   const block = document.getElementById('anBlock_' + id);
@@ -1803,8 +1809,8 @@ function render() {
   </div>
 
   <!-- Recent Form -->
-  <div class="sec-title"><span class="dot"></span>球队近况（近5场）</div>
-  <div class="form-grid">
+  <div class="sec-title clickable" onclick="toggleSection('${id}','form')"><span class="dot"></span><span class="label-text">球队近况（近5场）</span><span class="analysis-hint" id="formHint_${id}">点击展开</span><span class="toggle-arrow collapsed" id="formArrow_${id}">▼</span></div>
+  <div class="form-grid collapsible-section collapsed" id="formBlock_${id}">
     <div class="form-col">
       <div class="form-team-name">🏠 ${m.home_team}<span class="form-strand">${formStrandHtml(hS.f)}</span></div>
       <table class="mt">
@@ -1828,8 +1834,8 @@ function render() {
   </div>
 
   <!-- Stats -->
-  <div class="sec-title"><span class="dot"></span>近5场攻防数据</div>
-  <div class="stats-duo">
+  <div class="sec-title clickable" onclick="toggleSection('${id}','stats')"><span class="dot"></span><span class="label-text">近5场攻防数据</span><span class="analysis-hint" id="statsHint_${id}">点击展开</span><span class="toggle-arrow collapsed" id="statsArrow_${id}">▼</span></div>
+  <div class="stats-duo collapsible-section collapsed" id="statsBlock_${id}">
     <div class="stat-card">
       <div class="sc-team">🏠 ${m.home_team}</div>
       <div class="sc-row"><span>进球 / 失球</span><span class="sc-val">${hS.gf} / ${hS.ga}</span></div>
@@ -1849,12 +1855,12 @@ function render() {
   </div>
 
   <!-- Key Analysis -->
-  <div class="sec-title clickable" onclick="toggleAnalysis('${id}')"><span class="dot"></span><span class="label-text">关键分析</span><span class="analysis-mode-tag" id="anTag_${id}">「${ANALYSIS_MODES[anMode]}」</span><span class="analysis-hint" id="anHint_${id}">点击展开</span><button class="btn-refresh-an" onclick="event.stopPropagation(); refreshAnalysis('${id}')">🔄 换一种</button><span class="toggle-arrow" id="anArrow_${id}">▼</span></div>
-  <div class="analysis-block collapsed" id="anBlock_${id}">${txt}</div>
+  <div class="sec-title clickable" onclick="toggleSection('${id}','an')"><span class="dot"></span><span class="label-text">关键分析</span><span class="analysis-mode-tag" id="anTag_${id}">「${ANALYSIS_MODES[anMode]}」</span><span class="analysis-hint" id="anHint_${id}">点击展开</span><button class="btn-refresh-an" onclick="event.stopPropagation(); refreshAnalysis('${id}')">🔄 换一种</button><span class="toggle-arrow collapsed" id="anArrow_${id}">▼</span></div>
+  <div class="analysis-block collapsible-section collapsed" id="anBlock_${id}">${txt}</div>
 
   <!-- H2H -->
-  <div class="sec-title"><span class="dot"></span>交锋记录（近6次）</div>
-  <div class="h2h-wrap">
+  <div class="sec-title clickable" onclick="toggleSection('${id}','h2h')"><span class="dot"></span><span class="label-text">交锋记录（近6次）</span><span class="analysis-hint" id="h2hHint_${id}">点击展开</span><span class="toggle-arrow collapsed" id="h2hArrow_${id}">▼</span></div>
+  <div class="h2h-wrap collapsible-section collapsed" id="h2hBlock_${id}">
     ${h2h?`<div class="h2h-summ">${m.home_team} ${h2h.w}胜${h2h.d}平${h2h.l}负，进${h2h.gf}球失${h2h.ga}球</div>`:''}
     <table class="ht">
       <tr><th>日期</th><th>主队</th><th>比分</th><th>客队</th><th>赛果</th></tr>
