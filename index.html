@@ -88,6 +88,10 @@
     transition: all 0.2s;
   }
   .btn-refresh:active { background: rgba(255,255,255,0.25); }
+  .btn-toggle-on {
+    background: rgba(255,193,7,0.35) !important;
+    border-color: rgba(255,193,7,0.6) !important;
+  }
 
   /* ===== League Tabs ===== */
   .league-bar {
@@ -1131,7 +1135,8 @@
   </div>
   <div class="header-meta">
     <span id="updateLabel">数据加载中…</span>
-    <div style="display:flex;gap:6px;">
+    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+      <button class="btn-refresh btn-toggle-on" id="btnHideFinished" onclick="toggleHideFinished()">🙈 已完赛</button>
       <button class="btn-refresh" onclick="openImportModal()">📥 导入预测</button>
       <button class="btn-refresh" onclick="location.reload()">🔄 刷新数据</button>
     </div>
@@ -1231,6 +1236,7 @@
 let allData = [];
 let currentLeague = '全部';
 let currentDate = '全部';
+let hideFinished = true;
 const STORAGE_KEY = 'k_league_preds_v2';
 let exportImageDataUrl = null;
 let currentExportId = null;
@@ -1630,6 +1636,28 @@ function teamLogoSpan(m, side) {
   return url ? `<img class="team-logo" src="${url}" alt="" onerror="this.style.display='none'">` : '';
 }
 
+// ===== Match Finished Check =====
+function isMatchFinished(m) {
+  if (!m.match_date || !m.match_time) return false;
+  const start = new Date(m.match_date + 'T' + m.match_time + ':00');
+  if (isNaN(start.getTime())) return false;
+  // 足球比赛约 2 小时（90分钟 + 中场 + 补时）
+  const endTime = start.getTime() + 2 * 60 * 60 * 1000;
+  return Date.now() > endTime;
+}
+
+function toggleHideFinished() {
+  hideFinished = !hideFinished;
+  const btn = document.getElementById('btnHideFinished');
+  if (btn) {
+    btn.textContent = hideFinished ? '🙈 已完赛' : '👁 已完赛';
+    btn.classList.toggle('btn-toggle-on', hideFinished);
+  }
+  renderTabs();
+  renderDateTabs();
+  render();
+}
+
 // ===== Render Tabs =====
 function renderTabs() {
   const bar = document.getElementById('leagueBar');
@@ -1638,7 +1666,8 @@ function renderTabs() {
     const cnt = allData.filter(m => {
       const leagueOk = l === '全部' || (m.league || '其他') === l;
       const dateOk = currentDate === '全部' || m.match_date === currentDate;
-      return leagueOk && dateOk;
+      const finishedOk = !hideFinished || !isMatchFinished(m);
+      return leagueOk && dateOk && finishedOk;
     }).length;
     return `<button class="league-tab ${l===currentLeague?'active':''}" onclick="switchLeague('${l}')">${l}<span class="count">${cnt}</span></button>`;
   }).join('');
@@ -1673,7 +1702,8 @@ function renderDateTabs() {
     const cnt = allData.filter(m => {
       const leagueOk = currentLeague === '全部' || (m.league || '其他') === currentLeague;
       const dateOk = t.key === '全部' || m.match_date === t.key;
-      return leagueOk && dateOk;
+      const finishedOk = !hideFinished || !isMatchFinished(m);
+      return leagueOk && dateOk && finishedOk;
     }).length;
     const safeLabel = t.label.replace(/'/g, "\\'");
     return `<button class="date-tab ${t.key === currentDate ? 'active' : ''}" onclick="switchDate('${t.key}', '${safeLabel}')">${t.label}<span class="count">${cnt}</span></button>`;
@@ -1702,11 +1732,20 @@ function render() {
   const filtered = allData.filter(m => {
     const leagueOk = currentLeague === '全部' || (m.league || '其他') === currentLeague;
     const dateOk = currentDate === '全部' || m.match_date === currentDate;
-    return leagueOk && dateOk;
+    const finishedOk = !hideFinished || !isMatchFinished(m);
+    return leagueOk && dateOk && finishedOk;
   });
 
   if (!filtered.length) {
-    app.innerHTML = '<div class="empty-box"><span class="icon">📅</span><p>该日期暂无比赛</p><p style="font-size:0.75rem;color:#aaa">试试切换其他日期或联赛</p></div>';
+    const finishedCount = allData.filter(m => {
+      const leagueOk = currentLeague === '全部' || (m.league || '其他') === currentLeague;
+      const dateOk = currentDate === '全部' || m.match_date === currentDate;
+      return leagueOk && dateOk && isMatchFinished(m);
+    }).length;
+    const hint = (hideFinished && finishedCount > 0)
+      ? `已隐藏 ${finishedCount} 场已完赛比赛，点击上方「🙈 已完赛」可显示`
+      : '试试切换其他日期或联赛';
+    app.innerHTML = `<div class="empty-box"><span class="icon">📅</span><p>当前筛选暂无比赛</p><p style="font-size:0.75rem;color:#aaa">${hint}</p></div>`;
     return;
   }
 
