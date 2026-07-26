@@ -919,7 +919,7 @@
     width: 100%;
     background: linear-gradient(180deg, #f5f7fa 0%, #ffffff 30%);
     color: #1a1a1a;
-    font-size: 13px;
+    font-size: 16px;
     line-height: 1.6;
     border-radius: 12px;
     overflow: hidden;
@@ -961,21 +961,21 @@
     display: inline-block;
     background: #c0392b;
     color: #fff;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 800;
     padding: 4px 16px;
     border-radius: 4px;
     letter-spacing: 1px;
   }
   .exp-header .exp-league {
-    font-size: 11px;
+    font-size: 14px;
     color: #90a4ce;
     margin-top: 6px;
     letter-spacing: 2px;
     text-transform: uppercase;
   }
   .exp-header .exp-matchup {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 800;
     color: #fff;
     margin-top: 8px;
@@ -984,9 +984,9 @@
     align-items: center;
     gap: 14px;
   }
-  .exp-header .exp-matchup .spacer { font-size: 12px; color: #90a4ce; }
+  .exp-header .exp-matchup .spacer { font-size: 14px; color: #90a4ce; }
   .exp-header .exp-time {
-    font-size: 12px;
+    font-size: 14px;
     color: #ff9a9a;
     margin-top: 4px;
     font-weight: 600;
@@ -1000,7 +1000,7 @@
     width: calc(100% - 32px);
   }
   .exp-section-title {
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 700;
     margin: 16px 0 10px;
     padding-left: 10px;
@@ -1011,14 +1011,14 @@
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 10px;
-    font-size: 12px;
+    font-size: 14px;
   }
   .exp-form-table th {
     background: rgba(255,255,255,0.92);
     padding: 6px 8px;
     text-align: center;
     font-weight: 600;
-    font-size: 11px;
+    font-size: 12px;
     color: #888;
     border-bottom: 2px solid #e0e0e0;
   }
@@ -1039,7 +1039,7 @@
     display: flex;
     justify-content: space-between;
     padding: 2px 0;
-    font-size: 12px;
+    font-size: 14px;
   }
   .exp-analysis {
     background: #fffdf5;
@@ -1047,7 +1047,7 @@
     border-radius: 4px;
     border: 1px solid #fff3cd;
     border-left: 3px solid #f39c12;
-    font-size: 12px;
+    font-size: 14px;
     color: #555;
     line-height: 1.8;
   }
@@ -1063,7 +1063,7 @@
     margin-bottom: 14px;
   }
   .exp-pred-stamp .stamp-title {
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 800;
     color: #1a1a2e;
     margin-bottom: 6px;
@@ -1079,13 +1079,13 @@
     text-align: center;
   }
   .exp-pred-stamp .stamp-lbl {
-    font-size: 13px;
+    font-size: 15px;
     color: #2980b9;
     font-weight: 700;
     letter-spacing: 1px;
   }
   .exp-pred-stamp .stamp-val {
-    font-size: 17px;
+    font-size: 20px;
     font-weight: 800;
     color: #1a1a2e;
   }
@@ -2006,11 +2006,11 @@ function buildExportHtml(m, pred, an, hS, aS, h2h, txt, mode) {
         <div class="exp-num">${m.match_num}</div>
         <div class="exp-league">${m.league||''} · ${m.match_date||''} ${m.match_time||''}</div>
         <div class="exp-matchup">
-          ${teamLogoSpan(m,'home')?`<img src="${teamLogoUrl(m.home_team_id)}" style="width:32px;height:32px;object-fit:contain;vertical-align:middle;" onerror="this.style.display='none'">`:''}
+          ${teamLogoSpan(m,'home')?`<img src="${teamLogoUrl(m.home_team_id)}" style="width:40px;height:40px;object-fit:contain;vertical-align:middle;" onerror="this.style.display='none'">`:''}
           <span>${m.home_team} <small style="color:#999;font-weight:400;">[${m.home_rank}]</small></span>
           <span class="spacer">VS</span>
           <span><small style="color:#999;font-weight:400;">[${m.away_rank}]</small> ${m.away_team}</span>
-          ${teamLogoSpan(m,'away')?`<img src="${teamLogoUrl(m.away_team_id)}" style="width:32px;height:32px;object-fit:contain;vertical-align:middle;" onerror="this.style.display='none'">`:''}
+          ${teamLogoSpan(m,'away')?`<img src="${teamLogoUrl(m.away_team_id)}" style="width:40px;height:40px;object-fit:contain;vertical-align:middle;" onerror="this.style.display='none'">`:''}
         </div>
         <div class="exp-time"></div>
       </div>`;
@@ -2033,12 +2033,12 @@ function buildExportHtml(m, pred, an, hS, aS, h2h, txt, mode) {
             <div class="stamp-val">${scoresLabel}</div>
           </div>
         </div>
-        ${noteLabel?`<div style="text-align:center;width:100%;margin-top:6px;"><div class="stamp-lbl">分析</div><div style="font-size:13px;color:#555;margin-top:2px;">${noteLabel}</div></div>`:''}
+        ${noteLabel?`<div style="text-align:center;width:100%;margin-top:6px;"><div class="stamp-lbl">分析</div><div style="font-size:15px;color:#555;margin-top:2px;">${noteLabel}</div></div>`:''}
       </div>`;
 
   // ===== Pred-only mode: Header + Prediction stamp + footer =====
   if (mode === 'pred') {
-    return `<div class="exp-block">${header}${predStamp}<div style="padding:16px;text-align:center;font-size:11px;color:#aaa;border-top:1px solid #eee;">数据来源：500彩票网 · 仅供参考</div></div>`;
+    return `<div class="exp-block">${header}${predStamp}<div style="padding:16px;text-align:center;font-size:13px;color:#aaa;border-top:1px solid #eee;">数据来源：500彩票网 · 仅供参考</div></div>`;
   }
 
   // ===== Full mode =====
@@ -2052,7 +2052,7 @@ function buildExportHtml(m, pred, an, hS, aS, h2h, txt, mode) {
       <table style="width:100%;border-collapse:collapse;margin-bottom:10px;">
         <tr>
           <td style="width:50%;vertical-align:top;padding-right:10px;">
-            <div style="font-weight:700;font-size:13px;margin-bottom:6px;">🏠 ${m.home_team}</div>
+            <div style="font-weight:700;font-size:15px;margin-bottom:6px;">🏠 ${m.home_team}</div>
             <table class="exp-form-table">
               <tr><th>日期</th><th>对手</th><th>比分</th><th>赛果</th></tr>
               ${(an.home_recent_5_matches||[]).map(r=>{
@@ -2063,7 +2063,7 @@ function buildExportHtml(m, pred, an, hS, aS, h2h, txt, mode) {
             </table>
           </td>
           <td style="width:50%;vertical-align:top;padding-left:10px;">
-            <div style="font-weight:700;font-size:13px;margin-bottom:6px;">🛫 ${m.away_team}</div>
+            <div style="font-weight:700;font-size:15px;margin-bottom:6px;">🛫 ${m.away_team}</div>
             <table class="exp-form-table">
               <tr><th>日期</th><th>对手</th><th>比分</th><th>赛果</th></tr>
               ${(an.away_recent_5_matches||[]).map(r=>{
@@ -2082,7 +2082,7 @@ function buildExportHtml(m, pred, an, hS, aS, h2h, txt, mode) {
         <tr>
           <td style="width:50%;padding-right:10px;vertical-align:top;">
             <div class="exp-stat-box">
-              <div style="font-weight:700;font-size:13px;margin-bottom:6px;">🏠 ${m.home_team}</div>
+              <div style="font-weight:700;font-size:15px;margin-bottom:6px;">🏠 ${m.home_team}</div>
               <div class="s-row"><span>进球 / 失球</span><span style="font-weight:700;">${hS.gf} / ${hS.ga}</span></div>
               <div class="s-row"><span>场均进球</span><span style="font-weight:700;">${(hS.gf/5).toFixed(1)}</span></div>
               <div class="s-row"><span>场均失球</span><span style="font-weight:700;">${(hS.ga/5).toFixed(1)}</span></div>
@@ -2092,7 +2092,7 @@ function buildExportHtml(m, pred, an, hS, aS, h2h, txt, mode) {
           </td>
           <td style="width:50%;padding-left:10px;vertical-align:top;">
             <div class="exp-stat-box">
-              <div style="font-weight:700;font-size:13px;margin-bottom:6px;">🛫 ${m.away_team}</div>
+              <div style="font-weight:700;font-size:15px;margin-bottom:6px;">🛫 ${m.away_team}</div>
               <div class="s-row"><span>进球 / 失球</span><span style="font-weight:700;">${aS.gf} / ${aS.ga}</span></div>
               <div class="s-row"><span>场均进球</span><span style="font-weight:700;">${(aS.gf/5).toFixed(1)}</span></div>
               <div class="s-row"><span>场均失球</span><span style="font-weight:700;">${(aS.ga/5).toFixed(1)}</span></div>
@@ -2109,7 +2109,7 @@ function buildExportHtml(m, pred, an, hS, aS, h2h, txt, mode) {
 
       <!-- H2H -->
       <div class="exp-section-title">⚔️ 交锋记录（近6次）</div>
-      ${h2h?`<div style="font-size:12px;color:#666;margin-bottom:8px;background:#f8f9fb;padding:6px 10px;border-radius:4px;">${m.home_team} ${h2h.w}胜${h2h.d}平${h2h.l}负，进${h2h.gf}球失${h2h.ga}球</div>`:''}
+      ${h2h?`<div style="font-size:14px;color:#666;margin-bottom:8px;background:#f8f9fb;padding:6px 10px;border-radius:4px;">${m.home_team} ${h2h.w}胜${h2h.d}平${h2h.l}负，进${h2h.gf}球失${h2h.ga}球</div>`:''}
       <table class="exp-form-table">
         <tr><th>日期</th><th>主队</th><th>比分</th><th>客队</th><th>赛果</th></tr>
         ${(an.h2h_matches||[]).map(r=>{
