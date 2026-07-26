@@ -1205,6 +1205,68 @@
     transition: all 0.15s;
   }
   .zoom-reset:hover { color: #fff; background: rgba(255,255,255,0.1); }
+
+  /* ===== Batch Select ===== */
+  .batch-check {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    font-size: 0.7rem;
+    color: transparent;
+    line-height: 1;
+  }
+  .batch-check.checked {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: #fff;
+  }
+  .batch-check:active { transform: scale(0.85); }
+
+  .batch-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #fff;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    z-index: 200;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+    transform: translateY(100%);
+    transition: transform 0.25s ease;
+  }
+  .batch-bar.show { transform: translateY(0); }
+  .batch-bar .batch-info {
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .batch-bar .batch-info b { color: #ffd54f; font-size: 1.1rem; }
+  .batch-bar .batch-actions {
+    display: flex;
+    gap: 8px;
+  }
+  .batch-bar button {
+    border: none;
+    border-radius: 8px;
+    padding: 9px 16px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.1s;
+  }
+  .batch-bar button:active { transform: scale(0.96); }
+  .btn-batch-clear { background: rgba(255,255,255,0.15); color: #fff; }
+  .btn-batch-export { background: #27ae60; color: #fff; }
+  .btn-batch-export:disabled { background: #555; opacity: 0.5; cursor: not-allowed; }
 </style>
 </head>
 <body>
@@ -1241,6 +1303,16 @@
 <div class="content" id="app"></div>
 
 <div class="footer">数据来源：500彩票网 · 预测内容保存在浏览器本地 · 仅供参考</div>
+
+<!-- Batch Export Bar -->
+<div class="batch-bar" id="batchBar">
+  <div class="batch-info">已选 <b id="batchCount">0</b> 场比赛</div>
+  <div class="batch-actions">
+    <button class="btn-batch-clear" onclick="selectAllVisible()">全选可见</button>
+    <button class="btn-batch-clear" onclick="clearBatchSelection()">取消选择</button>
+    <button class="btn-batch-export" id="btnBatchExport" onclick="batchExportPred()" disabled>📦 批量导出预测</button>
+  </div>
+</div>
 
 <!-- Export Preview Overlay -->
 <div class="export-overlay" id="exportOverlay">
@@ -1330,6 +1402,7 @@ const ZOOM_KEY = 'k_league_zoom';
 let exportImageDataUrl = null;
 let currentExportId = null;
 let currentExportMode = 'full';
+const selectedMatches = new Set();
 
 // ===== Font Zoom =====
 function getZoom() {
@@ -1896,6 +1969,7 @@ function render() {
       html += `<div class="match-card" data-id="${id}">
   <!-- Header -->
   <div class="card-hd">
+    <div class="batch-check ${selectedMatches.has(id)?'checked':''}" onclick="toggleSelectMatch('${id}')" title="选择批量导出">${selectedMatches.has(id)?'✓':''}</div>
     <div class="match-no">${m.match_num}</div>
     <div class="match-info">
       <div class="match-league">${m.league||''}</div>
@@ -2336,6 +2410,153 @@ function closeExport() {
   exportImageDataUrl = null;
   currentExportId = null;
   currentExportMode = 'full';
+}
+
+// ===== Batch Multi-Match Export =====
+function toggleSelectMatch(id) {
+  if (selectedMatches.has(id)) selectedMatches.delete(id);
+  else selectedMatches.add(id);
+  // Update the checkbox visuals without full re-render
+  document.querySelectorAll('.match-card').forEach(card => {
+    const cid = card.getAttribute('data-id');
+    const chk = card.querySelector('.batch-check');
+    if (chk) {
+      const on = selectedMatches.has(cid);
+      chk.classList.toggle('checked', on);
+      chk.textContent = on ? '✓' : '';
+    }
+  });
+  updateBatchBar();
+}
+
+function clearBatchSelection() {
+  selectedMatches.clear();
+  document.querySelectorAll('.batch-check').forEach(chk => {
+    chk.classList.remove('checked');
+    chk.textContent = '';
+  });
+  updateBatchBar();
+}
+
+function selectAllVisible() {
+  const visible = allData.filter(m => {
+    const leagueOk = currentLeague === '全部' || (m.league || '其他') === currentLeague;
+    const dateOk = currentDate === '全部' || getMatchWeek(m) === currentDate;
+    const finishedOk = !hideFinished || !isMatchFinished(m);
+    return leagueOk && dateOk && finishedOk;
+  });
+  for (const m of visible) selectedMatches.add(m.fixture_id);
+  document.querySelectorAll('.match-card').forEach(card => {
+    const cid = card.getAttribute('data-id');
+    const chk = card.querySelector('.batch-check');
+    if (chk) {
+      const on = selectedMatches.has(cid);
+      chk.classList.toggle('checked', on);
+      chk.textContent = on ? '✓' : '';
+    }
+  });
+  updateBatchBar();
+}
+
+function updateBatchBar() {
+  const n = selectedMatches.size;
+  const bar = document.getElementById('batchBar');
+  bar.classList.toggle('show', n > 0);
+  document.getElementById('batchCount').textContent = n;
+  document.getElementById('btnBatchExport').disabled = n === 0;
+}
+
+function buildBatchPredHtml(matchIds) {
+  let blocks = '';
+  for (const id of matchIds) {
+    const m = allData.find(x => x.fixture_id === id);
+    if (!m) continue;
+    const pred = getPred(id);
+    const resultLabel = pred.result==='home'?'主胜':pred.result==='draw'?'平局':pred.result==='away'?'客胜':'未选';
+    const goalsLabel = pred.goals || '—';
+    const scoresLabel = (pred.scores||[]).filter(Boolean).join(' / ') || '—';
+    const noteLabel = pred.note || '';
+    const resColor = resultLabel==='主胜'?'#c0392b':resultLabel==='客胜'?'#27ae60':resultLabel==='平局'?'#f39c12':'#999';
+
+    blocks += `
+      <div style="background:#fff;border-radius:10px;margin-bottom:12px;overflow:hidden;border:1px solid #e8eaed;">
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:#fafbfc;border-bottom:1px solid #f0f0f0;">
+          <div style="background:#c0392b;color:#fff;font-size:14px;font-weight:800;padding:4px 10px;border-radius:5px;letter-spacing:1px;">${m.match_num}</div>
+          <div style="flex:1;">
+            <div style="font-size:12px;color:#999;">${m.league||''} · ${m.match_date||''} ${m.match_time||''}</div>
+            <div style="font-weight:700;font-size:17px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px;">
+              <span>${m.home_team} <small style="color:#999;font-weight:400;">[${m.home_rank}]</small></span>
+              <span style="color:#ccc;font-size:13px;">VS</span>
+              <span><small style="color:#999;font-weight:400;">[${m.away_rank}]</small> ${m.away_team}</span>
+            </div>
+          </div>
+        </div>
+        <div style="background:#f0f7ff;padding:14px 16px;">
+          <div style="display:flex;align-items:center;justify-content:space-around;gap:8px;">
+            <div style="text-align:center;">
+              <div style="font-size:12px;color:#888;margin-bottom:3px;">胜平负</div>
+              <div style="font-size:22px;font-weight:800;color:${resColor};">${resultLabel}</div>
+            </div>
+            <div style="width:1px;height:36px;background:#cce0f5;"></div>
+            <div style="text-align:center;">
+              <div style="font-size:12px;color:#888;margin-bottom:3px;">进球数</div>
+              <div style="font-size:18px;font-weight:700;">${goalsLabel}</div>
+            </div>
+            <div style="width:1px;height:36px;background:#cce0f5;"></div>
+            <div style="text-align:center;">
+              <div style="font-size:12px;color:#888;margin-bottom:3px;">比分参考</div>
+              <div style="font-size:18px;font-weight:700;">${scoresLabel}</div>
+            </div>
+          </div>
+          ${noteLabel?`<div style="margin-top:10px;padding-top:8px;border-top:1px dashed #cce0f5;text-align:center;"><span style="font-size:12px;color:#888;">分析：</span><span style="font-size:15px;color:#555;">${noteLabel}</span></div>`:''}
+        </div>
+      </div>`;
+  }
+  return `<div class="exp-block"><div style="padding:16px;">
+    <div style="text-align:center;margin-bottom:14px;">
+      <div style="font-size:20px;font-weight:800;color:#1a1a2e;">📊 今日比赛预测汇总</div>
+      <div style="font-size:12px;color:#999;margin-top:4px;">共 ${matchIds.length} 场 · ${new Date().toLocaleDateString('zh-CN')}</div>
+    </div>
+    ${blocks}
+    <div style="text-align:center;font-size:12px;color:#aaa;padding-top:8px;">数据来源：500彩票网 · 仅供参考</div>
+  </div></div>`;
+}
+
+async function batchExportPred() {
+  if (selectedMatches.size === 0) return;
+  const ids = Array.from(selectedMatches);
+
+  // Build combined HTML
+  const combinedHtml = buildBatchPredHtml(ids);
+
+  // Update tab states (hide tabs for batch, force pred mode)
+  document.getElementById('tabFull').classList.remove('active');
+  document.getElementById('tabPred').classList.add('active');
+  currentExportMode = 'pred';
+  currentExportId = null; // batch mode
+
+  // Show in overlay
+  const card = document.getElementById('exportCard');
+  card.innerHTML = combinedHtml;
+  document.getElementById('exportOverlay').classList.add('show');
+  updateBgButtons();
+  applyBgToExport();
+
+  // Auto-generate image
+  showToast('正在生成批量预测图片...');
+  try {
+    const canvas = await html2canvas(card, {
+      scale: 3,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      logging: false,
+    });
+    exportImageDataUrl = canvas.toDataURL('image/png');
+    showToast('✅ 图片已生成！点击下方按钮下载');
+  } catch(e) {
+    showToast('⚠️ 图片生成失败，请重试');
+    console.error(e);
+  }
 }
 
 // ===== Smart Import =====
