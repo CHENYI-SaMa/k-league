@@ -1010,20 +1010,21 @@
   .radar-wrap {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 10px;
+    justify-content: center;
+    gap: 0;
     margin: 10px 0 14px;
+    padding: 0 8px;
   }
   .radar-side {
-    width: 115px;
-    flex: 0 0 115px;
-    font-size: 12px;
-    line-height: 1.5;
+    width: 100px;
+    flex: 0 0 100px;
+    font-size: 11px;
+    line-height: 1.4;
     color: #333;
   }
   .radar-side-title {
     font-weight: 700;
-    font-size: 13px;
+    font-size: 12px;
     margin-bottom: 6px;
     text-align: center;
     padding: 3px 0;
@@ -1042,7 +1043,7 @@
   .radar-row-val { font-weight: 700; }
   .radar-side-home .radar-row-val { color: #c0392b; }
   .radar-side-away .radar-row-val { color: #27ae60; }
-  .radar-center { flex: 1 1 auto; min-width: 0; }
+  .radar-center { flex: 1 1 auto; min-width: 0; max-width: 260px; }
   .radar-center svg { width: 100%; display: block; }
   .exp-form-table {
     width: 100%;
@@ -2043,7 +2044,7 @@ function buildRadarSvg(hS, aS, an, homeTeam, awayTeam) {
   ];
   const lbls = ['进球','场均进球','失球','场均失球','赛季场均\n进球','赛季场均\n失球'];
   const maxV = hR.map((v,i)=>Math.max(v,aR[i],0.1));
-  const cx=220,cy=210,r=140;
+  const cx=170,cy=165,r=105;
   const ang=[-Math.PI/2,-Math.PI/6,Math.PI/6,Math.PI/2,5*Math.PI/6,-5*Math.PI/6];
 
   const pts=(d)=>d.map((v,i)=>{const f=v/maxV[i];return (cx+r*f*Math.cos(ang[i])).toFixed(1)+','+(cy+r*f*Math.sin(ang[i])).toFixed(1);}).join(' ');
@@ -2051,7 +2052,7 @@ function buildRadarSvg(hS, aS, an, homeTeam, awayTeam) {
 
   const hPoints=pts(hR), aPoints=pts(aR);
 
-  let svg='<svg viewBox="0 0 440 420" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:460px;display:block;margin:12px auto;">';
+  let svg='<svg viewBox="0 0 340 330" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">';
   // Grid
   [0.25,0.5,0.75,1].forEach(l=>svg+=`<polygon points="${grid(l)}" fill="none" stroke="${l===1?'#c0c0c0':'#e8e8e8'}" stroke-width="${l===1?1.2:0.6}"/>`);
   // Axes
@@ -2083,7 +2084,7 @@ function buildRadarSvg(hS, aS, an, homeTeam, awayTeam) {
   });
   // Labels
   lbls.forEach((lbl,i)=>{
-    const lx=cx+(r+28)*Math.cos(ang[i]), ly=cy+(r+28)*Math.sin(ang[i]);
+    const lx=cx+(r+22)*Math.cos(ang[i]), ly=cy+(r+22)*Math.sin(ang[i]);
     const lines=lbl.split('\n');
     if(lines.length===1){
       svg+=`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="700" fill="#333">${lines[0]}</text>`;
@@ -2093,8 +2094,8 @@ function buildRadarSvg(hS, aS, an, homeTeam, awayTeam) {
     }
   });
   // Legend
-  svg+=`<rect x="70" y="400" width="10" height="10" fill="#c0392b" rx="2"/><text x="86" y="410" font-size="11" fill="#555" dominant-baseline="middle">主队</text>`;
-  svg+=`<rect x="130" y="400" width="10" height="10" fill="#27ae60" rx="2"/><text x="146" y="410" font-size="11" fill="#555" dominant-baseline="middle">客队</text>`;
+  svg+=`<rect x="60" y="315" width="10" height="10" fill="#c0392b" rx="2"/><text x="76" y="325" font-size="10" fill="#555" dominant-baseline="middle">主队</text>`;
+  svg+=`<rect x="120" y="315" width="10" height="10" fill="#27ae60" rx="2"/><text x="136" y="325" font-size="10" fill="#555" dominant-baseline="middle">客队</text>`;
   svg+=`</svg>`;
 
   // Side stats panels
@@ -2133,7 +2134,7 @@ function buildExportHtml(m, pred, an, hS, aS, h2h, txt, mode) {
   // Shared prediction stamp
   const predStamp = `
       <div class="exp-pred-stamp">
-        <div class="stamp-title">📊 今日比赛预测结果</div>
+        <div class="stamp-title">📊 今日比赛</div>
         <div class="stamp-row">
           <div class="stamp-item">
             <div class="stamp-val" style="color:${resColor};">${resultLabel}</div>
