@@ -88,10 +88,6 @@
     transition: all 0.2s;
   }
   .btn-refresh:active { background: rgba(255,255,255,0.25); }
-  .btn-toggle-on {
-    background: rgba(255,193,7,0.35) !important;
-    border-color: rgba(255,193,7,0.6) !important;
-  }
 
   /* ===== League Tabs ===== */
   .league-bar {
@@ -101,28 +97,14 @@
     background: #fff;
     border-bottom: 1px solid var(--border-light);
     position: sticky;
-    top: 116px;
+    top: 84px;
     z-index: 99;
     overflow-x: auto;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
   .league-bar::-webkit-scrollbar { display: none; }
-  .date-bar {
-    display: flex;
-    gap: 6px;
-    padding: 10px 12px 6px;
-    background: #fff;
-    border-bottom: 1px solid var(--border-light);
-    position: sticky;
-    top: 84px;
-    z-index: 100;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-  .date-bar::-webkit-scrollbar { display: none; }
-  .date-tab {
+  .league-tab {
     flex: 0 0 auto;
     padding: 7px 16px;
     border-radius: 20px;
@@ -135,17 +117,6 @@
     white-space: nowrap;
     transition: all 0.2s;
   }
-  .date-tab.active {
-    background: var(--red);
-    color: #fff;
-    box-shadow: 0 2px 6px rgba(192,57,43,0.3);
-  }
-  .date-tab .count {
-    font-size: 0.6rem;
-    opacity: 0.9;
-    margin-left: 4px;
-  }
-  .date-tab:active { transform: scale(0.95); }
   .league-tab.active {
     background: var(--navy);
     color: #fff;
@@ -218,18 +189,6 @@
     font-size: 0.65rem;
     color: #ccc;
   }
-  .team-logo {
-    width: 26px;
-    height: 26px;
-    object-fit: contain;
-    vertical-align: middle;
-    flex-shrink: 0;
-  }
-  .team-name-wrap {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
   .match-time-badge {
     font-size: 0.72rem;
     color: var(--red);
@@ -282,30 +241,6 @@
     background: var(--red);
     border-radius: 2px;
     flex-shrink: 0;
-  }
-  .sec-title .label-text {
-    flex: 1;
-  }
-  .btn-refresh-an {
-    font-size: 0.65rem;
-    color: #2980b9;
-    background: #eaf2fb;
-    border: 1px solid #c8dcf0;
-    border-radius: 12px;
-    padding: 2px 8px;
-    cursor: pointer;
-    white-space: nowrap;
-    -webkit-tap-highlight-color: transparent;
-    transition: transform 0.15s;
-  }
-  .btn-refresh-an:active {
-    transform: scale(0.9);
-    background: #d4e6f7;
-  }
-  .analysis-mode-tag {
-    font-size: 0.6rem;
-    color: #999;
-    font-weight: 400;
   }
 
   /* Two-column Form */
@@ -402,23 +337,6 @@
   }
   .stat-card .sc-row .sc-val { font-weight: 700; color: var(--text); }
 
-  /* Collapsible Sections (Form, Stats, Analysis, H2H) */
-  .collapsible-section {
-    max-height: 3000px;
-    overflow: hidden;
-    transition: max-height 0.3s ease, padding 0.3s ease, margin 0.3s ease, opacity 0.2s ease, border-width 0.3s ease;
-    opacity: 1;
-  }
-  .collapsible-section.collapsed {
-    max-height: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    border-width: 0;
-    opacity: 0;
-  }
-
   /* Analysis Block */
   .analysis-block {
     margin: 0 14px 12px;
@@ -431,31 +349,6 @@
     line-height: 1.7;
     border: 1px solid #fff3cd;
     border-left: 3px solid var(--yellow);
-  }
-  .sec-title.clickable {
-    cursor: pointer;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .sec-title.clickable:active {
-    background: #f5f7fa;
-  }
-  .toggle-arrow {
-    display: inline-block;
-    font-size: 0.7rem;
-    color: #999;
-    margin-left: auto;
-    transition: transform 0.25s;
-    flex-shrink: 0;
-  }
-  .toggle-arrow.collapsed {
-    transform: rotate(-90deg);
-  }
-  .analysis-hint {
-    font-size: 0.62rem;
-    color: #bbb;
-    font-weight: 400;
-    margin-left: 4px;
   }
 
   /* H2H */
@@ -579,23 +472,6 @@
     font-size: 0.72rem;
     font-family: inherit;
   }
-  .btn-clear-pred {
-    width: 30px;
-    height: 30px;
-    margin-left: auto;
-    border: 1px solid #f0c8c8;
-    background: #fdf0ef;
-    color: #c0392b;
-    border-radius: 5px;
-    font-size: 0.72rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .btn-clear-pred:active { background: #f5dada; transform: scale(0.95); }
   .btn-export {
     display: flex;
     align-items: center;
@@ -698,376 +574,84 @@
     font-weight: 700;
     margin-left: 8px;
   }
-  .btn-bg-upload {
-    background: #e8edfb;
-    border: 1px solid #c8d6f0;
-    color: #1a1a2e;
-    padding: 6px 14px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-weight: 600;
-  }
-  .btn-bg-upload:active { background: #d0d9f5; }
-  .btn-bg-clear {
-    background: #fdf0ef;
-    border: 1px solid #f0c8c8;
-    color: #c0392b;
-    padding: 6px 14px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    font-weight: 600;
-  }
-  .btn-bg-clear:active { background: #f5dada; }
-
-  /* ===== Export Mode Tabs ===== */
-  .export-tabs {
-    display: flex;
-    gap: 4px;
-    background: #e8edfb;
-    border-radius: 6px;
-    padding: 3px;
-  }
-  .exp-tab {
-    padding: 6px 14px;
-    border: none;
-    background: transparent;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: #555;
-    transition: all 0.15s;
-    white-space: nowrap;
-  }
-  .exp-tab.active {
-    background: #1a1a2e;
-    color: #fff;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-  }
-  .exp-tab:active { transform: scale(0.96); }
-
-  /* ===== Import Modal ===== */
-  .import-overlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.7);
-    z-index: 10001;
-    justify-content: center;
-    align-items: center;
-    padding: 16px;
-  }
-  .import-overlay.show { display: flex; }
-  .import-panel {
-    background: #fff;
-    border-radius: 12px;
-    padding: 20px 16px;
-    width: 100%;
-    max-width: 480px;
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-  .import-title {
-    font-size: 1.1rem;
-    font-weight: 800;
-    color: #1a1a2e;
-    margin-bottom: 4px;
-  }
-  .import-subtitle {
-    font-size: 0.72rem;
-    color: #999;
-    margin-bottom: 14px;
-  }
-  .import-format-box {
-    background: #f8f9fb;
-    border: 1px solid #e8eaed;
-    border-radius: 8px;
-    padding: 10px 12px;
-    margin-bottom: 12px;
-    font-size: 0.72rem;
-    color: #555;
-    line-height: 1.7;
-  }
-  .import-format-box b { color: #1a1a2e; }
-  .import-format-box code {
-    display: block;
-    background: #fff;
-    padding: 4px 8px;
-    border-radius: 4px;
-    margin: 4px 0;
-    font-family: 'Courier New', monospace;
-    color: #2980b9;
-    font-size: 0.7rem;
-    white-space: pre-wrap;
-  }
-  #importText {
-    width: 100%;
-    min-height: 160px;
-    border: 1px solid #d0d4d8;
-    border-radius: 8px;
-    padding: 10px 12px;
-    font-size: 0.78rem;
-    font-family: 'Courier New', monospace;
-    line-height: 1.6;
-    resize: vertical;
-    margin-bottom: 14px;
-    color: #1a1a1a;
-  }
-  .import-buttons {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  .import-buttons button {
-    flex: 1;
-    min-width: 80px;
-    padding: 10px 8px;
-    border: none;
-    border-radius: 8px;
-    font-size: 0.82rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform 0.1s;
-  }
-  .import-buttons button:active { transform: scale(0.97); }
-  .btn-import-cancel { background: #eee; color: #555; }
-  .btn-import-copy { background: #e8edfb; color: #1a1a2e; border: 1px solid #c8d6f0; }
-  .btn-import-go { background: #27ae60; color: #fff; }
-
-  /* ===== Background Editor ===== */
-  .bg-editor-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
-    z-index: 10000;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
-  }
-  .bg-editor-overlay.show { display: flex; }
-  .bg-editor-panel {
-    background: #fff;
-    border-radius: 12px;
-    padding: 20px 16px;
-    width: 100%;
-    max-width: 420px;
-    text-align: center;
-  }
-  .bg-editor-title { font-size: 1.1rem; font-weight: 800; color: #1a1a2e; }
-  .bg-editor-subtitle { font-size: 0.75rem; color: #999; margin-top: 4px; margin-bottom: 14px; }
-  .bg-editor-preview-wrap {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 16px;
-  }
-  #bgEditorCanvas {
-    max-width: 100%;
-    max-height: 60vh;
-    border: 2px dashed #c8d6f0;
-    border-radius: 8px;
-    cursor: grab;
-    touch-action: none;
-    background: #f5f7fa;
-  }
-  #bgEditorCanvas:active { cursor: grabbing; }
-  .bg-editor-controls { margin-bottom: 16px; }
-  .bg-ctrl-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-  .bg-ctrl-lbl {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #333;
-    width: 56px;
-    text-align: right;
-    flex-shrink: 0;
-  }
-  .bg-ctrl-row input[type="range"] {
-    flex: 1;
-    accent-color: #2980b9;
-  }
-  .bg-ctrl-val {
-    font-size: 0.8rem;
-    color: #2980b9;
-    font-weight: 700;
-    width: 42px;
-    text-align: left;
-    flex-shrink: 0;
-  }
-  .bg-editor-buttons { display: flex; gap: 10px; justify-content: center; }
-  .btn-bg-cancel, .btn-bg-confirm {
-    padding: 10px 24px;
-    border-radius: 8px;
-    border: none;
-    font-size: 0.9rem;
-    font-weight: 700;
-    cursor: pointer;
-  }
-  .btn-bg-cancel { background: #eee; color: #555; }
-  .btn-bg-confirm { background: #27ae60; color: #fff; }
 
   /* ===== Export Template Image Styles ===== */
   .exp-block {
     width: 100%;
-    background: linear-gradient(180deg, #f5f7fa 0%, #ffffff 30%);
+    background: #fff;
     color: #1a1a1a;
-    font-size: 16px;
+    font-size: 13px;
     line-height: 1.6;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid #e8edfb;
-  }
-  .exp-block .exp-section-title,
-  .exp-block .stamp-title,
-  .exp-block .stamp-lbl,
-  .exp-block .stamp-val {
-    text-shadow: 0 1px 4px rgba(255,255,255,0.85), 0 0 2px rgba(255,255,255,0.6);
-  }
-  .exp-header,
-  .exp-header .exp-num,
-  .exp-header .exp-league,
-  .exp-header .exp-matchup,
-  .exp-header .exp-time {
-    text-shadow: none;
   }
   .exp-header {
     text-align: center;
-    padding: 22px 16px 16px;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    color: #fff;
-    margin-bottom: 0;
-    border-bottom: none;
-    position: relative;
-  }
-  .exp-header::after {
-    content: '';
-    display: block;
-    height: 3px;
-    background: linear-gradient(90deg, #c0392b 0%, #f39c12 50%, #27ae60 100%);
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    padding-bottom: 14px;
+    border-bottom: 2px solid #e0e0e0;
+    margin-bottom: 14px;
   }
   .exp-header .exp-num {
     display: inline-block;
     background: #c0392b;
     color: #fff;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 800;
     padding: 4px 16px;
     border-radius: 4px;
     letter-spacing: 1px;
   }
   .exp-header .exp-league {
-    font-size: 14px;
-    color: #90a4ce;
+    font-size: 11px;
+    color: #999;
     margin-top: 6px;
     letter-spacing: 2px;
     text-transform: uppercase;
   }
   .exp-header .exp-matchup {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 800;
-    color: #fff;
     margin-top: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 14px;
   }
-  .exp-header .exp-matchup .spacer { font-size: 14px; color: #90a4ce; }
+  .exp-header .exp-matchup .spacer { font-size: 12px; color: #ccc; }
   .exp-header .exp-time {
-    font-size: 14px;
-    color: #ff9a9a;
+    font-size: 12px;
+    color: #c0392b;
     margin-top: 4px;
     font-weight: 600;
   }
-  .exp-block > *:not(.exp-header):not(.exp-pred-stamp) {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-  .exp-pred-stamp {
-    margin: 14px 16px 0;
-    width: calc(100% - 32px);
-  }
   .exp-section-title {
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 700;
     margin: 16px 0 10px;
     padding-left: 10px;
     border-left: 3px solid #c0392b;
     color: #222;
   }
-  .radar-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    margin: 10px 0 14px;
-    padding: 0 8px;
-  }
-  .radar-side {
-    width: 100px;
-    flex: 0 0 100px;
-    font-size: 11px;
-    line-height: 1.4;
-    color: #333;
-  }
-  .radar-side-title {
-    font-weight: 700;
-    font-size: 12px;
-    margin-bottom: 6px;
-    text-align: center;
-    padding: 3px 0;
-    border-radius: 4px;
-  }
-  .radar-side-home .radar-side-title { background: #fdeaea; color: #c0392b; }
-  .radar-side-away .radar-side-title { background: #e6f7ed; color: #27ae60; }
-  .radar-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 4px 0;
-    border-bottom: 1px dashed #eee;
-  }
-  .radar-row:last-child { border-bottom: none; }
-  .radar-row-label { color: #666; }
-  .radar-row-val { font-weight: 700; }
-  .radar-side-home .radar-row-val { color: #c0392b; }
-  .radar-side-away .radar-row-val { color: #27ae60; }
-  .radar-center { flex: 1 1 auto; min-width: 0; max-width: 260px; }
-  .radar-center svg { width: 100%; display: block; }
   .exp-form-table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 10px;
-    font-size: 14px;
+    font-size: 12px;
   }
   .exp-form-table th {
-    background: rgba(255,255,255,0.92);
+    background: #f5f6f8;
     padding: 6px 8px;
     text-align: center;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 11px;
     color: #888;
     border-bottom: 2px solid #e0e0e0;
   }
   .exp-form-table td {
     padding: 5px 8px;
     text-align: center;
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-    background: rgba(255,255,255,0.88);
+    border-bottom: 1px solid #f0f0f0;
   }
   .exp-stat-box {
-    background: rgba(255,255,255,0.92);
+    background: #f8f9fb;
     padding: 10px 14px;
     border-radius: 6px;
     border: 1px solid #e8e8e8;
@@ -1077,7 +661,7 @@
     display: flex;
     justify-content: space-between;
     padding: 2px 0;
-    font-size: 14px;
+    font-size: 12px;
   }
   .exp-analysis {
     background: #fffdf5;
@@ -1085,45 +669,29 @@
     border-radius: 4px;
     border: 1px solid #fff3cd;
     border-left: 3px solid #f39c12;
-    font-size: 14px;
+    font-size: 12px;
     color: #555;
     line-height: 1.8;
   }
   .exp-pred-stamp {
-    padding: 16px 20px;
-    background: linear-gradient(135deg, #f0f4ff 0%, #e8edfb 100%);
+    margin-top: 16px;
+    padding: 12px 14px;
+    background: #f0f4ff;
     border-radius: 6px;
     border: 1px solid #c8d6f0;
     display: flex;
-    flex-direction: column;
+    gap: 20px;
     align-items: center;
-    gap: 6px;
-    margin-bottom: 14px;
-  }
-  .exp-pred-stamp .stamp-title {
-    font-size: 18px;
-    font-weight: 800;
-    color: #1a1a2e;
-    margin-bottom: 6px;
-    letter-spacing: 1px;
-  }
-  .exp-pred-stamp .stamp-row {
-    display: flex;
-    gap: 28px;
-    justify-content: center;
     flex-wrap: wrap;
   }
-  .exp-pred-stamp .stamp-item {
-    text-align: center;
-  }
   .exp-pred-stamp .stamp-lbl {
-    font-size: 15px;
+    font-size: 11px;
     color: #2980b9;
     font-weight: 700;
     letter-spacing: 1px;
   }
   .exp-pred-stamp .stamp-val {
-    font-size: 20px;
+    font-size: 14px;
     font-weight: 800;
     color: #1a1a2e;
   }
@@ -1161,112 +729,6 @@
     color: #999;
   }
   .empty-box .icon { font-size: 2.5rem; display: block; margin-bottom: 12px; }
-
-  /* ===== Font Zoom Control ===== */
-  .zoom-control {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(255,255,255,0.08);
-    border-radius: 16px;
-    padding: 4px 8px;
-  }
-  .zoom-btn {
-    width: 26px; height: 26px;
-    border: 1px solid rgba(255,255,255,0.25);
-    background: transparent;
-    color: #fff;
-    border-radius: 50%;
-    font-size: 0.9rem;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-    transition: all 0.15s;
-    flex-shrink: 0;
-  }
-  .zoom-btn:active { background: rgba(255,255,255,0.2); transform: scale(0.9); }
-  .zoom-label {
-    font-size: 0.65rem;
-    color: #90a4ce;
-    white-space: nowrap;
-    min-width: 32px;
-    text-align: center;
-    font-weight: 600;
-  }
-  .zoom-reset {
-    font-size: 0.55rem;
-    color: #90a4ce;
-    cursor: pointer;
-    padding: 2px 4px;
-    border-radius: 4px;
-    transition: all 0.15s;
-  }
-  .zoom-reset:hover { color: #fff; background: rgba(255,255,255,0.1); }
-
-  /* ===== Batch Select ===== */
-  .batch-check {
-    width: 22px; height: 22px;
-    border-radius: 50%;
-    border: 2px solid #ccc;
-    background: #fff;
-    cursor: pointer;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.15s;
-    font-size: 0.7rem;
-    color: transparent;
-    line-height: 1;
-  }
-  .batch-check.checked {
-    background: var(--blue);
-    border-color: var(--blue);
-    color: #fff;
-  }
-  .batch-check:active { transform: scale(0.85); }
-
-  .batch-bar {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    color: #fff;
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    z-index: 200;
-    box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
-    transform: translateY(100%);
-    transition: transform 0.25s ease;
-  }
-  .batch-bar.show { transform: translateY(0); }
-  .batch-bar .batch-info {
-    font-size: 0.85rem;
-    font-weight: 600;
-  }
-  .batch-bar .batch-info b { color: #ffd54f; font-size: 1.1rem; }
-  .batch-bar .batch-actions {
-    display: flex;
-    gap: 8px;
-  }
-  .batch-bar button {
-    border: none;
-    border-radius: 8px;
-    padding: 9px 16px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform 0.1s;
-  }
-  .batch-bar button:active { transform: scale(0.96); }
-  .btn-batch-clear { background: rgba(255,255,255,0.15); color: #fff; }
-  .btn-batch-export { background: #27ae60; color: #fff; }
-  .btn-batch-export:disabled { background: #555; opacity: 0.5; cursor: not-allowed; }
 </style>
 </head>
 <body>
@@ -1279,22 +741,9 @@
   </div>
   <div class="header-meta">
     <span id="updateLabel">数据加载中…</span>
-    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-      <div class="zoom-control">
-        <button class="zoom-btn" onclick="changeZoom(-5)" title="缩小字体">−</button>
-        <span class="zoom-label" id="zoomLabel">100%</span>
-        <button class="zoom-btn" onclick="changeZoom(+5)" title="放大字体">+</button>
-        <span class="zoom-reset" onclick="resetZoom()" title="恢复默认">↺</span>
-      </div>
-      <button class="btn-refresh btn-toggle-on" id="btnHideFinished" onclick="toggleHideFinished()">🙈 已完赛</button>
-      <button class="btn-refresh" onclick="openImportModal()">📥 导入预测</button>
-      <button class="btn-refresh" onclick="location.reload()">🔄 刷新数据</button>
-    </div>
+    <button class="btn-refresh" onclick="location.reload()">🔄 刷新数据</button>
   </div>
 </div>
-
-<!-- Date Filter Tabs -->
-<div class="date-bar" id="dateBar"></div>
 
 <!-- League Tabs -->
 <div class="league-bar" id="leagueBar"></div>
@@ -1304,32 +753,13 @@
 
 <div class="footer">数据来源：500彩票网 · 预测内容保存在浏览器本地 · 仅供参考</div>
 
-<!-- Batch Export Bar -->
-<div class="batch-bar" id="batchBar">
-  <div class="batch-info">已选 <b id="batchCount">0</b> 场比赛</div>
-  <div class="batch-actions">
-    <button class="btn-batch-clear" onclick="selectAllVisible()">全选可见</button>
-    <button class="btn-batch-clear" onclick="clearBatchSelection()">取消选择</button>
-    <button class="btn-batch-export" id="btnBatchExport" onclick="batchExportPred()" disabled>📦 批量导出预测</button>
-  </div>
-</div>
-
 <!-- Export Preview Overlay -->
 <div class="export-overlay" id="exportOverlay">
   <div style="width:750px;max-width:98vw;">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px;flex-wrap:wrap;">
-      <div class="export-tabs">
-        <button class="exp-tab active" id="tabFull" onclick="switchExportMode('full')">📊 完整</button>
-        <button class="exp-tab" id="tabPred" onclick="switchExportMode('pred')">🎯 仅预测</button>
-      </div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <button class="btn-bg-upload" onclick="document.getElementById('bgInput').click()">🖼 背景图</button>
-        <button class="btn-bg-clear" id="btnBgClear" onclick="clearBg()" style="display:none;">🗑 清除背景</button>
-        <button class="btn-close-export" onclick="closeExport()">✕ 关闭</button>
-        <button class="btn-download" id="btnDownload" onclick="downloadImage()">⬇ 下载图片</button>
-      </div>
+    <div style="display:flex;justify-content:flex-end;margin-bottom:8px;gap:8px;">
+      <button class="btn-close-export" onclick="closeExport()">✕ 关闭</button>
+      <button class="btn-download" id="btnDownload" onclick="downloadImage()">⬇ 下载图片</button>
     </div>
-    <input type="file" id="bgInput" accept="image/*" style="display:none" onchange="handleBgUpload(event)">
     <div class="export-card" id="exportCard">
       <!-- template content rendered here -->
     </div>
@@ -1339,85 +769,12 @@
 <!-- Toast -->
 <div class="exporting-toast" id="toast"></div>
 
-<!-- Background Image Editor Overlay -->
-<div class="bg-editor-overlay" id="bgEditorOverlay">
-  <div class="bg-editor-panel">
-    <div class="bg-editor-title">🖼 调整背景图</div>
-    <div class="bg-editor-subtitle">拖动图片调整位置</div>
-    <div class="bg-editor-preview-wrap">
-      <canvas id="bgEditorCanvas" width="360" height="520"></canvas>
-    </div>
-    <div class="bg-editor-controls">
-      <div class="bg-ctrl-row">
-        <span class="bg-ctrl-lbl">缩放</span>
-        <input type="range" id="bgScale" min="50" max="300" value="100" oninput="drawBgPreview()">
-        <span class="bg-ctrl-val" id="bgScaleVal">100%</span>
-      </div>
-      <div class="bg-ctrl-row">
-        <span class="bg-ctrl-lbl">遮罩浓度</span>
-        <input type="range" id="bgOpacity" min="50" max="95" value="85" oninput="drawBgPreview()">
-        <span class="bg-ctrl-val" id="bgOpacityVal">85%</span>
-      </div>
-      <div style="font-size:0.7rem;color:#ffd9d9;text-align:center;margin-top:4px;line-height:1.4;">数值越大背景越淡、文字越清晰<br>看不清文字就往右拉</div>
-    </div>
-    <div class="bg-editor-buttons">
-      <button class="btn-bg-cancel" onclick="closeBgEditor()">取消</button>
-      <button class="btn-bg-confirm" onclick="confirmBgEditor()">✓ 确认使用</button>
-    </div>
-  </div>
-</div>
-
-<!-- Import Prediction Modal -->
-<div class="import-overlay" id="importOverlay">
-  <div class="import-panel">
-    <div class="import-title">📥 一键导入预测</div>
-    <div class="import-subtitle">粘贴文字，系统自动识别编号、胜平负、比分、进球数</div>
-    <div class="import-format-box">
-      <b>支持的格式（每行一场）：</b>
-      <code>001|主胜|2-3球|1-0|2-1|3-1|防守反击</code>
-      <code>002 平局 0-1球 0-0 1-1</code>
-      <code>第3场 客胜 4-6球 1-2 2-3</code>
-      <b>胜平负：</b>主胜/平局/客胜，或 胜/平/负，或 3/1/0<br>
-      <b>进球数：</b>0-1球 / 2-3球 / 4-6球 / 7+球<br>
-      <b>比分：</b>X-X 或 X:X（最多3个）<br>
-      <span style="color:#999;">分隔符可用空格、|、逗号、制表符；编号可带前导0</span>
-    </div>
-    <textarea id="importText" placeholder="在此粘贴预测数据…&#10;001 | 主胜 | 2-3球 | 1-0 | 2-1 | 3-1&#10;002 平局 0-1球 0-0 1-1&#10;003 客胜 4-6球 1-2 2-3"></textarea>
-    <div class="import-buttons">
-      <button class="btn-import-cancel" onclick="closeImportModal()">取消</button>
-      <button class="btn-import-copy" onclick="copyAllPredsAsText()">📋 复制现有</button>
-      <button class="btn-import-go" onclick="doImport()">✓ 智能识别并导入</button>
-    </div>
-  </div>
-</div>
-
 <script>
 // ===== State =====
 let allData = [];
 let currentLeague = '全部';
-let currentDate = '全部';
-let hideFinished = true;
 const STORAGE_KEY = 'k_league_preds_v2';
-const ZOOM_KEY = 'k_league_zoom';
 let exportImageDataUrl = null;
-let currentExportId = null;
-let currentExportMode = 'full';
-const selectedMatches = new Set();
-
-// ===== Font Zoom =====
-function getZoom() {
-  return parseInt(localStorage.getItem(ZOOM_KEY) || '100');
-}
-function applyZoom(v) {
-  v = Math.max(80, Math.min(150, v));
-  localStorage.setItem(ZOOM_KEY, v);
-  document.body.style.zoom = (v / 100).toString();
-  const label = document.getElementById('zoomLabel');
-  if (label) label.textContent = v + '%';
-}
-function changeZoom(delta) { applyZoom(getZoom() + delta); }
-function resetZoom() { applyZoom(100); }
-applyZoom(getZoom());
 
 // ===== Data =====
 async function loadData() {
@@ -1506,295 +863,30 @@ function rc(r) {
   return 'r-l';
 }
 
-function genAnalysis(m, hS, aS, h2h, an, mode) {
-  mode = mode || 0;
-  const d = computeAnalysisData(m, hS, aS, h2h, an);
-  if (mode === 1) return genAnalysisBrief(d);
-  if (mode === 2) return genAnalysisData(d);
-  if (mode === 3) return genAnalysisCasual(d);
-  return genAnalysisFull(d);
-}
-
-const ANALYSIS_MODES = ['全面', '简明', '数据', '通俗'];
-const ANALYSIS_MODE_KEY = 'kleague_an_mode';
-
-function getAnalysisMode(id) {
-  const raw = localStorage.getItem(ANALYSIS_MODE_KEY);
-  const map = raw ? JSON.parse(raw) : {};
-  return map[id] || 0;
-}
-function setAnalysisMode(id, mode) {
-  const raw = localStorage.getItem(ANALYSIS_MODE_KEY);
-  const map = raw ? JSON.parse(raw) : {};
-  map[id] = mode;
-  localStorage.setItem(ANALYSIS_MODE_KEY, JSON.stringify(map));
-}
-
-function refreshAnalysis(id) {
-  const cur = getAnalysisMode(id);
-  const next = (cur + 1) % ANALYSIS_MODES.length;
-  setAnalysisMode(id, next);
-  const m = allData.find(x => x.fixture_id === id);
-  if (!m) return;
-  const an = m.analysis || {};
-  const hS = formStats(an.home_recent_5_matches, m.home_team);
-  const aS = formStats(an.away_recent_5_matches, m.away_team);
-  const h2h = h2hSummary(an.h2h_matches, m.home_team, m.away_team);
-  const txt = genAnalysis(m, hS, aS, h2h, an, next);
-  const block = document.getElementById('anBlock_' + id);
-  if (block) block.textContent = txt;
-  const tag = document.getElementById('anTag_' + id);
-  if (tag) tag.textContent = '「' + ANALYSIS_MODES[next] + '」';
-  // Auto-expand when user requests new style
-  expandAnalysis(id);
-}
-
-function toggleSection(id, type) {
-  const block = document.getElementById(type + 'Block_' + id);
-  if (!block) return;
-  const willCollapse = !block.classList.contains('collapsed');
-  block.classList.toggle('collapsed', willCollapse);
-  const arrow = document.getElementById(type + 'Arrow_' + id);
-  if (arrow) arrow.classList.toggle('collapsed', willCollapse);
-  const hint = document.getElementById(type + 'Hint_' + id);
-  if (hint) hint.textContent = willCollapse ? '点击展开' : '点击收起';
-}
-
-function toggleAnalysis(id) { toggleSection(id, 'an'); }
-
-function expandAnalysis(id) {
-  const block = document.getElementById('anBlock_' + id);
-  if (block && block.classList.contains('collapsed')) {
-    block.classList.remove('collapsed');
-    const arrow = document.getElementById('anArrow_' + id);
-    if (arrow) arrow.classList.remove('collapsed');
-    const hint = document.getElementById('anHint_' + id);
-    if (hint) hint.textContent = '点击收起';
-  }
-}
-
-function computeAnalysisData(m, hS, aS, h2h, an) {
-  const h = m.home_team, a = m.away_team;
-  an = an || {};
-  const d = { h, a, m, hS, aS, h2h, an };
-
-  d.hr = parseInt(m.home_rank);
-  d.ar = parseInt(m.away_rank);
-  d.rankGap = (d.hr && d.ar) ? Math.abs(d.hr - d.ar) : null;
-  d.rankFav = (d.hr && d.ar) ? (d.hr < d.ar ? h : d.ar < d.hr ? a : '') : '';
-
-  // odds implied probability
-  if (m.odds_nspf && m.odds_nspf.length === 3) {
-    const [oh, od, oa] = m.odds_nspf.map(Number);
-    if (oh && od && oa) {
-      const total = 1/oh + 1/od + 1/oa;
-      d.ph = Math.round(1/oh/total * 100);
-      d.pd = Math.round(1/od/total * 100);
-      d.pa = Math.round(1/oa/total * 100);
-      d.oddsFav = d.ph > d.pa ? h : d.pa > d.ph ? a : '';
+function genAnalysis(m, hS, aS, h2h) {
+  const p=[];
+  const h=m.home_team, a=m.away_team;
+  if (hS) {
+    const t=hS.w+hS.d+hS.l;
+    if (t>0) {
+      p.push(`${h}近${t}场${hS.w}胜${hS.d}平${hS.l}负，进${hS.gf}球失${hS.ga}球`);
+      if (hS.w<=1&&t>=3) p.push(`胜率偏低，状态一般`);
+      else if ((hS.w*3+hS.d)/t>=2) p.push(`状态出色`);
     }
   }
-
-  // handicap
-  d.rq = m.rangqiu;
-  if (d.rq) {
-    const rn = parseFloat(d.rq);
-    d.rqText = rn > 0 ? `${h}受让${rn}球` : rn < 0 ? `${h}让${Math.abs(rn)}球` : '平手';
-    d.rqFav = rn > 0 ? a : rn < 0 ? h : '';
-  }
-
-  // home form
-  if (hS) {
-    d.ht = hS.w + hS.d + hS.l;
-    d.hRate = d.ht > 0 ? (hS.w * 3 + hS.d) / (d.ht * 3) : 0;
-    d.hStreak = detectStreak(hS.f);
-    d.hAvgG = d.ht > 0 ? (hS.gf / d.ht).toFixed(1) : '0';
-    d.hAvgC = d.ht > 0 ? (hS.ga / d.ht).toFixed(1) : '0';
-    d.hStatus = d.hRate >= 0.7 ? '出色' : d.hRate <= 0.3 ? '低迷' : '中规中矩';
-  }
-
-  // away form
   if (aS) {
-    d.at = aS.w + aS.d + aS.l;
-    d.aRate = d.at > 0 ? (aS.w * 3 + aS.d) / (d.at * 3) : 0;
-    d.aStreak = detectStreak(aS.f);
-    d.aAvgG = d.at > 0 ? (aS.gf / d.at).toFixed(1) : '0';
-    d.aAvgC = d.at > 0 ? (aS.ga / d.at).toFixed(1) : '0';
-    d.aStatus = d.aRate >= 0.7 ? '出色' : d.aRate <= 0.3 ? '低迷' : '中规中矩';
+    const t=aS.w+aS.d+aS.l;
+    if (t>0) {
+      p.push(`${a}近${t}场${aS.w}胜${aS.d}平${aS.l}负，进${aS.gf}球失${aS.ga}球`);
+      if (aS.l<=1&&t>=3) p.push(`不败率高，状态稳定`);
+    }
   }
-
-  // home/away specific
-  d.hScoredHome = parseFloat(an.home_avg_scored_home);
-  d.hConcededHome = parseFloat(an.home_avg_conceded_home);
-  d.aScoredAway = parseFloat(an.away_avg_scored_away);
-  d.aConcededAway = parseFloat(an.away_avg_conceded_away);
-
-  // totals
-  const hAvgS = parseFloat(an.home_avg_scored);
-  const hAvgC = parseFloat(an.home_avg_conceded);
-  const aAvgS = parseFloat(an.away_avg_scored);
-  const aAvgC = parseFloat(an.away_avg_conceded);
-  if (!isNaN(hAvgS) && !isNaN(aAvgC) && !isNaN(aAvgS) && !isNaN(hAvgC)) {
-    d.expTotal = (hAvgS + aAvgC + aAvgS + hAvgC) / 2;
-  }
-
-  // h2h
   if (h2h) {
-    d.h2hAvg = (h2h.gf + h2h.ga) / h2h.n;
-    d.h2hFav = h2h.w > h2h.l + 1 ? h : h2h.l > h2h.w + 1 ? a : '';
+    p.push(`近${h2h.n}次交锋${h}${h2h.w}胜${h2h.d}平${h2h.l}负`);
+    if (h2h.l>h2h.w) p.push(`历史交锋处于下风`);
+    else if (h2h.w>h2h.l) p.push(`历史交锋占优`);
   }
-
-  // comprehensive lean
-  d.leans = [];
-  if (hS && aS && d.ht && d.at) {
-    if (d.hRate - d.aRate > 0.25) d.leans.push(`${h}近期状态明显占优`);
-    else if (d.aRate - d.hRate > 0.25) d.leans.push(`${a}近期状态明显占优`);
-  }
-  if (d.rankGap && d.rankGap >= 5) d.leans.push(`${d.rankFav}排名优势明显`);
-
-  return d;
-}
-
-// Mode 0: 全面分析
-function genAnalysisFull(d) {
-  const p = [];
-  const { h, a } = d;
-
-  if (d.rankGap !== null) {
-    if (d.rankGap === 0) p.push(`${h}与${a}同列第${d.hr}名`);
-    else if (d.rankGap <= 2) p.push(`${h}第${d.hr}名 vs ${a}第${d.ar}名，排名接近`);
-    else p.push(`${d.rankFav}排名领先${d.rankGap}个位次`);
-  }
-  if (d.ph) {
-    if (d.oddsFav) p.push(`不让球赔率隐含胜率：${h}${d.ph}% / 平${d.pd}% / ${a}${d.pa}%，机构略看好${d.oddsFav}`);
-    else p.push(`不让球赔率隐含胜率：${h}${d.ph}% / 平${d.pd}% / ${a}${d.pa}%，势均力敌`);
-  }
-  if (d.rqText) p.push(`盘口${d.rqText}，机构看好${d.rqFav}`);
-
-  if (d.hS && d.ht > 0) {
-    p.push(`${h}近${d.ht}场${d.hS.w}胜${d.hS.d}平${d.hS.l}负，进${d.hS.gf}失${d.hS.ga}`);
-    if (d.hStreak) p.push(d.hStreak);
-    if (d.hS.gf >= d.ht * 2) p.push(`进攻火力旺盛（场均${d.hAvgG}球）`);
-    if (d.hS.ga === 0 && d.ht >= 3) p.push(`近${d.ht}场零失球，防守稳固`);
-    else if (d.hS.ga >= d.ht * 2) p.push(`防线漏洞明显（场均失${d.hAvgC}球）`);
-    if (d.hStatus !== '中规中矩') p.push(`状态${d.hStatus}`);
-  }
-  if (d.aS && d.at > 0) {
-    p.push(`${a}近${d.at}场${d.aS.w}胜${d.aS.d}平${d.aS.l}负，进${d.aS.gf}失${d.aS.ga}`);
-    if (d.aStreak) p.push(d.aStreak);
-    if (d.aS.gf >= d.at * 2) p.push(`进攻火力旺盛（场均${d.aAvgG}球）`);
-    if (d.aS.ga === 0 && d.at >= 3) p.push(`近${d.at}场零失球，防守稳固`);
-    else if (d.aS.ga >= d.at * 2) p.push(`防线漏洞明显（场均失${d.aAvgC}球）`);
-    if (d.aStatus !== '中规中矩') p.push(`状态${d.aStatus}`);
-  }
-  if (!isNaN(d.hScoredHome) && !isNaN(d.aConcededAway) && d.hScoredHome + d.aConcededAway >= 3)
-    p.push(`${h}主场场均进${d.hScoredHome}球 + ${a}客场场均失${d.aConcededAway}球，主队有望破门`);
-  if (!isNaN(d.aScoredAway) && !isNaN(d.hConcededHome) && d.aScoredAway + d.hConcededHome >= 3)
-    p.push(`${a}客场场均进${d.aScoredAway}球 + ${h}主场场均失${d.hConcededHome}球，客队反击有力`);
-  if (d.expTotal) {
-    if (d.expTotal >= 3) p.push(`双方场均合计约${d.expTotal.toFixed(1)}球，大球可期`);
-    else if (d.expTotal <= 2) p.push(`双方场均合计约${d.expTotal.toFixed(1)}球，小球概率较高`);
-  }
-  if (d.h2h) {
-    p.push(`近${d.h2h.n}次交锋${h}${d.h2h.w}胜${d.h2h.d}平${d.h2h.l}负，进${d.h2h.gf}失${d.h2h.ga}`);
-    if (d.h2hAvg >= 3) p.push(`交锋场均${d.h2hAvg.toFixed(1)}球，对攻倾向`);
-    else if (d.h2hAvg <= 1.5) p.push(`交锋场均${d.h2hAvg.toFixed(1)}球，偏防守`);
-    if (d.h2hFav === h) p.push(`历史交锋占优`);
-    else if (d.h2hFav === a) p.push(`历史交锋处于下风`);
-    else if (d.h2h.n >= 3 && d.h2h.d >= d.h2h.n * 0.4) p.push(`交锋平局率高`);
-  }
-  if (d.leans.length) p.push(`综合：${d.leans.join('，')}`);
-
-  return p.join('；') + '。';
-}
-
-// Mode 1: 简明结论
-function genAnalysisBrief(d) {
-  const p = [];
-  const { h, a } = d;
-  if (d.rankGap !== null && d.rankGap > 2) p.push(`${d.rankFav}排名领先${d.rankGap}位`);
-  if (d.oddsFav) p.push(`机构看好${d.oddsFav}`);
-  else if (d.ph) p.push(`赔率势均力敌`);
-  if (d.rqFav) p.push(`盘口倾向${d.rqFav}`);
-  if (d.hS && d.ht > 0) p.push(`${h}状态${d.hStatus}${d.hStreak ? '（' + d.hStreak + '）' : ''}`);
-  if (d.aS && d.at > 0) p.push(`${a}状态${d.aStatus}${d.aStreak ? '（' + d.aStreak + '）' : ''}`);
-  if (d.expTotal) p.push(d.expTotal >= 3 ? '倾向大球' : d.expTotal <= 2 ? '倾向小球' : '进球数中性');
-  if (d.h2h) {
-    if (d.h2hFav === h) p.push(`交锋${h}占优`);
-    else if (d.h2hFav === a) p.push(`交锋${a}占优`);
-    else p.push(`交锋均势`);
-  }
-  if (d.leans.length) p.push(d.leans.join('，'));
-  return p.length ? p.join('；') + '。' : '数据不足，暂无分析。';
-}
-
-// Mode 2: 数据视角
-function genAnalysisData(d) {
-  const p = [];
-  const { h, a } = d;
-  if (d.rankGap !== null) p.push(`排名：${h}#${d.hr} vs ${a}#${d.ar}（差${d.rankGap}位）`);
-  if (d.ph) p.push(`隐含概率：主${d.ph}% 平${d.pd}% 客${d.pa}%`);
-  if (d.rq) p.push(`盘口：${d.rq}（${d.rqText}）`);
-  if (d.hS && d.ht > 0) p.push(`${h}近${d.ht}场：${d.hS.w}-${d.hS.d}-${d.hS.l} 进${d.hS.gf}/${d.hS.ga} 场均进${d.hAvgG}/失${d.hAvgC} 胜率${(d.hRate*100).toFixed(0)}%`);
-  if (d.aS && d.at > 0) p.push(`${a}近${d.at}场：${d.aS.w}-${d.aS.d}-${d.aS.l} 进${d.aS.gf}/${d.aS.ga} 场均进${d.aAvgG}/失${d.aAvgC} 胜率${(d.aRate*100).toFixed(0)}%`);
-  if (!isNaN(d.hScoredHome)) p.push(`${h}主场场均进${d.hScoredHome}/失${d.hConcededHome||'-'}`);
-  if (!isNaN(d.aScoredAway)) p.push(`${a}客场场均进${d.aScoredAway}/失${d.aConcededAway||'-'}`);
-  if (d.expTotal) p.push(`预期总进球：${d.expTotal.toFixed(1)}（${d.expTotal>=3?'大球':d.expTotal<=2?'小球':'中性'}）`);
-  if (d.h2h) p.push(`交锋${d.h2h.n}次：${d.h2h.w}-${d.h2h.d}-${d.h2h.l} 进${d.h2h.gf}/${d.h2h.ga} 场均${d.h2hAvg.toFixed(1)}球`);
-  return p.join(' | ') + '。';
-}
-
-// Mode 3: 通俗解读
-function genAnalysisCasual(d) {
-  const p = [];
-  const { h, a } = d;
-  if (d.rankGap !== null) {
-    if (d.rankGap <= 2) p.push(`${h}和${a}排名挨得近`);
-    else p.push(`${d.rankFav}排名高出${d.rankGap}位，纸面实力有差距`);
-  }
-  if (d.oddsFav) p.push(`赔率上看机构更偏向${d.oddsFav}`);
-  else if (d.ph) p.push(`赔率两边差不多，谁赢都不意外`);
-  if (d.rqFav) p.push(`盘口也给了${d.rqFav}面子`);
-  if (d.hS && d.ht > 0) {
-    p.push(`${h}最近${d.ht}场拿了${d.hS.w}胜${d.hS.d}平${d.hS.l}负`);
-    if (d.hStreak) p.push(`正处于${d.hStreak}`);
-    if (d.hStatus === '出色') p.push(`状态挺猛的`);
-    else if (d.hStatus === '低迷') p.push(`状态不太行`);
-    if (d.hS.ga === 0 && d.ht >= 3) p.push(`而且防守不错，几场没丢球`);
-  }
-  if (d.aS && d.at > 0) {
-    p.push(`${a}那边${d.aS.w}胜${d.aS.d}平${d.aS.l}负`);
-    if (d.aStreak) p.push(`正${d.aStreak}`);
-    if (d.aStatus === '出色') p.push(`势头很旺`);
-    else if (d.aStatus === '低迷') p.push(`有点萎靡`);
-  }
-  if (d.expTotal) {
-    if (d.expTotal >= 3) p.push(`俩队进球都不少，这场有望打成对攻`);
-    else if (d.expTotal <= 2) p.push(`双方进球不多，可能比较沉闷`);
-  }
-  if (d.h2h) {
-    if (d.h2hFav === h) p.push(`以前交手${h}赢得多，有点心理优势`);
-    else if (d.h2hFav === a) p.push(`历史交锋${a}占上风`);
-    else p.push(`之前互有胜负`);
-    if (d.h2hAvg <= 1.5) p.push(`不过交锋一般进球不多`);
-    else if (d.h2hAvg >= 3) p.push(`交锋经常打出大比分`);
-  }
-  if (d.leans.length) p.push(`总的来说，${d.leans.join('，')}`);
-  return p.join('，') + '。';
-}
-
-function detectStreak(f) {
-  if (!f || !f.length) return '';
-  const rev = [...f].reverse();
-  let streak = 1;
-  for (let i = 1; i < rev.length; i++) {
-    if (rev[i] === rev[0]) streak++;
-    else break;
-  }
-  if (rev[0] === 'W' && streak >= 2) return `近${streak}连胜`;
-  if (rev[0] === 'L' && streak >= 2) return `近${streak}连败`;
-  if (rev[0] === 'D' && streak >= 2) return `近${streak}连平`;
-  return '';
+  return p.join('；')+'。';
 }
 
 function getLeagues(data) {
@@ -1802,56 +894,12 @@ function getLeagues(data) {
   return ['全部', ...Array.from(set).sort()];
 }
 
-function teamLogoUrl(teamId) {
-  if (!teamId) return '';
-  return `https://liansai.500.com/static/soccerdata/images/TeamPic/teamsignnew_${teamId}.png`;
-}
-
-function teamLogoSpan(m, side) {
-  const tid = side === 'home' ? m.home_team_id : m.away_team_id;
-  const url = teamLogoUrl(tid);
-  return url ? `<img class="team-logo" src="${url}" alt="" onerror="this.style.display='none'">` : '';
-}
-
-// ===== Match Finished Check =====
-function getMatchWeek(m) {
-  const num = m.match_num || '';
-  const match = num.match(/^([\u4e00-\u9fa5]+)/);
-  return match ? match[1] : '其他';
-}
-
-function isMatchFinished(m) {
-  if (!m.match_date || !m.match_time) return false;
-  const start = new Date(m.match_date + 'T' + m.match_time + ':00');
-  if (isNaN(start.getTime())) return false;
-  // 足球比赛约 2 小时（90分钟 + 中场 + 补时）
-  const endTime = start.getTime() + 2 * 60 * 60 * 1000;
-  return Date.now() > endTime;
-}
-
-function toggleHideFinished() {
-  hideFinished = !hideFinished;
-  const btn = document.getElementById('btnHideFinished');
-  if (btn) {
-    btn.textContent = hideFinished ? '🙈 已完赛' : '👁 已完赛';
-    btn.classList.toggle('btn-toggle-on', hideFinished);
-  }
-  renderTabs();
-  renderDateTabs();
-  render();
-}
-
 // ===== Render Tabs =====
 function renderTabs() {
   const bar = document.getElementById('leagueBar');
   const leagues = getLeagues(allData);
   bar.innerHTML = leagues.map(l => {
-    const cnt = allData.filter(m => {
-      const leagueOk = l === '全部' || (m.league || '其他') === l;
-      const dateOk = currentDate === '全部' || getMatchWeek(m) === currentDate;
-      const finishedOk = !hideFinished || !isMatchFinished(m);
-      return leagueOk && dateOk && finishedOk;
-    }).length;
+    const cnt = l==='全部' ? allData.length : allData.filter(m=>(m.league||'其他')===l).length;
     return `<button class="league-tab ${l===currentLeague?'active':''}" onclick="switchLeague('${l}')">${l}<span class="count">${cnt}</span></button>`;
   }).join('');
 }
@@ -1859,49 +907,6 @@ function renderTabs() {
 function switchLeague(l) {
   currentLeague = l;
   renderTabs();
-  renderDateTabs();
-  render();
-}
-
-function getDateTabs() {
-  const tabs = [{key: '全部', label: '全部'}];
-  const weekMap = {};
-  for (const m of allData) {
-    const w = getMatchWeek(m);
-    if (!weekMap[w]) {
-      weekMap[w] = {
-        key: w,
-        label: w,
-        sortTime: (m.match_date || '') + (m.match_time || '')
-      };
-    }
-  }
-  const weeks = Object.values(weekMap).sort((a, b) => a.sortTime.localeCompare(b.sortTime));
-  for (const w of weeks) {
-    tabs.push({key: w.key, label: w.label});
-  }
-  return tabs;
-}
-
-function renderDateTabs() {
-  const bar = document.getElementById('dateBar');
-  const tabs = getDateTabs();
-  bar.innerHTML = tabs.map(t => {
-    const cnt = allData.filter(m => {
-      const leagueOk = currentLeague === '全部' || (m.league || '其他') === currentLeague;
-      const dateOk = t.key === '全部' || getMatchWeek(m) === t.key;
-      const finishedOk = !hideFinished || !isMatchFinished(m);
-      return leagueOk && dateOk && finishedOk;
-    }).length;
-    const safeLabel = t.label.replace(/'/g, "\\'");
-    return `<button class="date-tab ${t.key === currentDate ? 'active' : ''}" onclick="switchDate('${t.key}', '${safeLabel}')">${t.label}<span class="count">${cnt}</span></button>`;
-  }).join('');
-}
-
-function switchDate(key, label) {
-  currentDate = key;
-  renderTabs();
-  renderDateTabs();
   render();
 }
 
@@ -1917,66 +922,44 @@ function render() {
   document.getElementById('updateLabel').textContent =
     '更新于 ' + now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0')+' '+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
 
-  const filtered = allData.filter(m => {
-    const leagueOk = currentLeague === '全部' || (m.league || '其他') === currentLeague;
-    const dateOk = currentDate === '全部' || getMatchWeek(m) === currentDate;
-    const finishedOk = !hideFinished || !isMatchFinished(m);
-    return leagueOk && dateOk && finishedOk;
-  });
+  const filtered = currentLeague === '全部'
+    ? allData
+    : allData.filter(m => (m.league || '其他') === currentLeague);
 
-  if (!filtered.length) {
-    const finishedCount = allData.filter(m => {
-      const leagueOk = currentLeague === '全部' || (m.league || '其他') === currentLeague;
-      const dateOk = currentDate === '全部' || getMatchWeek(m) === currentDate;
-      return leagueOk && dateOk && isMatchFinished(m);
-    }).length;
-    const hint = (hideFinished && finishedCount > 0)
-      ? `已隐藏 ${finishedCount} 场已完赛比赛，点击上方「🙈 已完赛」可显示`
-      : '试试切换其他日期或联赛';
-    app.innerHTML = `<div class="empty-box"><span class="icon">📅</span><p>当前筛选暂无比赛</p><p style="font-size:0.75rem;color:#aaa">${hint}</p></div>`;
-    return;
-  }
-
+  const dayMap = ['周日','周一','周二','周三','周四','周五','周六'];
   const grp = {};
   for (const m of filtered) {
-    const w = getMatchWeek(m);
-    if (!grp[w]) grp[w] = [];
-    grp[w].push(m);
+    const d = m.match_date||'?';
+    if (!grp[d]) grp[d] = [];
+    grp[d].push(m);
   }
 
-  const weekOrder = Object.keys(grp).sort((a, b) => {
-    const ta = (grp[a][0].match_date||'') + (grp[a][0].match_time||'');
-    const tb = (grp[b][0].match_date||'') + (grp[b][0].match_time||'');
-    return ta.localeCompare(tb);
-  });
-
   let html = '';
-  for (const w of weekOrder) {
-    grp[w].sort((a, b) => ((a.match_date||'')+(a.match_time||'')).localeCompare((b.match_date||'')+(b.match_time||'')));
-    html += `<div style="text-align:center;padding:14px 0 8px;font-size:0.85rem;font-weight:700;color:#555;">📅 ${w}（${grp[w].length}场）</div>`;
+  for (const dt of Object.keys(grp).sort()) {
+    const d = new Date(dt);
+    const dy = dayMap[d.getDay()]||'';
+    html += `<div style="text-align:center;padding:14px 0 8px;font-size:0.85rem;font-weight:700;color:#555;">📅 ${dt} ${dy}（${grp[dt].length}场）</div>`;
 
-    for (const m of grp[w]) {
+    for (const m of grp[dt]) {
       const id = m.fixture_id;
       const an = m.analysis||{};
       const hS = formStats(an.home_recent_5_matches, m.home_team);
       const aS = formStats(an.away_recent_5_matches, m.away_team);
       const h2h = h2hSummary(an.h2h_matches, m.home_team, m.away_team);
-      const anMode = getAnalysisMode(id);
-      const txt = genAnalysis(m, hS, aS, h2h, an, anMode);
+      const txt = genAnalysis(m, hS, aS, h2h);
       const pred = getPred(id);
       const rql = rqLabel(m.rangqiu);
 
       html += `<div class="match-card" data-id="${id}">
   <!-- Header -->
   <div class="card-hd">
-    <div class="batch-check ${selectedMatches.has(id)?'checked':''}" onclick="toggleSelectMatch('${id}')" title="选择批量导出">${selectedMatches.has(id)?'✓':''}</div>
     <div class="match-no">${m.match_num}</div>
     <div class="match-info">
       <div class="match-league">${m.league||''}</div>
       <div class="match-teams">
-        <span class="team-name-wrap">${teamLogoSpan(m,'home')}<span>${m.home_team}<span class="rank">[${m.home_rank}]</span></span></span>
+        <span>${m.home_team}<span class="rank">[${m.home_rank}]</span></span>
         <span class="vs-dot">VS</span>
-        <span class="team-name-wrap"><span><span class="rank">[${m.away_rank}]</span>${m.away_team}</span>${teamLogoSpan(m,'away')}</span>
+        <span><span class="rank">[${m.away_rank}]</span>${m.away_team}</span>
       </div>
     </div>
     <div class="match-time-badge">
@@ -2011,7 +994,6 @@ function render() {
         <span>进球数：<b id="predGoals_${id}">${pred.goals||'-'}</b></span>
         <span>比分参考：<b id="predScores_${id}">${(pred.scores||[]).filter(Boolean).join(' / ')||'-'}</b></span>
       </div>
-      <button class="btn-clear-pred" onclick="clearPred('${id}')" title="清除预测">❌</button>
     </div>
     <div class="pred-row">
       <span class="pred-lbl">胜负</span>
@@ -2041,8 +1023,8 @@ function render() {
   </div>
 
   <!-- Recent Form -->
-  <div class="sec-title clickable" onclick="toggleSection('${id}','form')"><span class="dot"></span><span class="label-text">球队近况（近5场）</span><span class="analysis-hint" id="formHint_${id}">点击展开</span><span class="toggle-arrow collapsed" id="formArrow_${id}">▼</span></div>
-  <div class="form-grid collapsible-section collapsed" id="formBlock_${id}">
+  <div class="sec-title"><span class="dot"></span>球队近况（近5场）</div>
+  <div class="form-grid">
     <div class="form-col">
       <div class="form-team-name">🏠 ${m.home_team}<span class="form-strand">${formStrandHtml(hS.f)}</span></div>
       <table class="mt">
@@ -2066,8 +1048,8 @@ function render() {
   </div>
 
   <!-- Stats -->
-  <div class="sec-title clickable" onclick="toggleSection('${id}','stats')"><span class="dot"></span><span class="label-text">近5场攻防数据</span><span class="analysis-hint" id="statsHint_${id}">点击展开</span><span class="toggle-arrow collapsed" id="statsArrow_${id}">▼</span></div>
-  <div class="stats-duo collapsible-section collapsed" id="statsBlock_${id}">
+  <div class="sec-title"><span class="dot"></span>近5场攻防数据</div>
+  <div class="stats-duo">
     <div class="stat-card">
       <div class="sc-team">🏠 ${m.home_team}</div>
       <div class="sc-row"><span>进球 / 失球</span><span class="sc-val">${hS.gf} / ${hS.ga}</span></div>
@@ -2087,12 +1069,12 @@ function render() {
   </div>
 
   <!-- Key Analysis -->
-  <div class="sec-title clickable" onclick="toggleSection('${id}','an')"><span class="dot"></span><span class="label-text">关键分析</span><span class="analysis-mode-tag" id="anTag_${id}">「${ANALYSIS_MODES[anMode]}」</span><span class="analysis-hint" id="anHint_${id}">点击展开</span><button class="btn-refresh-an" onclick="event.stopPropagation(); refreshAnalysis('${id}')">🔄 换一种</button><span class="toggle-arrow collapsed" id="anArrow_${id}">▼</span></div>
-  <div class="analysis-block collapsible-section collapsed" id="anBlock_${id}">${txt}</div>
+  <div class="sec-title"><span class="dot"></span>关键分析</div>
+  <div class="analysis-block">${txt}</div>
 
   <!-- H2H -->
-  <div class="sec-title clickable" onclick="toggleSection('${id}','h2h')"><span class="dot"></span><span class="label-text">交锋记录（近6次）</span><span class="analysis-hint" id="h2hHint_${id}">点击展开</span><span class="toggle-arrow collapsed" id="h2hArrow_${id}">▼</span></div>
-  <div class="h2h-wrap collapsible-section collapsed" id="h2hBlock_${id}">
+  <div class="sec-title"><span class="dot"></span>交锋记录（近6次）</div>
+  <div class="h2h-wrap">
     ${h2h?`<div class="h2h-summ">${m.home_team} ${h2h.w}胜${h2h.d}平${h2h.l}负，进${h2h.gf}球失${h2h.ga}球</div>`:''}
     <table class="ht">
       <tr><th>日期</th><th>主队</th><th>比分</th><th>客队</th><th>赛果</th></tr>
@@ -2152,162 +1134,45 @@ function setScore(id, idx, val) {
   savePreds(p);
   updatePredSummary(id);
 }
-function clearPred(id) {
-  const p = loadPreds();
-  if (p[id]) { delete p[id]; savePreds(p); }
-  const badge = document.getElementById('predBadge_'+id);
-  const strip = badge ? badge.closest('.pred-strip') : null;
-  if (strip) {
-    strip.querySelectorAll('.score-inp').forEach(inp => inp.value = '');
-    const noteInput = strip.querySelector('.note-inp');
-    if (noteInput) noteInput.value = '';
-  }
-  const resContainer = document.getElementById('resBtns_'+id);
-  if (resContainer) resContainer.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-  const goalContainer = document.getElementById('goalBtns_'+id);
-  if (goalContainer) goalContainer.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-  updatePredSummary(id);
-  showToast('已清除预测');
-}
 
 // ===== Export =====
-function buildRadarSvg(hS, aS, an, homeTeam, awayTeam) {
-  const hR = [
-    hS.gf, parseFloat((hS.gf/5).toFixed(1)),
-    hS.ga, parseFloat((hS.ga/5).toFixed(1)),
-    parseFloat(an.home_avg_scored)||0, parseFloat(an.home_avg_conceded)||0
-  ];
-  const aR = [
-    aS.gf, parseFloat((aS.gf/5).toFixed(1)),
-    aS.ga, parseFloat((aS.ga/5).toFixed(1)),
-    parseFloat(an.away_avg_scored)||0, parseFloat(an.away_avg_conceded)||0
-  ];
-  const lbls = ['进球','场均进球','失球','场均失球','赛季场均\n进球','赛季场均\n失球'];
-  const maxV = hR.map((v,i)=>Math.max(v,aR[i],0.1));
-  const cx=170,cy=165,r=105;
-  const ang=[-Math.PI/2,-Math.PI/6,Math.PI/6,Math.PI/2,5*Math.PI/6,-5*Math.PI/6];
+async function exportMatch(id) {
+  const m = allData.find(x => x.fixture_id === id);
+  if (!m) return;
 
-  const pts=(d)=>d.map((v,i)=>{const f=v/maxV[i];return (cx+r*f*Math.cos(ang[i])).toFixed(1)+','+(cy+r*f*Math.sin(ang[i])).toFixed(1);}).join(' ');
-  const grid=(l)=>{let p='';for(let i=0;i<6;i++)p+=(cx+r*l*Math.cos(ang[i])).toFixed(1)+','+(cy+r*l*Math.sin(ang[i])).toFixed(1)+' ';return p.trim();};
+  const pred = getPred(id);
+  const an = m.analysis||{};
+  const hS = formStats(an.home_recent_5_matches, m.home_team);
+  const aS = formStats(an.away_recent_5_matches, m.away_team);
+  const h2h = h2hSummary(an.h2h_matches, m.home_team, m.away_team);
+  const txt = genAnalysis(m, hS, aS, h2h);
 
-  const hPoints=pts(hR), aPoints=pts(aR);
-
-  let svg='<svg viewBox="0 0 340 330" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">';
-  // Grid
-  [0.25,0.5,0.75,1].forEach(l=>svg+=`<polygon points="${grid(l)}" fill="none" stroke="${l===1?'#c0c0c0':'#e8e8e8'}" stroke-width="${l===1?1.2:0.6}"/>`);
-  // Axes
-  for(let i=0;i<6;i++)svg+=`<line x1="${cx}" y1="${cy}" x2="${(cx+r*Math.cos(ang[i])).toFixed(1)}" y2="${(cy+r*Math.sin(ang[i])).toFixed(1)}" stroke="#e0e0e0" stroke-width="0.8"/>`;
-  // Home polygon
-  svg+=`<polygon points="${hPoints}" fill="rgba(192,57,43,0.22)" stroke="#c0392b" stroke-width="2.2"/>`;
-  // Away polygon
-  svg+=`<polygon points="${aPoints}" fill="rgba(39,174,96,0.22)" stroke="#27ae60" stroke-width="2.2"/>`;
-  // Dots + value labels (perpendicular offset to separate home/away)
-  hR.forEach((v,i)=>{
-    const f=v/maxV[i];
-    const dx=cx+r*f*Math.cos(ang[i]);
-    const dy=cy+r*f*Math.sin(ang[i]);
-    svg+=`<circle cx="${dx.toFixed(1)}" cy="${dy.toFixed(1)}" r="4" fill="#c0392b" stroke="#fff" stroke-width="1.5"/>`;
-    // Offset perpendicular clockwise
-    const px=dx+13*Math.cos(ang[i]+Math.PI/2);
-    const py=dy+13*Math.sin(ang[i]+Math.PI/2);
-    svg+=`<text x="${px.toFixed(1)}" y="${py.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#c0392b">${v}</text>`;
-  });
-  aR.forEach((v,i)=>{
-    const f=v/maxV[i];
-    const dx=cx+r*f*Math.cos(ang[i]);
-    const dy=cy+r*f*Math.sin(ang[i]);
-    svg+=`<circle cx="${dx.toFixed(1)}" cy="${dy.toFixed(1)}" r="4" fill="#27ae60" stroke="#fff" stroke-width="1.5"/>`;
-    // Offset perpendicular counter-clockwise
-    const px=dx+13*Math.cos(ang[i]-Math.PI/2);
-    const py=dy+13*Math.sin(ang[i]-Math.PI/2);
-    svg+=`<text x="${px.toFixed(1)}" y="${py.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-size="11" font-weight="700" fill="#27ae60">${v}</text>`;
-  });
-  // Labels
-  lbls.forEach((lbl,i)=>{
-    const lx=cx+(r+22)*Math.cos(ang[i]), ly=cy+(r+22)*Math.sin(ang[i]);
-    const lines=lbl.split('\n');
-    if(lines.length===1){
-      svg+=`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="700" fill="#333">${lines[0]}</text>`;
-    }else{
-      svg+=`<text x="${lx.toFixed(1)}" y="${(ly-7).toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="700" fill="#333">${lines[0]}</text>`;
-      svg+=`<text x="${lx.toFixed(1)}" y="${(ly+7).toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-size="12" font-weight="700" fill="#333">${lines[1]}</text>`;
-    }
-  });
-  // Legend
-  svg+=`<rect x="60" y="315" width="10" height="10" fill="#c0392b" rx="2"/><text x="76" y="325" font-size="10" fill="#555" dominant-baseline="middle">主队</text>`;
-  svg+=`<rect x="120" y="315" width="10" height="10" fill="#27ae60" rx="2"/><text x="136" y="325" font-size="10" fill="#555" dominant-baseline="middle">客队</text>`;
-  svg+=`</svg>`;
-
-  // Side stats panels
-  const statLabels = ['进球 / 失球', '场均进球', '场均失球', '赛季场均进球', '赛季场均失球'];
-  const homeVals = [`${hS.gf} / ${hS.ga}`, (hS.gf/5).toFixed(1), (hS.ga/5).toFixed(1), an.home_avg_scored||'-', an.home_avg_conceded||'-'];
-  const awayVals = [`${aS.gf} / ${aS.ga}`, (aS.gf/5).toFixed(1), (aS.ga/5).toFixed(1), an.away_avg_scored||'-', an.away_avg_conceded||'-'];
-  const sideStats = (title, vals, cls) => {
-    let rows = vals.map((v,i)=>`<div class="radar-row"><span class="radar-row-label">${statLabels[i]}</span><span class="radar-row-val">${v}</span></div>`).join('');
-    return `<div class="radar-side ${cls}"><div class="radar-side-title">${title}</div>${rows}</div>`;
-  };
-  return `<div class="radar-wrap">${sideStats(homeTeam||'主队', homeVals, 'radar-side-home')}<div class="radar-center">${svg}</div>${sideStats(awayTeam||'客队', awayVals, 'radar-side-away')}</div>`;
-}
-
-function buildExportHtml(m, pred, an, hS, aS, h2h, txt, mode) {
   const resultLabel = pred.result==='home'?'主胜':pred.result==='draw'?'平局':pred.result==='away'?'客胜':'—';
   const goalsLabel = pred.goals || '—';
   const scoresLabel = (pred.scores||[]).filter(Boolean).join(' / ') || '—';
   const noteLabel = pred.note || '';
-  const resColor = resultLabel==='主胜'?'#c0392b':resultLabel==='客胜'?'#27ae60':resultLabel==='平局'?'#f39c12':'#999';
 
-  // Shared header
-  const header = `
+  // Build export HTML
+  const exportHtml = `
+    <div class="exp-block">
+      <!-- Header -->
       <div class="exp-header">
         <div class="exp-num">${m.match_num}</div>
         <div class="exp-league">${m.league||''} · ${m.match_date||''} ${m.match_time||''}</div>
         <div class="exp-matchup">
-          ${teamLogoSpan(m,'home')?`<img src="${teamLogoUrl(m.home_team_id)}" style="width:40px;height:40px;object-fit:contain;vertical-align:middle;" onerror="this.style.display='none'">`:''}
           <span>${m.home_team} <small style="color:#999;font-weight:400;">[${m.home_rank}]</small></span>
           <span class="spacer">VS</span>
           <span><small style="color:#999;font-weight:400;">[${m.away_rank}]</small> ${m.away_team}</span>
-          ${teamLogoSpan(m,'away')?`<img src="${teamLogoUrl(m.away_team_id)}" style="width:40px;height:40px;object-fit:contain;vertical-align:middle;" onerror="this.style.display='none'">`:''}
         </div>
         <div class="exp-time"></div>
-      </div>`;
-
-  // Shared prediction stamp
-  const predStamp = `
-      <div class="exp-pred-stamp">
-        <div class="stamp-title">📊 今日比赛</div>
-        <div class="stamp-row">
-          <div class="stamp-item">
-            <div class="stamp-val" style="color:${resColor};">${resultLabel}</div>
-          </div>
-          <div class="stamp-item">
-            <div class="stamp-lbl">进球数</div>
-            <div class="stamp-val">${goalsLabel}</div>
-          </div>
-          <div class="stamp-item">
-            <div class="stamp-lbl">比分参考</div>
-            <div class="stamp-val">${scoresLabel}</div>
-          </div>
-        </div>
-        ${noteLabel?`<div style="text-align:center;width:100%;margin-top:6px;"><div class="stamp-lbl">分析</div><div style="font-size:15px;color:#555;margin-top:2px;">${noteLabel}</div></div>`:''}
-      </div>`;
-
-  // ===== Pred-only mode: Header + Prediction stamp + footer =====
-  if (mode === 'pred') {
-    return `<div class="exp-block">${header}${predStamp}<div style="padding:16px;text-align:center;font-size:13px;color:#aaa;border-top:1px solid #eee;">数据来源：500彩票网 · 仅供参考</div></div>`;
-  }
-
-  // ===== Full mode =====
-  return `
-    <div class="exp-block">
-      ${header}
-      ${predStamp}
+      </div>
 
       <!-- Recent Form -->
       <div class="exp-section-title">📋 球队近况（近5场）</div>
       <table style="width:100%;border-collapse:collapse;margin-bottom:10px;">
         <tr>
           <td style="width:50%;vertical-align:top;padding-right:10px;">
-            <div style="font-weight:700;font-size:15px;margin-bottom:6px;">🏠 ${m.home_team}</div>
+            <div style="font-weight:700;font-size:13px;margin-bottom:6px;">🏠 ${m.home_team}</div>
             <table class="exp-form-table">
               <tr><th>日期</th><th>对手</th><th>比分</th><th>赛果</th></tr>
               ${(an.home_recent_5_matches||[]).map(r=>{
@@ -2318,7 +1183,7 @@ function buildExportHtml(m, pred, an, hS, aS, h2h, txt, mode) {
             </table>
           </td>
           <td style="width:50%;vertical-align:top;padding-left:10px;">
-            <div style="font-weight:700;font-size:15px;margin-bottom:6px;">🛫 ${m.away_team}</div>
+            <div style="font-weight:700;font-size:13px;margin-bottom:6px;">🛫 ${m.away_team}</div>
             <table class="exp-form-table">
               <tr><th>日期</th><th>对手</th><th>比分</th><th>赛果</th></tr>
               ${(an.away_recent_5_matches||[]).map(r=>{
@@ -2331,9 +1196,32 @@ function buildExportHtml(m, pred, an, hS, aS, h2h, txt, mode) {
         </tr>
       </table>
 
-      <!-- Stats Radar -->
+      <!-- Stats -->
       <div class="exp-section-title">📊 近5场攻防数据</div>
-      ${buildRadarSvg(hS, aS, an, m.home_team, m.away_team)}
+      <table style="width:100%;border-collapse:collapse;margin-bottom:10px;">
+        <tr>
+          <td style="width:50%;padding-right:10px;vertical-align:top;">
+            <div class="exp-stat-box">
+              <div style="font-weight:700;font-size:13px;margin-bottom:6px;">🏠 ${m.home_team}</div>
+              <div class="s-row"><span>进球 / 失球</span><span style="font-weight:700;">${hS.gf} / ${hS.ga}</span></div>
+              <div class="s-row"><span>场均进球</span><span style="font-weight:700;">${(hS.gf/5).toFixed(1)}</span></div>
+              <div class="s-row"><span>场均失球</span><span style="font-weight:700;">${(hS.ga/5).toFixed(1)}</span></div>
+              <div class="s-row"><span>赛季场均进球</span><span style="font-weight:700;">${an.home_avg_scored||'-'}</span></div>
+              <div class="s-row"><span>赛季场均失球</span><span style="font-weight:700;">${an.home_avg_conceded||'-'}</span></div>
+            </div>
+          </td>
+          <td style="width:50%;padding-left:10px;vertical-align:top;">
+            <div class="exp-stat-box">
+              <div style="font-weight:700;font-size:13px;margin-bottom:6px;">🛫 ${m.away_team}</div>
+              <div class="s-row"><span>进球 / 失球</span><span style="font-weight:700;">${aS.gf} / ${aS.ga}</span></div>
+              <div class="s-row"><span>场均进球</span><span style="font-weight:700;">${(aS.gf/5).toFixed(1)}</span></div>
+              <div class="s-row"><span>场均失球</span><span style="font-weight:700;">${(aS.ga/5).toFixed(1)}</span></div>
+              <div class="s-row"><span>赛季场均进球</span><span style="font-weight:700;">${an.away_avg_scored||'-'}</span></div>
+              <div class="s-row"><span>赛季场均失球</span><span style="font-weight:700;">${an.away_avg_conceded||'-'}</span></div>
+            </div>
+          </td>
+        </tr>
+      </table>
 
       <!-- Analysis -->
       <div class="exp-section-title">💡 关键分析</div>
@@ -2341,7 +1229,7 @@ function buildExportHtml(m, pred, an, hS, aS, h2h, txt, mode) {
 
       <!-- H2H -->
       <div class="exp-section-title">⚔️ 交锋记录（近6次）</div>
-      ${h2h?`<div style="font-size:14px;color:#666;margin-bottom:8px;background:#f8f9fb;padding:6px 10px;border-radius:4px;">${m.home_team} ${h2h.w}胜${h2h.d}平${h2h.l}负，进${h2h.gf}球失${h2h.ga}球</div>`:''}
+      ${h2h?`<div style="font-size:12px;color:#666;margin-bottom:8px;background:#f8f9fb;padding:6px 10px;border-radius:4px;">${m.home_team} ${h2h.w}胜${h2h.d}平${h2h.l}负，进${h2h.gf}球失${h2h.ga}球</div>`:''}
       <table class="exp-form-table">
         <tr><th>日期</th><th>主队</th><th>比分</th><th>客队</th><th>赛果</th></tr>
         ${(an.h2h_matches||[]).map(r=>{
@@ -2350,37 +1238,29 @@ function buildExportHtml(m, pred, an, hS, aS, h2h, txt, mode) {
         }).join('')}
       </table>
 
+      <!-- Prediction Stamp -->
+      <div class="exp-pred-stamp">
+        <div>
+          <div class="stamp-lbl">预测结果</div>
+          <div class="stamp-val" style="color:${resultLabel==='主胜'?'#c0392b':resultLabel==='客胜'?'#27ae60':resultLabel==='平局'?'#f39c12':'#999'};font-size:18px;">${resultLabel}</div>
+        </div>
+        <div>
+          <div class="stamp-lbl">进球数</div>
+          <div class="stamp-val">${goalsLabel}</div>
+        </div>
+        <div>
+          <div class="stamp-lbl">比分参考</div>
+          <div class="stamp-val">${scoresLabel}</div>
+        </div>
+        ${noteLabel?`<div style="flex-basis:100%;"><div class="stamp-lbl">分析</div><div style="font-size:12px;color:#555;margin-top:4px;">${noteLabel}</div></div>`:''}
+      </div>
     </div>
   `;
-}
-
-async function exportMatch(id, mode) {
-  mode = mode || currentExportMode || 'full';
-  const m = allData.find(x => x.fixture_id === id);
-  if (!m) return;
-
-  currentExportId = id;
-  currentExportMode = mode;
-
-  const pred = getPred(id);
-  const an = m.analysis||{};
-  const hS = formStats(an.home_recent_5_matches, m.home_team);
-  const aS = formStats(an.away_recent_5_matches, m.away_team);
-  const h2h = h2hSummary(an.h2h_matches, m.home_team, m.away_team);
-  const txt = genAnalysis(m, hS, aS, h2h, an, getAnalysisMode(id));
-
-  const exportHtml = buildExportHtml(m, pred, an, hS, aS, h2h, txt, mode);
-
-  // Update tab states
-  document.getElementById('tabFull').classList.toggle('active', mode === 'full');
-  document.getElementById('tabPred').classList.toggle('active', mode === 'pred');
 
   // Show in overlay
   const card = document.getElementById('exportCard');
   card.innerHTML = exportHtml;
   document.getElementById('exportOverlay').classList.add('show');
-  updateBgButtons();
-  applyBgToExport();
 
   // Auto-generate image
   showToast('正在生成图片...');
@@ -2399,479 +1279,9 @@ async function exportMatch(id, mode) {
   }
 }
 
-function switchExportMode(mode) {
-  if (!currentExportId) return;
-  if (mode === currentExportMode) return;
-  exportMatch(currentExportId, mode);
-}
-
 function closeExport() {
   document.getElementById('exportOverlay').classList.remove('show');
   exportImageDataUrl = null;
-  currentExportId = null;
-  currentExportMode = 'full';
-}
-
-// ===== Batch Multi-Match Export =====
-function toggleSelectMatch(id) {
-  if (selectedMatches.has(id)) selectedMatches.delete(id);
-  else selectedMatches.add(id);
-  // Update the checkbox visuals without full re-render
-  document.querySelectorAll('.match-card').forEach(card => {
-    const cid = card.getAttribute('data-id');
-    const chk = card.querySelector('.batch-check');
-    if (chk) {
-      const on = selectedMatches.has(cid);
-      chk.classList.toggle('checked', on);
-      chk.textContent = on ? '✓' : '';
-    }
-  });
-  updateBatchBar();
-}
-
-function clearBatchSelection() {
-  selectedMatches.clear();
-  document.querySelectorAll('.batch-check').forEach(chk => {
-    chk.classList.remove('checked');
-    chk.textContent = '';
-  });
-  updateBatchBar();
-}
-
-function selectAllVisible() {
-  const visible = allData.filter(m => {
-    const leagueOk = currentLeague === '全部' || (m.league || '其他') === currentLeague;
-    const dateOk = currentDate === '全部' || getMatchWeek(m) === currentDate;
-    const finishedOk = !hideFinished || !isMatchFinished(m);
-    return leagueOk && dateOk && finishedOk;
-  });
-  for (const m of visible) selectedMatches.add(m.fixture_id);
-  document.querySelectorAll('.match-card').forEach(card => {
-    const cid = card.getAttribute('data-id');
-    const chk = card.querySelector('.batch-check');
-    if (chk) {
-      const on = selectedMatches.has(cid);
-      chk.classList.toggle('checked', on);
-      chk.textContent = on ? '✓' : '';
-    }
-  });
-  updateBatchBar();
-}
-
-function updateBatchBar() {
-  const n = selectedMatches.size;
-  const bar = document.getElementById('batchBar');
-  bar.classList.toggle('show', n > 0);
-  document.getElementById('batchCount').textContent = n;
-  document.getElementById('btnBatchExport').disabled = n === 0;
-}
-
-function buildBatchPredHtml(matchIds) {
-  let blocks = '';
-  for (const id of matchIds) {
-    const m = allData.find(x => x.fixture_id === id);
-    if (!m) continue;
-    const pred = getPred(id);
-    const resultLabel = pred.result==='home'?'主胜':pred.result==='draw'?'平局':pred.result==='away'?'客胜':'未选';
-    const goalsLabel = pred.goals || '—';
-    const scoresLabel = (pred.scores||[]).filter(Boolean).join(' / ') || '—';
-    const noteLabel = pred.note || '';
-    const resColor = resultLabel==='主胜'?'#c0392b':resultLabel==='客胜'?'#27ae60':resultLabel==='平局'?'#f39c12':'#999';
-
-    blocks += `
-      <div style="background:#fff;border-radius:10px;margin-bottom:12px;overflow:hidden;border:1px solid #e8eaed;">
-        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:#fafbfc;border-bottom:1px solid #f0f0f0;">
-          <div style="background:#c0392b;color:#fff;font-size:14px;font-weight:800;padding:4px 10px;border-radius:5px;letter-spacing:1px;">${m.match_num}</div>
-          <div style="flex:1;">
-            <div style="font-size:12px;color:#999;">${m.league||''} · ${m.match_date||''} ${m.match_time||''}</div>
-            <div style="font-weight:700;font-size:17px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px;">
-              <span>${m.home_team} <small style="color:#999;font-weight:400;">[${m.home_rank}]</small></span>
-              <span style="color:#ccc;font-size:13px;">VS</span>
-              <span><small style="color:#999;font-weight:400;">[${m.away_rank}]</small> ${m.away_team}</span>
-            </div>
-          </div>
-        </div>
-        <div style="background:#f0f7ff;padding:14px 16px;">
-          <div style="display:flex;align-items:center;justify-content:space-around;gap:8px;">
-            <div style="text-align:center;">
-              <div style="font-size:12px;color:#888;margin-bottom:3px;">胜平负</div>
-              <div style="font-size:22px;font-weight:800;color:${resColor};">${resultLabel}</div>
-            </div>
-            <div style="width:1px;height:36px;background:#cce0f5;"></div>
-            <div style="text-align:center;">
-              <div style="font-size:12px;color:#888;margin-bottom:3px;">进球数</div>
-              <div style="font-size:18px;font-weight:700;">${goalsLabel}</div>
-            </div>
-            <div style="width:1px;height:36px;background:#cce0f5;"></div>
-            <div style="text-align:center;">
-              <div style="font-size:12px;color:#888;margin-bottom:3px;">比分参考</div>
-              <div style="font-size:18px;font-weight:700;">${scoresLabel}</div>
-            </div>
-          </div>
-          ${noteLabel?`<div style="margin-top:10px;padding-top:8px;border-top:1px dashed #cce0f5;text-align:center;"><span style="font-size:12px;color:#888;">分析：</span><span style="font-size:15px;color:#555;">${noteLabel}</span></div>`:''}
-        </div>
-      </div>`;
-  }
-  return `<div class="exp-block"><div style="padding:16px;">
-    <div style="text-align:center;margin-bottom:14px;">
-      <div style="font-size:20px;font-weight:800;color:#1a1a2e;">📊 今日比赛预测汇总</div>
-      <div style="font-size:12px;color:#999;margin-top:4px;">共 ${matchIds.length} 场 · ${new Date().toLocaleDateString('zh-CN')}</div>
-    </div>
-    ${blocks}
-    <div style="text-align:center;font-size:12px;color:#aaa;padding-top:8px;">数据来源：500彩票网 · 仅供参考</div>
-  </div></div>`;
-}
-
-async function batchExportPred() {
-  if (selectedMatches.size === 0) return;
-  const ids = Array.from(selectedMatches);
-
-  // Build combined HTML
-  const combinedHtml = buildBatchPredHtml(ids);
-
-  // Update tab states (hide tabs for batch, force pred mode)
-  document.getElementById('tabFull').classList.remove('active');
-  document.getElementById('tabPred').classList.add('active');
-  currentExportMode = 'pred';
-  currentExportId = null; // batch mode
-
-  // Show in overlay
-  const card = document.getElementById('exportCard');
-  card.innerHTML = combinedHtml;
-  document.getElementById('exportOverlay').classList.add('show');
-  updateBgButtons();
-  applyBgToExport();
-
-  // Auto-generate image
-  showToast('正在生成批量预测图片...');
-  try {
-    const canvas = await html2canvas(card, {
-      scale: 3,
-      useCORS: true,
-      backgroundColor: '#ffffff',
-      logging: false,
-    });
-    exportImageDataUrl = canvas.toDataURL('image/png');
-    showToast('✅ 图片已生成！点击下方按钮下载');
-  } catch(e) {
-    showToast('⚠️ 图片生成失败，请重试');
-    console.error(e);
-  }
-}
-
-// ===== Smart Import =====
-function openImportModal() {
-  document.getElementById('importOverlay').classList.add('show');
-}
-function closeImportModal() {
-  document.getElementById('importOverlay').classList.remove('show');
-}
-
-function normalizeGoals(t) {
-  if (/7\s*\+?\s*球|7球以上/.test(t)) return '7+球';
-  if (/0[-~～]1\s*球/.test(t)) return '0-1球';
-  if (/2[-~～]3\s*球/.test(t)) return '2-3球';
-  if (/4[-~～]6\s*球/.test(t)) return '4-6球';
-  return t;
-}
-
-// Smart-parse one line into { matchNum, result, goals, scores[], note }
-function parseImportLine(line) {
-  if (!line || !line.trim()) return null;
-  let s = line.trim();
-
-  // Extract match number at start: "001", "1.", "第1场", "1)"
-  let matchNum = null;
-  const numMatch = s.match(/^(?:第\s*)?(\d{1,4})\s*(?:场|\.|、|\)|）)?/);
-  if (numMatch) {
-    matchNum = numMatch[1];
-    s = s.slice(numMatch[0].length);
-  }
-
-  // Tokenize remaining by separators
-  const tokens = s.split(/[|\t,，;；]+|\s+/).map(t => t.trim()).filter(Boolean);
-
-  let result = null, goals = null, scores = [], noteParts = [];
-  for (const tok of tokens) {
-    // Goals: X-Y球 / X~Y球 / 7+球 / N球以上
-    if (/\d+[-~～]\d+\s*球/.test(tok) || /7\s*\+\s*球/.test(tok) || /7球以上/.test(tok) || /\d+\s*球以上/.test(tok)) {
-      goals = normalizeGoals(tok);
-      continue;
-    }
-    // Score: X-Y / X:Y / X：Y (digits only)
-    const scoreMatch = tok.match(/^(\d+)[-:：](\d+)$/);
-    if (scoreMatch) {
-      if (scores.length < 3) scores.push(tok.replace(/[:：]/g, '-'));
-      continue;
-    }
-    // Result keywords
-    if (/主胜/.test(tok) || tok === '胜') { result = 'home'; continue; }
-    if (/平局/.test(tok) || tok === '平') { result = 'draw'; continue; }
-    if (/客胜/.test(tok) || tok === '负') { result = 'away'; continue; }
-    // Numeric result codes: 3=home, 1=draw, 0=away
-    if (tok === '3') { result = 'home'; continue; }
-    if (tok === '1') { result = 'draw'; continue; }
-    if (tok === '0') { result = 'away'; continue; }
-    // Skip placeholders
-    if (tok === '-' || tok === '—' || tok === '/') continue;
-    // Treat as note
-    noteParts.push(tok);
-  }
-
-  if (!matchNum && !result && !goals && scores.length === 0) return null;
-  return { matchNum, result, goals, scores, note: noteParts.join(' ') };
-}
-
-function findMatchByNum(num) {
-  if (!num) return null;
-  const clean = num.replace(/^0+/, '');
-  return allData.find(m => {
-    const mn = (m.match_num || '').replace(/^0+/, '');
-    return mn && mn === clean;
-  });
-}
-
-function doImport() {
-  const text = document.getElementById('importText').value;
-  if (!text.trim()) { showToast('请先粘贴预测数据'); return; }
-
-  const lines = text.split(/\n/);
-  const preds = loadPreds();
-  let imported = 0, skipped = 0;
-  const errLines = [];
-
-  for (let i = 0; i < lines.length; i++) {
-    const parsed = parseImportLine(lines[i]);
-    if (!parsed) continue;
-    const m = findMatchByNum(parsed.matchNum);
-    if (!m) {
-      skipped++;
-      if (parsed.matchNum) errLines.push(`编号 ${parsed.matchNum}`);
-      continue;
-    }
-    const id = m.fixture_id;
-    if (!preds[id]) preds[id] = {};
-    if (parsed.result) preds[id].result = parsed.result;
-    if (parsed.goals) preds[id].goals = parsed.goals;
-    if (parsed.scores.length) {
-      // Merge: keep existing empty slots, fill new
-      const old = preds[id].scores || ['','',''];
-      for (let j = 0; j < 3; j++) {
-        if (parsed.scores[j]) old[j] = parsed.scores[j];
-      }
-      preds[id].scores = old;
-    }
-    if (parsed.note) preds[id].note = parsed.note;
-    imported++;
-  }
-
-  savePreds(preds);
-  const msg = `✅ 导入 ${imported} 场` + (skipped ? `，跳过 ${skipped} 场（编号未匹配）` : '');
-  showToast(msg);
-  render();
-  if (imported > 0 && skipped === 0) {
-    setTimeout(() => closeImportModal(), 800);
-  } else if (errLines.length) {
-    console.log('未匹配的编号:', errLines.join(', '));
-  }
-}
-
-function copyAllPredsAsText() {
-  const preds = loadPreds();
-  const lines = [];
-  for (const m of allData) {
-    const p = preds[m.fixture_id];
-    if (!p) continue;
-    const hasData = p.result || p.goals || (p.scores||[]).some(Boolean);
-    if (!hasData) continue;
-    const num = m.match_num || '';
-    const res = p.result==='home'?'主胜':p.result==='draw'?'平局':p.result==='away'?'客胜':'';
-    const goals = p.goals || '';
-    const scores = (p.scores||[]).filter(Boolean).join(' | ');
-    const note = p.note || '';
-    lines.push([num, res, goals, scores, note].filter(Boolean).join(' | '));
-  }
-  if (!lines.length) { showToast('暂无预测数据可复制'); return; }
-  const text = lines.join('\n');
-  const ta = document.getElementById('importText');
-  ta.value = text;
-  ta.select();
-  try {
-    document.execCommand('copy');
-    showToast('✅ 已复制到剪贴板并填入文本框');
-  } catch {
-    showToast('已填入文本框，可手动复制');
-  }
-}
-
-// ===== Background Image (localStorage + Editor) =====
-function getBgImage() { return localStorage.getItem('kleague_bg_image') || ''; }
-
-let _bgEditorImg = null;
-let _bgOffX = 0, _bgOffY = 0;
-let _bgDragStart = null;
-
-function handleBgUpload(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-  if (file.size > 8 * 1024 * 1024) {
-    showToast('图片太大，请选小于 8MB 的');
-    e.target.value = '';
-    return;
-  }
-  const reader = new FileReader();
-  reader.onload = function(ev) {
-    const img = new Image();
-    img.onload = function() {
-      _bgEditorImg = img;
-      _bgOffX = 0; _bgOffY = 0;
-      document.getElementById('bgScale').value = 100;
-      document.getElementById('bgOpacity').value = 85;
-      // auto-fit scale so image covers preview height
-      const canvas = document.getElementById('bgEditorCanvas');
-      const fitScale = Math.max(canvas.height / img.width, canvas.width / img.height);
-      // actually fit to cover canvas
-      const sc = Math.max(canvas.width / img.width, canvas.height / img.height);
-      const baseScale = Math.round(sc * 100);
-      const slider = document.getElementById('bgScale');
-      slider.min = Math.max(50, Math.round(baseScale * 0.5));
-      slider.max = Math.round(baseScale * 3);
-      slider.value = baseScale;
-      drawBgPreview();
-      document.getElementById('bgEditorOverlay').classList.add('show');
-      bindBgDrag();
-    };
-    img.src = ev.target.result;
-  };
-  reader.readAsDataURL(file);
-  e.target.value = '';
-}
-
-function drawBgPreview() {
-  if (!_bgEditorImg) return;
-  const canvas = document.getElementById('bgEditorCanvas');
-  const ctx = canvas.getContext('2d');
-  const W = canvas.width, H = canvas.height;
-  ctx.clearRect(0, 0, W, H);
-  ctx.fillStyle = '#f5f7fa';
-  ctx.fillRect(0, 0, W, H);
-  const img = _bgEditorImg;
-  const scale = document.getElementById('bgScale').value / 100;
-  const iw = img.width * scale;
-  const ih = img.height * scale;
-  const x = (W - iw) / 2 + _bgOffX;
-  const y = (H - ih) / 2 + _bgOffY;
-  ctx.drawImage(img, x, y, iw, ih);
-  const op = document.getElementById('bgOpacity').value / 100;
-  ctx.fillStyle = `rgba(255,255,255,${op})`;
-  ctx.fillRect(0, 0, W, H);
-  // overlay grid lines to simulate text area
-  ctx.strokeStyle = 'rgba(200,214,240,0.4)';
-  ctx.lineWidth = 1;
-  for (let i = 1; i < 4; i++) {
-    ctx.beginPath();
-    ctx.moveTo(0, H * i / 4);
-    ctx.lineTo(W, H * i / 4);
-    ctx.stroke();
-  }
-  document.getElementById('bgScaleVal').textContent = document.getElementById('bgScale').value + '%';
-  document.getElementById('bgOpacityVal').textContent = document.getElementById('bgOpacity').value + '%';
-}
-
-function bindBgDrag() {
-  const canvas = document.getElementById('bgEditorCanvas');
-  canvas.onpointerdown = function(e) {
-    _bgDragStart = { x: e.clientX, y: e.clientY, ox: _bgOffX, oy: _bgOffY };
-    canvas.setPointerCapture(e.pointerId);
-  };
-  canvas.onpointermove = function(e) {
-    if (!_bgDragStart) return;
-    _bgOffX = _bgDragStart.ox + (e.clientX - _bgDragStart.x);
-    _bgOffY = _bgDragStart.oy + (e.clientY - _bgDragStart.y);
-    drawBgPreview();
-  };
-  canvas.onpointerup = function(e) { _bgDragStart = null; };
-}
-
-function confirmBgEditor() {
-  if (!_bgEditorImg) return;
-  const exportW = 750;
-  const exportH = 1500;
-  const canvas = document.createElement('canvas');
-  canvas.width = exportW;
-  canvas.height = exportH;
-  const ctx = canvas.getContext('2d');
-  ctx.fillStyle = '#fff';
-  ctx.fillRect(0, 0, exportW, exportH);
-  const img = _bgEditorImg;
-  const previewCanvas = document.getElementById('bgEditorCanvas');
-  const pW = previewCanvas.width, pH = previewCanvas.height;
-  const scale = document.getElementById('bgScale').value / 100;
-  const iw = img.width * scale;
-  const ih = img.height * scale;
-  const x = (exportW - iw) / 2 + _bgOffX * (exportW / pW);
-  const y = (exportH - ih) / 2 + _bgOffY * (exportH / pH);
-  ctx.drawImage(img, x, y, iw, ih);
-  const op = document.getElementById('bgOpacity').value / 100;
-  ctx.fillStyle = `rgba(255,255,255,${op})`;
-  ctx.fillRect(0, 0, exportW, exportH);
-  let dataUrl;
-  try { dataUrl = canvas.toDataURL('image/jpeg', 0.78); }
-  catch(err) { showToast('图片处理失败'); return; }
-  try {
-    localStorage.setItem('kleague_bg_image', dataUrl);
-    closeBgEditor();
-    updateBgButtons();
-    applyBgToExport();
-    regenerateImage();
-    showToast('✅ 背景图已保存，下次自动使用');
-  } catch(err) {
-    showToast('存储失败，请调小缩放后重试');
-  }
-}
-
-function closeBgEditor() {
-  document.getElementById('bgEditorOverlay').classList.remove('show');
-  _bgEditorImg = null;
-}
-
-function applyBgToExport() {
-  const bg = getBgImage();
-  const block = document.querySelector('#exportCard .exp-block');
-  if (!block) return;
-  if (bg) {
-    block.style.background = `url("${bg}")`;
-    block.style.backgroundSize = 'cover';
-    block.style.backgroundPosition = 'center';
-  } else {
-    block.style.background = '';
-    block.style.backgroundSize = '';
-    block.style.backgroundPosition = '';
-  }
-}
-function updateBgButtons() {
-  const has = !!getBgImage();
-  document.getElementById('btnBgClear').style.display = has ? '' : 'none';
-}
-function clearBg() {
-  localStorage.removeItem('kleague_bg_image');
-  applyBgToExport();
-  updateBgButtons();
-  showToast('已清除背景图');
-  regenerateImage();
-}
-async function regenerateImage() {
-  const card = document.getElementById('exportCard');
-  if (!card || !document.getElementById('exportOverlay').classList.contains('show')) return;
-  showToast('正在重新生成图片...');
-  try {
-    const canvas = await html2canvas(card, { scale: 3, useCORS: true, backgroundColor: '#ffffff', logging: false });
-    exportImageDataUrl = canvas.toDataURL('image/png');
-    showToast('✅ 图片已更新');
-  } catch(e) {
-    showToast('⚠️ 重新生成失败');
-    console.error(e);
-  }
 }
 
 function downloadImage() {
@@ -2906,17 +1316,12 @@ async function init() {
     } catch {}
   }
   renderTabs();
-  renderDateTabs();
   render();
 }
 
 // Close export overlay on background click
 document.getElementById('exportOverlay').addEventListener('click', function(e) {
   if (e.target === this) closeExport();
-});
-// Close import overlay on background click
-document.getElementById('importOverlay').addEventListener('click', function(e) {
-  if (e.target === this) closeImportModal();
 });
 
 init();
