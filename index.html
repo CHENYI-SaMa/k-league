@@ -10,69 +10,70 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, sans-serif;
-    background: #f0f0f0;
+    background: #ececec;
     color: #1a1a1a;
     font-size: 14px;
     line-height: 1.6;
     -webkit-text-size-adjust: 100%;
-    padding-bottom: 40px;
+    padding-bottom: 70px;
   }
 
-  /* ===== Overview Page ===== */
-  .overview-page { display: block; }
-  .detail-page { display: none; }
+  /* ===== Poster (single page) ===== */
+  .poster {
+    max-width: 640px;
+    margin: 0 auto;
+    background: #fff;
+    min-height: 100vh;
+    box-shadow: 0 0 30px rgba(0,0,0,0.06);
+  }
 
   /* ---- Header ---- */
-  .page-header {
-    background: #fff;
-    padding: 28px 20px 24px;
-    text-align: center;
-    border-bottom: 1px solid #e8e8e8;
+  .poster-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 26px 20px 20px;
+    border-bottom: 1px solid #ededed;
   }
-  .page-header h1 {
-    font-size: 32px;
+  .ph-left h1 {
+    font-size: 30px;
     font-weight: 900;
     letter-spacing: 4px;
     color: #1a1a1a;
-    margin-bottom: 6px;
+    line-height: 1.1;
   }
-  .page-header .subtitle {
-    font-size: 13px;
-    color: #888;
+  .ph-sub {
+    font-size: 12px;
+    color: #999;
     letter-spacing: 2px;
+    margin-top: 8px;
   }
-  .header-bar {
+  .ph-right {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 16px;
-    background: #fff;
-    border-bottom: 1px solid #eee;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    padding-top: 2px;
   }
-  .header-bar .date-info { font-size: 12px; color: #999; }
-  .header-bar .btn-back {
-    display: none;
-    background: none;
-    border: 1px solid #ddd;
-    padding: 6px 14px;
-    border-radius: 4px;
-    font-size: 13px;
-    cursor: pointer;
-    color: #555;
+  .ph-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #aaa;
+    text-transform: uppercase;
   }
-  .detail-page .header-bar .btn-back { display: inline-block; }
+  .ph-tag strong { color: #1a3a6c; }
 
-  /* ---- Match Card (Overview) ---- */
-  .match-list { padding: 12px 12px 0; }
+  /* ---- Match Card ---- */
+  .match-list { padding: 14px 14px 0; }
   .match-card {
+    position: relative;
     background: #fff;
-    border-radius: 2px;
-    margin-bottom: 12px;
+    border: 1px solid #ececec;
+    border-radius: 3px;
+    margin-bottom: 14px;
     overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
   }
 
   /* Card top area: number + teams */
@@ -86,18 +87,18 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-width: 56px;
+    min-width: 54px;
     padding-right: 12px;
     border-right: 1px solid #eee;
     margin-right: 14px;
   }
   .card-num {
-    font-size: 26px;
+    font-size: 25px;
     font-weight: 900;
     color: #fff;
     background: linear-gradient(135deg, #1a3a6c, #2a5aa0);
-    width: 48px;
-    height: 42px;
+    width: 46px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -111,6 +112,8 @@
     letter-spacing: 2px;
     margin-top: 4px;
     font-weight: 600;
+    text-align: center;
+    line-height: 1.2;
   }
 
   /* Team area */
@@ -127,15 +130,14 @@
     align-items: center;
     gap: 6px;
   }
-  .team-side.away { align-items: center; }
   .team-logo-wrap {
-    width: 64px;
-    height: 64px;
+    width: 60px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .team-logo-wrap svg { width: 56px; height: 56px; }
+  .team-logo-wrap svg { width: 54px; height: 54px; }
   .team-name-cn {
     font-size: 15px;
     font-weight: 800;
@@ -143,8 +145,8 @@
     text-align: center;
   }
   .team-name-en {
-    font-size: 10px;
-    color: #999;
+    font-size: 9.5px;
+    color: #aaa;
     text-align: center;
     letter-spacing: 0.5px;
     text-transform: uppercase;
@@ -156,10 +158,9 @@
     flex-direction: column;
     align-items: center;
     padding: 0 10px;
-    position: relative;
   }
   .vs-text {
-    font-size: 28px;
+    font-size: 27px;
     font-weight: 900;
     color: #333;
     font-style: italic;
@@ -167,13 +168,13 @@
   }
   .vs-line {
     width: 1px;
-    height: 30px;
+    height: 28px;
     background: linear-gradient(to bottom, transparent, #ccc, transparent);
     margin-top: 2px;
     transform: rotate(-15deg);
   }
 
-  /* Card bottom: prediction + scores + analysis */
+  /* Card bottom: 预测赛果 + 比分参考 + 分析 */
   .card-bottom {
     display: flex;
     border-top: 1px solid #eee;
@@ -185,8 +186,8 @@
     flex-direction: column;
     justify-content: center;
   }
-  .cb-pred { flex: 0 0 90px; align-items: center; border-right: 1px solid #eee; }
-  .cb-scores { flex: 0 0 140px; align-items: center; border-right: 1px solid #eee; }
+  .cb-pred { flex: 0 0 96px; align-items: center; border-right: 1px solid #eee; }
+  .cb-scores { flex: 0 0 132px; align-items: center; border-right: 1px solid #eee; }
   .cb-analysis { flex: 1; align-items: flex-start; }
 
   .cb-label {
@@ -194,43 +195,52 @@
     font-weight: 700;
     color: #999;
     letter-spacing: 1px;
-    margin-bottom: 6px;
+    margin-bottom: 7px;
     text-transform: uppercase;
   }
-  .pred-tag {
+
+  /* 预测赛果：第一行 胜平负 大字 + 第二行 球数 小字 */
+  .pred-main {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: 5px 14px;
     border-radius: 3px;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 800;
     color: #fff;
-    min-height: 32px;
+    min-width: 56px;
     cursor: pointer;
     transition: opacity 0.15s;
+    white-space: nowrap;
   }
-  .pred-tag:hover { opacity: 0.85; }
-  .pred-tag.blue { background: #1a3a6c; }
-  .pred-tag.red { background: #8b1a1a; }
-  .pred-tag.gray { background: #bbb; color: #666; }
-  .pred-sub { font-size: 11px; font-weight: 600; margin-top: 2px; color: #888; }
+  .pred-main:hover { opacity: 0.85; }
+  .pred-main.red { background: #8b1a1a; }
+  .pred-main.blue { background: #1a3a6c; }
+  .pred-main.gray { background: #bbb; color: #666; }
+  .pred-sub {
+    font-size: 11px;
+    font-weight: 600;
+    margin-top: 6px;
+    color: #888;
+    cursor: pointer;
+  }
 
   .score-chips { display: flex; gap: 5px; flex-wrap: wrap; justify-content: center; }
   .score-chip {
     border: 1px solid #ddd;
     background: #fff;
-    padding: 4px 10px;
+    padding: 4px 9px;
     border-radius: 3px;
     font-size: 13px;
     font-weight: 700;
-    color: #444;
-    min-width: 36px;
+    color: #555;
+    min-width: 32px;
     text-align: center;
     cursor: pointer;
     transition: all 0.15s;
   }
-  .score-chip:hover, .score-chip.active { border-color: #1a3a6c; color: #1a3a6c; background: #f0f4fa; }
+  .score-chip.on { border-color: #1a3a6c; color: #1a3a6c; background: #f0f4fa; }
 
   .analysis-text {
     font-size: 12px;
@@ -240,22 +250,6 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-  }
-
-  /* Click overlay on card */
-  .card-click-area {
-    cursor: pointer;
-    position: relative;
-  }
-  .card-click-area::after {
-    content: '';
-    position: absolute;
-    bottom: 0; right: 0;
-    width: 0; height: 0;
-    border-style: solid;
-    border-width: 0 0 24px 24px;
-    border-color: transparent transparent #ccc transparent;
-    opacity: 0.3;
   }
 
   /* Card export button */
@@ -268,7 +262,7 @@
     height: 32px;
     border-radius: 50%;
     border: none;
-    background: rgba(26,26,26,0.06);
+    background: rgba(26,26,26,0.05);
     font-size: 15px;
     cursor: pointer;
     display: flex;
@@ -279,267 +273,44 @@
   .card-export-btn:hover { background: rgba(26,26,26,0.12); }
   .card-export-btn:active { transform: scale(0.92); }
 
-  /* ===== Detail Page ===== */
-  .detail-container {
-    max-width: 600px;
-    margin: 0 auto;
-    background: #fff;
-    min-height: 100vh;
-  }
-
-  /* Detail header - style like Image 2 */
-  .detail-header {
-    position: relative;
-    padding: 30px 20px 20px;
-    overflow: hidden;
-  }
-  .dh-bg-bar {
-    position: absolute;
-    top: 0; left: 0;
-    height: 6px;
-    width: 200px;
-    background: #333;
-  }
-  .dh-bg-bar:nth-child(2) { left: 210px; background: #1a3a6c; width: 160px; }
-  .dh-title-row {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    margin-bottom: 16px;
-    margin-top: 8px;
-  }
-  .dh-title {
-    font-size: 36px;
-    font-weight: 900;
-    font-style: italic;
-    color: #1a1a1a;
-    letter-spacing: 2px;
-  }
-  .dh-title-en {
-    font-size: 14px;
-    color: #999;
-    letter-spacing: 2px;
-    font-weight: 600;
-  }
-  .dh-match-line {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  .dh-league {
-    font-size: 18px;
-    font-weight: 800;
-    color: #1a3a6c;
-  }
-  .dh-matchup-text {
-    font-size: 18px;
-    font-weight: 700;
-    color: #1a1a1a;
-  }
-  .dh-match-num {
-    font-size: 22px;
-    font-weight: 900;
-    color: #1a1a1a;
-  }
-
-  /* Detail sections */
-  .d-section { padding: 16px 20px; }
-  .d-section-title {
-    font-size: 17px;
-    font-weight: 800;
-    color: #1a1a1a;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-  .d-st-bar {
-    width: 5px;
-    height: 20px;
-    background: #8b1a1a;
-    border-radius: 2px;
-    flex-shrink: 0;
-  }
-
-  /* Form text paragraphs */
-  .form-para {
-    font-size: 14px;
-    line-height: 1.75;
-    color: #333;
-    margin-bottom: 10px;
-    padding-left: 13px;
-  }
-  .form-para strong { color: #1a1a1a; }
-
-  /* Stats table - exact replica of reference */
-  .stats-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-    border: 1px solid #ddd;
-  }
-  .stats-table th {
-    background: #f5f5f5;
-    padding: 10px 12px;
-    text-align: center;
-    font-weight: 600;
-    color: #555;
-    border: 1px solid #ddd;
-    font-size: 14px;
-  }
-  .stats-table td {
-    padding: 10px 12px;
-    text-align: center;
-    border: 1px solid #ddd;
-    color: #333;
-    font-weight: 500;
-  }
-  .stats-table td:first-child {
-    font-weight: 700;
-    text-align: left;
-    padding-left: 16px;
-  }
-
-  /* Key point */
-  .key-point {
-    font-size: 14.5px;
-    line-height: 1.85;
-    color: #222;
-    padding: 14px 16px;
-    background: #fdfdfd;
-    border-radius: 2px;
-  }
-
-  /* Decorative stripes at bottom of detail */
-  .detail-stripes {
-    height: 40px;
-    margin-top: 30px;
-    background: repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 6px,
-      #ccc 6px,
-      #ccc 8px
-    );
-    opacity: 0.35;
-  }
-
-  /* Detail prediction area */
-  .detail-pred-area {
-    background: #f8f8f8;
-    padding: 16px 20px;
-    border-top: 2px solid #eee;
-  }
-  .dpa-title {
-    font-size: 13px;
-    font-weight: 700;
-    color: #888;
-    margin-bottom: 10px;
-    letter-spacing: 1px;
-  }
-  .dpa-row {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 8px;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  .dpa-label {
-    font-size: 12px;
-    color: #999;
-    font-weight: 600;
-    min-width: 48px;
-  }
-  .dpa-btn-group { display: flex; gap: 5px; flex: 1; }
-  .dpa-btn {
-    flex: 1;
-    padding: 7px 4px;
-    border: 1px solid #ddd;
-    background: #fff;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 700;
-    color: #555;
-    cursor: pointer;
-    text-align: center;
-    transition: all 0.15s;
-    min-width: 0;
-  }
-  .dpa-btn:active { transform: scale(0.97); }
-  .dpa-btn.active-h { background: #8b1a1a; color: #fff; border-color: #8b1a1a; }
-  .dpa-btn.active-a { background: #1a3a6c; color: #fff; border-color: #1a3a6c; }
-  .dpa-btn.active-d { background: #666; color: #fff; border-color: #666; }
-  .dpa-inp {
-    width: 52px;
-    padding: 7px 4px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    text-align: center;
-    font-size: 13px;
-    font-weight: 700;
-  }
-  .dpa-ta {
-    flex: 1;
-    min-width: 140px;
-    padding: 7px 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 12px;
-    font-family: inherit;
-    resize: vertical;
-    min-height: 36px;
-  }
-  .btn-export-detail {
-    width: 100%;
-    padding: 11px;
-    background: #1a1a1a;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 8px;
-    letter-spacing: 1px;
-  }
-  .btn-export-detail:active { opacity: 0.85; }
-
-  /* Footer */
-  .page-footer {
-    text-align: center;
-    padding: 20px 16px 30px;
-    font-size: 11px;
-    color: #bbb;
-    background: #fff;
-    margin-top: 12px;
-  }
-  .footer-deco {
+  /* ===== Footer ===== */
+  .poster-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 20px;
+    padding: 16px 18px;
     background: #fff;
-    border-top: 1px solid #eee;
-    font-size: 11px;
-    color: #aaa;
+    border-top: 1px solid #eaeaea;
+    margin-top: 4px;
   }
-  .barcode-box {
+  .barcode-box { display: flex; align-items: center; }
+  .barcode-lines { display: flex; gap: 2px; align-items: center; }
+  .barcode-lines span { width: 2px; height: 20px; background: #333; display: inline-block; border-radius: 1px; }
+  .pf-text { text-align: center; font-size: 11px; color: #999; line-height: 1.5; }
+  .pf-src { font-size: 10px; color: #bbb; margin-top: 2px; }
+  .pf-en { text-align: right; font-size: 10px; color: #aaa; font-weight: 700; letter-spacing: 1px; line-height: 1.4; }
+
+  /* ===== Export Bar (fixed, not in poster screenshot) ===== */
+  .export-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 200;
     display: flex;
-    align-items: center;
-    gap: 6px;
+    gap: 0;
+    padding: 0;
   }
-  .barcode-lines {
-    display: flex;
-    gap: 2px;
-    align-items: center;
+  .btn-export-poster {
+    flex: 1;
+    padding: 14px;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 1px;
   }
-  .barcode-lines span {
-    width: 2px;
-    height: 20px;
-    background: #333;
-    display: inline-block;
-  }
+  .btn-export-poster:active { opacity: 0.85; }
 
   /* ===== Export Overlay ===== */
   .export-overlay {
@@ -554,7 +325,7 @@
     padding: 20px 0;
   }
   .export-overlay.show { display: flex; }
-  .export-inner { width: 520px; max-width: 95vw; }
+  .export-inner { width: 600px; max-width: 95vw; }
   .export-toolbar {
     display: flex;
     justify-content: flex-end;
@@ -572,19 +343,13 @@
   .ebtn-close { background: #eee; color: #333; }
   .ebtn-dl { background: #1a1a1a; color: #fff; }
 
-  /* Export card image container */
-  .export-img-card {
-    background: #fff;
-    padding: 0;
-    border-radius: 2px;
-    box-shadow: 0 8px 40px rgba(0,0,0,0.25);
-  }
+  .export-img-card { background: #fff; padding: 0; border-radius: 2px; box-shadow: 0 8px 40px rgba(0,0,0,0.25); }
 
   /* ===== Toast ===== */
   .toast {
     display: none;
     position: fixed;
-    bottom: 60px;
+    bottom: 70px;
     left: 50%;
     transform: translateX(-50%);
     background: rgba(26,26,46,0.92);
@@ -597,77 +362,40 @@
   }
   .toast.show { display: block; }
 
-  /* Empty state */
-  .empty-state {
-    text-align: center;
-    padding: 80px 20px;
-    color: #bbb;
-  }
+  .empty-state { text-align: center; padding: 80px 20px; color: #bbb; }
   .empty-state .icon { font-size: 48px; margin-bottom: 12px; display: block; }
-
-  /* League filter bar */
-  .filter-bar {
-    display: flex;
-    gap: 6px;
-    padding: 10px 12px;
-    background: #fff;
-    border-bottom: 1px solid #eee;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .filter-bar::-webkit-scrollbar { display: none; }
-  .filter-chip {
-    flex: 0 0 auto;
-    padding: 6px 14px;
-    border-radius: 16px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #666;
-    background: #f5f5f5;
-    border: none;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-  .filter-chip.active {
-    background: #1a1a1a;
-    color: #fff;
-  }
 </style>
 </head>
 <body>
 
-<!-- ============ OVERVIEW PAGE ============ -->
-<div class="overview-page" id="overviewPage">
-  <div class="page-header">
-    <h1>今日赛事预测</h1>
-    <div class="subtitle" id="subTitle">加载中...</div>
-  </div>
-  <div class="header-bar">
-    <span class="date-info" id="dateInfo"></span>
-    <span style="font-size:12px;color:#aaa;" id="matchCount"></span>
-  </div>
-  <div class="filter-bar" id="filterBar"></div>
-  <div class="match-list" id="matchList"></div>
-  <div class="footer-deco">
-    <div class="barcode-box">
-      <div class="barcode-lines" id="barcode"></div>
+<!-- ============ SINGLE PAGE POSTER ============ -->
+<div class="poster" id="poster">
+  <div class="poster-header">
+    <div class="ph-left">
+      <h1>今日赛事预测</h1>
+      <div class="ph-sub" id="subTitle">加载中...</div>
     </div>
-    <span>理性观赛 量力而行</span>
-    <span>STAY CALM STAY FOCUSED</span>
+    <div class="ph-right">
+      <div class="ph-tag"><strong>DATA ANALYSIS</strong></div>
+      <div class="ph-tag">FOCUS MATCHES</div>
+    </div>
   </div>
-  <div class="page-footer">数据来源：公开数据整理，仅供参考</div>
+
+  <div class="match-list" id="matchList"></div>
+
+  <div class="poster-footer">
+    <div class="barcode-box"><div class="barcode-lines" id="barcode"></div></div>
+    <div class="pf-text">
+      <div>理性观赛 量力而行</div>
+      <div class="pf-src">数据来源：公开数据整理，仅供参考</div>
+    </div>
+    <div class="pf-en">STAY CALM<br>STAY FOCUSED</div>
+  </div>
 </div>
 
-<!-- ============ DETAIL PAGE ============ -->
-<div class="detail-page" id="detailPage">
-  <div class="header-bar">
-    <button class="btn-back" onclick="goBack()">← 返回列表</button>
-    <span class="date-info" id="detailDateInfo"></span>
-    <span></span>
-  </div>
-  <div class="detail-container" id="detailContainer">
-    <!-- rendered dynamically -->
-  </div>
+<!-- fixed export bar (outside poster -> not in screenshot) -->
+<div class="export-bar">
+  <button class="btn-export-poster" onclick="exportPoster()">📸 导出整页长图</button>
 </div>
 
 <!-- ============ EXPORT OVERLAY ============ -->
@@ -686,8 +414,6 @@
 <script>
 // ========== STATE ==========
 let allData = [];
-let currentLeague = '全部';
-let currentMatchId = null;
 const STORAGE_KEY = 'match_preds_v3';
 let exportDataUrl = null;
 
@@ -761,26 +487,6 @@ function h2hSummary(h2h, ht, at) {
   return {n:h2h.length,w,d,l,gf,ga};
 }
 
-function genAnalysisText(m, hS, aS, h2h) {
-  const p=[];
-  const h=m.home_team, a=m.away_team;
-  if(hS && (hS.w+hS.d+hS.l)>0){
-    const t=hS.w+hS.d+hS.l;
-    p.push(`${h}：近${t}场${hS.w}胜${hS.d}平${hS.l}负`);
-    if(hS.w>=3) p.push('主场表现强势，进攻火力稳定');
-    else if(hS.l>=3) p.push('近期状态低迷，防守问题突出');
-    else p.push('表现中规中矩');
-  }
-  if(aS && (aS.w+aS.d+aS.l)>0){
-    const t=aS.w+aS.d+aS.l;
-    p.push(`${a}：近${t}场${aS.w}胜${aS.d}平${aS.l}负`);
-    if(aS.l>=3) p.push('客场成绩不佳，防守漏洞较大');
-    else if(aS.w>=3) p.push('整体状态平稳，客战能力尚可');
-    else p.push('攻守较为均衡');
-  }
-  return p.join('；')+'。';
-}
-
 function genKeyPoint(m, hS, aS, h2h) {
   const h=m.home_team, a=m.away_team;
   const parts = [];
@@ -796,9 +502,9 @@ function genKeyPoint(m, hS, aS, h2h) {
   }
   if(parts.length === 0) parts.push(`${h}与${a}此番交锋，双方都将全力争胜，比赛值得期待。`);
   const pred = getPred(m.fixture_id);
-  if(pred.result==='home') parts.push('主胜更值得关注。');
-  else if(pred.result==='away') parts.push('客胜可能性不小。');
-  else if(pred.result==='draw') parts.push('平局或小比分更可能。');
+  if(pred.result==='home') parts.push('综合来看，主胜更值得关注。');
+  else if(pred.result==='away') parts.push('综合来看，客胜可能性不小。');
+  else if(pred.result==='draw') parts.push('综合来看，平局或小比分更可能。');
   return parts.join('');
 }
 
@@ -811,50 +517,20 @@ async function loadData() {
   } catch(e) { return null; }
 }
 
-// ========== RENDER OVERVIEW ==========
-function getLeagues() {
-  const s = new Set(allData.map(m=>m.league||'其他').filter(Boolean));
-  return ['全部', ...Array.from(s).sort()];
-}
-
-function renderFilter() {
-  const leagues = getLeagues();
-  $('#filterBar').innerHTML = leagues.map(l => {
-    const cnt = l==='全部'?allData.length:allData.filter(m=>(m.league||'其他')===l).length;
-    return `<button class="filter-chip ${l===currentLeague?'active':''}" onclick="switchLg('${l}')">${l} (${cnt})</button>`;
-  }).join('');
-}
-
-function switchLg(l) { currentLeague=l; renderFilter(); renderOverview(); }
-
+// ========== RENDER ==========
 function renderOverview() {
   const list = $('#matchList');
   if(!allData||!allData.length){
     list.innerHTML = '<div class="empty-state"><span class="icon">📭</span><p>暂无赛事数据</p><p style="font-size:12px;color:#ccc;margin-top:4px;">请运行爬虫获取最新数据</p></div>';
     return;
   }
-  const filtered = currentLeague==='全部'?allData:allData.filter(m=>(m.league||'其他')===currentLeague);
-
   const now = new Date();
-  $('#dateInfo').textContent = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
-  $('#matchCount').textContent = `共 ${filtered.length} 场`;
-  $('#subTitle').textContent = `${filtered.length} 场焦点对决 · 精准分析推荐`;
-
-  const dayMap = {};
-  for(const m of filtered){
-    const d = m.match_date||'?';
-    if(!dayMap[d]) dayMap[d] = [];
-    dayMap[d].push(m);
-  }
+  const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+  $('#subTitle').textContent = `${allData.length} 场焦点对决 · 精准分析推荐`;
 
   let html = '';
-  const dayNames = ['周日','周一','周二','周三','周四','周五','周六'];
-  for(const dt of Object.keys(dayMap).sort()){
-    const d = new Date(dt);
-    html += `<div style="padding:14px 4px 6px;text-align:center;font-size:13px;font-weight:700;color:#999;">${dt} ${dayNames[d.getDay()]||''}</div>`;
-    for(const m of dayMap[dt]){
-      html += renderCard(m);
-    }
+  for(const m of allData){
+    html += renderCard(m);
   }
   list.innerHTML = html;
 }
@@ -868,26 +544,26 @@ function renderCard(m) {
   const analysisTxt = genKeyPoint(m, hS, aS, h2h);
   const pred = getPred(id);
 
-  const numCls = parseInt(m.match_num.replace(/[^0-9]/g,''))%2===0?'hot':'';
-  const resLabel = pred.result==='home'?'主胜':pred.result==='draw'?'平':pred.result==='away'?'客胜':'?';
-  const resCls = pred.result==='home'?'red':pred.result==='away'?'blue':pred.result==='draw'?'blue':'gray';
-
+  const num = m.match_num.replace(/[^0-9]/g,'');
+  const numCls = parseInt(num)%2===0?'hot':'';
+  const resLabel = pred.result==='home'?'主胜':pred.result==='draw'?'平局':pred.result==='away'?'客胜':'待填';
+  const resCls = pred.result==='home'?'red':pred.result==='away'?'blue':pred.result==='draw'?'gray':'gray';
+  const goalsLabel = pred.goals||'—';
   const scores = pred.scores||['','',''];
-  const goalsLabel = pred.goals||'';
 
   return `
-  <div class="match-card card-click-area" onclick="showDetail('${id}')">
-    <button class="card-export-btn" title="导出卡片图" onclick="event.stopPropagation();exportCardImg('${id}')">📸</button>
+  <div class="match-card" id="card-${id}">
+    <button class="card-export-btn" title="导出此卡片" onclick="exportCardImg('${id}')">📸</button>
     <div class="card-top">
       <div class="card-num-block">
-        <div class="card-num ${numCls}">${m.match_num.replace(/[^0-9]/g,'')}</div>
+        <div class="card-num ${numCls}">${num}</div>
         <div class="card-day-label">MATCH<br>DAY</div>
       </div>
       <div class="card-teams">
         <div class="team-side">
           <div class="team-logo-wrap">${teamShield(m.home_team, teamHue(m.home_team))}</div>
           <div class="team-name-cn">${m.home_team}</div>
-          <div class="team-name-en">${m.home_team.slice(0,12)}</div>
+          <div class="team-name-en">${m.home_team.slice(0,14)}</div>
         </div>
         <div class="vs-divider">
           <div class="vs-text">VS</div>
@@ -896,22 +572,20 @@ function renderCard(m) {
         <div class="team-side away">
           <div class="team-logo-wrap">${teamShield(m.away_team, teamHue(m.away_team))}</div>
           <div class="team-name-cn">${m.away_team}</div>
-          <div class="team-name-en">${m.away_team.slice(0,12)}</div>
+          <div class="team-name-en">${m.away_team.slice(0,14)}</div>
         </div>
       </div>
     </div>
     <div class="card-bottom">
       <div class="cb-section cb-pred">
-        <div class="cb-label">预测结果</div>
-        <div class="pred-tag ${resCls}" onclick="event.stopPropagation();cycleResult('${id}')">
-          ${goalsLabel ? goalsLabel : resLabel}
-        </div>
-        ${goalsLabel&&resLabel!=='?' ? `<div class="pred-sub">(${resLabel})</div>` : ''}
+        <div class="cb-label">预测赛果</div>
+        <div class="pred-main ${resCls}" onclick="cycleResult('${id}')">${resLabel}</div>
+        <div class="pred-sub" onclick="cycleGoals('${id}')">${goalsLabel}</div>
       </div>
       <div class="cb-section cb-scores">
         <div class="cb-label">比分参考</div>
         <div class="score-chips">
-          ${scores.map((s,i)=>`<span class="score-chip ${s?'active':''}" onclick="event.stopPropagation()">${s||'-'}</span>`).join('')}
+          ${[0,1,2].map(i=>`<span class="score-chip ${scores[i]?'on':''}" onclick="editScore('${id}',${i})">${scores[i]||'--'}</span>`).join('')}
         </div>
       </div>
       <div class="cb-section cb-analysis">
@@ -922,134 +596,42 @@ function renderCard(m) {
   </div>`;
 }
 
-// Quick cycle result on overview card
-function cycleResult(id) {
-  const p = getPred(id);
-  const order = ['home','draw','away'];
-  const idx = order.indexOf(p.result);
-  p.result = order[(idx+1)%3];
-  savePred(loadPreds());
-  renderOverview();
-}
-
-// ========== DETAIL PAGE ==========
-function showDetail(id) {
-  currentMatchId = id;
+// Re-render a single card in place (keep scroll position)
+function refreshCard(id){
   const m = allData.find(x=>x.fixture_id===id);
-  if(!m) return;
-  $('#overviewPage').style.display = 'none';
-  $('#detailPage').style.display = 'block';
-  renderDetail(m);
-  window.scrollTo(0,0);
+  const el = document.getElementById('card-'+id);
+  if(m && el) el.outerHTML = renderCard(m);
 }
 
-function goBack() {
-  $('#detailPage').style.display = 'none';
-  $('#overviewPage').style.display = 'block';
-  currentMatchId = null;
-  renderOverview();
+// Cycle 胜平负
+function cycleResult(id) {
+  const p = loadPreds(); if(!p[id]) p[id]={};
+  const order = ['home','draw','away'];
+  const idx = order.indexOf(p[id].result);
+  p[id].result = order[(idx+1)%3];
+  savePreds(p);
+  refreshCard(id);
 }
 
-function renderDetail(m) {
-  const id = m.fixture_id;
-  const an = m.analysis||{};
-  const hS = formStats(an.home_recent_5_matches, m.home_team);
-  const aS = formStats(an.away_recent_5_matches, m.away_team);
-  const h2h = h2hSummary(an.h2h_matches, m.home_team, m.away_team);
-  const formText = genAnalysisText(m, hS, aS, h2h);
-  const keyPt = genKeyPoint(m, hS, aS, h2h);
-  const pred = getPred(id);
-
-  $('#detailDateInfo').textContent = `${m.league||''} · ${m.match_date||''} ${m.match_time||''}`;
-
-  // Use average stats from API if available, otherwise computed
-  const hAvgScored = an.home_avg_scored || hS.avgShot;
-  const hAvgConceded = an.home_avg_conceded || hS.avgConcede;
-  const aAvgScored = an.away_avg_scored || aS.avgShot;
-  const aAvgConceded = an.away_avg_conceded || aS.avgConcede;
-
-  const scores = pred.scores||['','',''];
-
-  $('#detailContainer').innerHTML = `
-    <div class="detail-header">
-      <div class="dh-bg-bar"></div>
-      <div class="dh-bg-bar"></div>
-      <div class="dh-title-row">
-        <div class="dh-title">赛事分析</div>
-        <div class="dh-title-en">ANALYSIS</div>
-      </div>
-      <div class="dh-match-line">
-        <span class="dh-league">${m.league||''}</span>
-        <span class="dh-matchup-text">${m.home_team} VS ${m.away_team}</span>
-        <span class="dh-match-num">${m.match_num}</span>
-      </div>
-    </div>
-
-    <div class="d-section">
-      <div class="d-section-title"><div class="d-st-bar"></div>球队近况</div>
-      <div class="form-para"><strong>${m.home_team}</strong>：${formText.split('。')[0]||'近况数据更新中'}。</div>
-      <div class="form-para"><strong>${m.away_team}</strong>：${(formText.split('。')[1]||formText.split('。')[0]).replace(/^\S+：/,'')}</div>
-    </div>
-
-    <div class="d-section">
-      <div class="d-section-title"><div class="d-st-bar"></div>攻防数据（近5场）</div>
-      <table class="stats-table">
-        <tr><th>球队</th><th>进球</th><th>失球</th><th>场均射门</th><th>场均失球</th></tr>
-        <tr><td>${m.home_team}</td><td>${hS.gf}</td><td>${hS.ga}</td><td>${hAvgScored}</td><td>${hAvgConceded}</td></tr>
-        <tr><td>${m.away_team}</td><td>${aS.gf}</td><td>${aS.ga}</td><td>${aAvgScored}</td><td>${aAvgConceded}</td></tr>
-      </table>
-    </div>
-
-    <div class="d-section">
-      <div class="d-section-title"><div class="d-st-bar"></div>关键点</div>
-      <div class="key-point">${keyPt}</div>
-    </div>
-
-    <div class="detail-stripes"></div>
-
-    <div class="detail-pred-area">
-      <div class="dpa-title">—— 填写预测 ——</div>
-      <div class="dpa-row">
-        <span class="dpa-label">胜负</span>
-        <div class="dpa-btn-group" id="dResBtns">
-          <button class="dpa-btn ${pred.result==='home'?'active-h':''}" onclick="setDR('${id}','home')">主胜</button>
-          <button class="dpa-btn ${pred.result==='draw'?'active-d':''}" onclick="setDR('${id}','draw')">平局</button>
-          <button class="dpa-btn ${pred.result==='away'?'active-a':''}" onclick="setDR('${id}','away')">客胜</button>
-        </div>
-      </div>
-      <div class="dpa-row">
-        <span class="dpa-label">进球</span>
-        <div class="dpa-btn-group" id="dGoalBtns">
-          <button class="dpa-btn ${pred.goals==='0-1球'?'active-h':''}" onclick="setDG('${id}','0-1球')">0-1球</button>
-          <button class="dpa-btn ${pred.goals==='2-3球'?'active-h':''}" onclick="setDG('${id}','2-3球')">2-3球</button>
-          <button class="dpa-btn ${pred.goals==='4-6球'?'active-h':''}" onclick="setDG('${id}','4-6球')">4-6球</button>
-        </div>
-      </div>
-      <div class="dpa-row">
-        <span class="dpa-label">比分</span>
-        <input class="dpa-inp" placeholder="X-X" value="${scores[0]}" onchange="setDS('${id}',0,this.value)">
-        <input class="dpa-inp" placeholder="X-X" value="${scores[1]}" onchange="setDS('${id}',1,this.value)">
-        <input class="dpa-inp" placeholder="X-X" value="${scores[2]}" onchange="setDS('${id}',2,this.value)">
-      </div>
-      <div class="dpa-row">
-        <span class="dpa-label">备注</span>
-        <textarea class="dpa-ta" placeholder="分析备注..." onchange="setPred('${id}','note',this.value)">${pred.note||''}</textarea>
-      </div>
-      <button class="btn-export-detail" onclick="exportDetailImg('${id}')">📸 导出分析图片</button>
-    </div>
-  `;
+// Cycle 球数
+function cycleGoals(id) {
+  const p = loadPreds(); if(!p[id]) p[id]={};
+  const order = ['0-1球','2-3球','4-6球'];
+  const idx = order.indexOf(p[id].goals);
+  p[id].goals = order[(idx+1)%3];
+  savePreds(p);
+  refreshCard(id);
 }
 
-function setDR(id,v) {
-  setPred(id,'result',v);
-  renderDetail(allData.find(x=>x.fixture_id===id));
-}
-function setDG(id,v) {
-  setPred(id,'goals',v);
-  renderDetail(allData.find(x=>x.fixture_id===id));
-}
-function setDS(id,idx,val) {
-  const p = loadPreds(); if(!p[id])p[id]={}; if(!p[id].scores)p[id].scores=['','','']; p[id].scores[idx]=val; savePreds(p);
+// Edit score (inline prompt)
+function editScore(id, idx) {
+  const p = loadPreds(); if(!p[id]) p[id]={}; if(!p[id].scores) p[id].scores=['','',''];
+  const cur = p[id].scores[idx]||'';
+  const val = prompt('输入比分（如 2-1）', cur);
+  if(val===null) return;
+  p[id].scores[idx] = val.trim();
+  savePreds(p);
+  refreshCard(id);
 }
 
 // ========== EXPORT ==========
@@ -1058,7 +640,7 @@ function showToast(msg) {
   setTimeout(()=>t.classList.remove('show'),2200);
 }
 
-// Export the 图3-style card image (team logos + prediction)
+// Export single card image (图3-style)
 async function exportCardImg(id) {
   const m = allData.find(x=>x.fixture_id===id);
   if(!m) return;
@@ -1071,56 +653,53 @@ async function exportCardImg(id) {
 
   const num = m.match_num.replace(/[^0-9]/g,'');
   const numCls = parseInt(num)%2===0?'hot':'';
-  const resLabel = pred.result==='home'?'主胜':pred.result==='draw'?'平局':pred.result==='away'?'客胜':'?';
-  const resCls = pred.result==='home'?'red':pred.result==='away'?'blue':pred.result==='draw'?'blue':'gray';
-  const resColor = pred.result==='home'?'#8b1a1a':pred.result==='away'?'#1a3a6c':pred.result==='draw'?'#1a3a6c':'#bbb';
+  const resLabel = pred.result==='home'?'主胜':pred.result==='draw'?'平局':pred.result==='away'?'客胜':'待填';
+  const resCls = pred.result==='home'?'red':pred.result==='away'?'blue':pred.result==='draw'?'gray':'gray';
+  const resColor = pred.result==='home'?'#8b1a1a':pred.result==='away'?'#1a3a6c':pred.result==='draw'?'#666':'#bbb';
   const scores = pred.scores||['','',''];
-  const goalsLabel = pred.goals||'';
+  const goalsLabel = pred.goals||'—';
 
   const html = `
-  <div style="background:#fff;width:520px;font-family:'PingFang SC','Microsoft YaHei',sans-serif;color:#1a1a1a;font-size:14px;">
-    <!-- Card top -->
+  <div style="background:#fff;width:600px;font-family:'PingFang SC','Microsoft YaHei',sans-serif;color:#1a1a1a;font-size:14px;">
     <div style="display:flex;align-items:stretch;padding:18px 16px;border-bottom:1px solid #eee;">
       <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:54px;padding-right:14px;border-right:1px solid #eee;margin-right:14px;">
         <div style="font-size:24px;font-weight:900;color:#fff;background:${numCls==='hot'?'linear-gradient(135deg,#8b1a1a,#c0392b)':'linear-gradient(135deg,#1a3a6c,#2a5aa0)'};width:46px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:4px 4px 0 0;letter-spacing:1px;">${num}</div>
-        <div style="font-size:9px;color:#999;letter-spacing:2px;margin-top:4px;font-weight:600;text-align:center;">MATCH<br>DAY</div>
+        <div style="font-size:9px;color:#999;letter-spacing:2px;margin-top:4px;font-weight:600;text-align:center;line-height:1.2;">MATCH<br>DAY</div>
       </div>
       <div style="flex:1;display:flex;align-items:center;justify-content:space-between;">
         <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;">
-          <div style="width:60px;height:60px;display:flex;align-items:center;justify-content:center;">${teamShield(m.home_team, teamHue(m.home_team))}</div>
+          <div style="width:56px;height:56px;display:flex;align-items:center;justify-content:center;">${teamShield(m.home_team, teamHue(m.home_team))}</div>
           <div style="font-size:15px;font-weight:800;">${m.home_team}</div>
-          <div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.5px;">${m.home_team.slice(0,12)}</div>
+          <div style="font-size:9.5px;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">${m.home_team.slice(0,14)}</div>
         </div>
         <div style="display:flex;flex-direction:column;align-items:center;padding:0 10px;">
           <div style="font-size:26px;font-weight:900;font-style:italic;color:#333;letter-spacing:-1px;">VS</div>
-          <div style="width:1px;height:30px;background:linear-gradient(to bottom,transparent,#ccc,transparent);margin-top:2px;transform:rotate(-15deg);"></div>
+          <div style="width:1px;height:28px;background:linear-gradient(to bottom,transparent,#ccc,transparent);margin-top:2px;transform:rotate(-15deg);"></div>
         </div>
         <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;">
-          <div style="width:60px;height:60px;display:flex;align-items:center;justify-content:center;">${teamShield(m.away_team, teamHue(m.away_team))}</div>
+          <div style="width:56px;height:56px;display:flex;align-items:center;justify-content:center;">${teamShield(m.away_team, teamHue(m.away_team))}</div>
           <div style="font-size:15px;font-weight:800;">${m.away_team}</div>
-          <div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.5px;">${m.away_team.slice(0,12)}</div>
+          <div style="font-size:9.5px;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">${m.away_team.slice(0,14)}</div>
         </div>
       </div>
     </div>
-    <!-- Card bottom -->
     <div style="display:flex;background:#fafafa;">
-      <div style="flex:0 0 90px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:12px 10px;border-right:1px solid #eee;">
-        <div style="font-size:10px;font-weight:700;color:#999;letter-spacing:1px;margin-bottom:6px;">预测结果</div>
-        <div style="display:inline-flex;align-items:center;justify-content:center;padding:5px 14px;border-radius:3px;font-size:15px;font-weight:800;color:#fff;background:${resCls==='gray'?'#bbb':resColor};">${goalsLabel||resLabel}</div>
-        ${goalsLabel&&resLabel!=='?'?`<div style="font-size:11px;font-weight:600;margin-top:2px;color:#888;">(${resLabel})</div>`:''}
+      <div style="flex:0 0 96px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:12px 10px;border-right:1px solid #eee;">
+        <div style="font-size:10px;font-weight:700;color:#999;letter-spacing:1px;margin-bottom:7px;">预测赛果</div>
+        <div style="display:inline-flex;align-items:center;justify-content:center;padding:5px 14px;border-radius:3px;font-size:16px;font-weight:800;color:#fff;background:${resColor};white-space:nowrap;">${resLabel}</div>
+        <div style="font-size:11px;font-weight:600;margin-top:6px;color:#888;">${goalsLabel}</div>
       </div>
-      <div style="flex:0 0 140px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:12px 10px;border-right:1px solid #eee;">
-        <div style="font-size:10px;font-weight:700;color:#999;letter-spacing:1px;margin-bottom:6px;">比分参考</div>
+      <div style="flex:0 0 132px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:12px 10px;border-right:1px solid #eee;">
+        <div style="font-size:10px;font-weight:700;color:#999;letter-spacing:1px;margin-bottom:7px;">比分参考</div>
         <div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center;">
-          ${scores.map(s=>`<span style="border:1px solid ${s?'#1a3a6c':'#ddd'};background:${s?'#f0f4fa':'#fff'};padding:4px 10px;border-radius:3px;font-size:13px;font-weight:700;color:${s?'#1a3a6c':'#444'};min-width:36px;text-align:center;">${s||'-'}</span>`).join('')}
+          ${[0,1,2].map(i=>`<span style="border:1px solid ${scores[i]?'#1a3a6c':'#ddd'};background:${scores[i]?'#f0f4fa':'#fff'};padding:4px 9px;border-radius:3px;font-size:13px;font-weight:700;color:${scores[i]?'#1a3a6c':'#555'};min-width:32px;text-align:center;">${scores[i]||'--'}</span>`).join('')}
         </div>
       </div>
       <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:12px 12px;">
-        <div style="font-size:10px;font-weight:700;color:#999;letter-spacing:1px;margin-bottom:6px;">分析</div>
+        <div style="font-size:10px;font-weight:700;color:#999;letter-spacing:1px;margin-bottom:7px;">分析</div>
         <div style="font-size:12px;color:#666;line-height:1.65;">${analysisTxt}</div>
       </div>
     </div>
-    <!-- Footer decoration -->
     <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;font-size:11px;color:#aaa;border-top:1px solid #eee;">
       <span>${m.league||''} · ${m.match_date||''} ${m.match_time||''}</span>
       <span>理性观赛 量力而行</span>
@@ -1133,106 +712,24 @@ async function exportCardImg(id) {
   try {
     const canvas = await html2canvas($('#exportImgCard'), {scale:3,useCORS:true,backgroundColor:'#fff',logging:false});
     exportDataUrl = canvas.toDataURL('image/png');
-    showToast('✅ 卡片图已生成！再进入详情导出分析图');
+    showToast('✅ 卡片图已生成！可下载保存');
   } catch(e) {
     showToast('⚠️ 生成失败，请重试');
     console.error(e);
   }
 }
 
-
-async function exportDetailImg(id) {
-  const m = allData.find(x=>x.fixture_id===id);
-  if(!m) return;
-  const pred = getPred(id);
-  const an = m.analysis||{};
-  const hS = formStats(an.home_recent_5_matches, m.home_team);
-  const aS = formStats(an.away_recent_5_matches, m.away_team);
-  const h2h = h2hSummary(an.h2h_matches, m.home_team, m.away_team);
-  const formText = genAnalysisText(m, hS, aS, h2h);
-  const keyPt = genKeyPoint(m, hS, aS, h2h);
-
-  const hAvgS = an.home_avg_scored||hS.avgShot;
-  const hAvgC = an.home_avg_conceded||hS.avgConcede;
-  const aAvgS = an.away_avg_scored||aS.avgShot;
-  const aAvgC = an.away_avg_conceded||aS.avgConcede;
-
-  const resLbl = pred.result==='home'?'主胜':pred.result==='draw'?'平':pred.result==='away'?'客胜':'—';
-  const goalLbl = pred.goals||'—';
-
-  const exportHTML = `
-    <div style="background:#fff;color:#1a1a1a;font-family:'PingFang SC','Microsoft YaHei',sans-serif;font-size:14px;line-height:1.6;padding:0;">
-      <!-- Header -->
-      <div style="position:relative;padding:28px 24px 18px;overflow:hidden;">
-        <div style="position:absolute;top:0;left:0;height:6px;width:180px;background:#333;"></div>
-        <div style="position:absolute;top:0;left:190px;height:6px;width:140px;background:#1a3a6c;"></div>
-        <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px;margin-top:6px;">
-          <div style="font-size:34px;font-weight:900;font-style:italic;color:#1a1a1a;letter-spacing:2px;">赛事分析</div>
-          <div style="font-size:13px;color:#999;letter-spacing:2px;font-weight:600;">ANALYSIS</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-          <span style="font-size:17px;font-weight:800;color:#1a3a6c;">${m.league||''}</span>
-          <span style="font-size:17px;font-weight:700;color:#1a1a1a;">${m.home_team} VS ${m.away_team}</span>
-          <span style="font-size:21px;font-weight:900;color:#1a1a1a;">${m.match_num}</span>
-        </div>
-      </div>
-
-      <!-- 球队近况 -->
-      <div style="padding:14px 24px;">
-        <div style="font-size:16px;font-weight:800;color:#1a1a1a;display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-          <div style="width:5px;height:18px;background:#8b1a1a;border-radius:2px;"></div>球队近况
-        </div>
-        <div style="font-size:14px;line-height:1.75;color:#333;margin-bottom:8px;padding-left:13px;"><strong>${m.home_team}</strong>：${(formText.split('。')[0])||'近况数据更新中'}。</div>
-        <div style="font-size:14px;line-height:1.75;color:#333;padding-left:13px;"><strong>${m.away_team}</strong>：${(formText.split('。')[1]||formText.split('。')[0]).replace(/^\S+：/,'')}</div>
-      </div>
-
-      <!-- 攻防数据表 -->
-      <div style="padding:14px 24px;">
-        <div style="font-size:16px;font-weight:800;color:#1a1a1a;display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-          <div style="width:5px;height:18px;background:#8b1a1a;border-radius:2px;"></div>攻防数据（近5场）
-        </div>
-        <table style="width:100%;border-collapse:collapse;font-size:14px;border:1px solid #ddd;">
-          <tr><th style="background:#f5f5f5;padding:10px 12px;text-align:center;font-weight:600;color:#555;border:1px solid #ddd;">球队</th><th style="background:#f5f5f5;padding:10px 12px;text-align:center;font-weight:600;color:#555;border:1px solid #ddd;">进球</th><th style="background:#f5f5f5;padding:10px 12px;text-align:center;font-weight:600;color:#555;border:1px solid #ddd;">失球</th><th style="background:#f5f5f5;padding:10px 12px;text-align:center;font-weight:600;color:#555;border:1px solid #ddd;">场均射门</th><th style="background:#f5f5f5;padding:10px 12px;text-align:center;font-weight:600;color:#555;border:1px solid #ddd;">场均失球</th></tr>
-          <tr><td style="padding:10px 12px;text-align:left;border:1px solid #ddd;font-weight:700;padding-left:16px;">${m.home_team}</td><td style="padding:10px 12px;text-align:center;border:1px solid #ddd;">${hS.gf}</td><td style="padding:10px 12px;text-align:center;border:1px solid #ddd;">${hS.ga}</td><td style="padding:10px 12px;text-align:center;border:1px solid #ddd;">${hAvgS}</td><td style="padding:10px 12px;text-align:center;border:1px solid #ddd;">${hAvgC}</td></tr>
-          <tr><td style="padding:10px 12px;text-align:left;border:1px solid #ddd;font-weight:700;padding-left:16px;">${m.away_team}</td><td style="padding:10px 12px;text-align:center;border:1px solid #ddd;">${aS.gf}</td><td style="padding:10px 12px;text-align:center;border:1px solid #ddd;">${aS.ga}</td><td style="padding:10px 12px;text-align-center;border:1px solid #ddd;">${aAvgS}</td><td style="padding:10px 12px;text-align:center;border:1px solid #ddd;">${aAvgC}</td></tr>
-        </table>
-      </div>
-
-      <!-- 关键点 -->
-      <div style="padding:14px 24px;">
-        <div style="font-size:16px;font-weight:800;color:#1a1a1a;display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-          <div style="width:5px;height:18px;background:#8b1a1a;border-radius:2px;"></div>关键点
-        </div>
-        <div style="font-size:14.5px;line-height:1.85;color:#222;padding:14px 16px;background:#fdfdfd;border-radius:2px;">${keyPt}</div>
-      </div>
-
-      <!-- Decorative stripes -->
-      <div style="height:36px;margin-top:24px;background:repeating-linear-gradient(-45deg,transparent,transparent 6px,#ccc 6px,#ccc 8px);opacity:0.3;"></div>
-
-      <!-- Prediction stamp -->
-      <div style="padding:18px 24px 24px;background:#f8f8f8;">
-        <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;">
-          <div>
-            <div style="font-size:11px;color:#888;font-weight:700;letter-spacing:1px;">预测结果</div>
-            <div style="font-size:20px;font-weight:900;color:${pred.result==='home'?'#8b1a1a':pred.result==='away'?'#1a3a6c':pred.result==='draw'?'#666':'#999'};margin-top:4px;">${goalLbl||resLbl}</div>
-            ${goalLbl&&resLbl!=='—'?`<div style="font-size:12px;color:#888;margin-top:2px;">(${resLbl})</div>`:''}
-          </div>
-          <div>
-            <div style="font-size:11px;color:#888;font-weight:700;letter-spacing:1px;">比分参考</div>
-            <div style="font-size:15px;font-weight:700;color:#333;margin-top:4px;">${(pred.scores||[]).filter(Boolean).join(' / ')||'—'}</div>
-          </div>
-          ${pred.note?`<div style="flex-basis:100%;margin-top:8px;"><div style="font-size:11px;color:#888;font-weight:700;">备注</div><div style="font-size:12px;color:#666;margin-top:4px;">${pred.note}</div></div>`:''}
-        </div>
-      </div>
-    </div>`;
-
-  $('#exportImgCard').innerHTML = exportHTML;
+// Export whole poster (single long image)
+async function exportPoster() {
+  const poster = $('#poster');
   $('#exportOverlay').classList.add('show');
-  showToast('正在生成图片...');
+  $('#exportImgCard').innerHTML = '';
+  showToast('正在生成长图...');
   try {
-    const canvas = await html2canvas($('#exportImgCard'), {scale:3,useCORS:true,backgroundColor:'#fff',logging:false});
+    const canvas = await html2canvas(poster, {scale:3,useCORS:true,backgroundColor:'#fff',logging:false,windowWidth: poster.scrollWidth});
     exportDataUrl = canvas.toDataURL('image/png');
-    showToast('✅ 图片已生成！点击下载保存');
+    $('#exportImgCard').innerHTML = `<img src="${exportDataUrl}" style="width:100%;display:block;">`;
+    showToast('✅ 长图已生成！可下载保存');
   } catch(e) {
     showToast('⚠️ 生成失败，请重试');
     console.error(e);
@@ -1244,7 +741,7 @@ function closeExport() { $('#exportOverlay').classList.remove('show'); exportDat
 function dlImage() {
   if(!exportDataUrl){ showToast('请稍候...'); return; }
   const a=document.createElement('a'); a.href=exportDataUrl;
-  a.download=`赛事分析_${new Date().toISOString().slice(0,10)}.png`;
+  a.download=`赛事预测_${new Date().toISOString().slice(0,10)}.png`;
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   showToast('✅ 已下载！');
 }
@@ -1253,7 +750,6 @@ function dlImage() {
 async function init() {
   renderBarcode();
   allData = await loadData() || [];
-  renderFilter();
   renderOverview();
 }
 
