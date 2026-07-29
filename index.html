@@ -258,6 +258,27 @@
     opacity: 0.3;
   }
 
+  /* Card export button */
+  .card-export-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 10;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(26,26,26,0.06);
+    font-size: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+  .card-export-btn:hover { background: rgba(26,26,26,0.12); }
+  .card-export-btn:active { transform: scale(0.92); }
+
   /* ===== Detail Page ===== */
   .detail-container {
     max-width: 600px;
@@ -856,6 +877,7 @@ function renderCard(m) {
 
   return `
   <div class="match-card card-click-area" onclick="showDetail('${id}')">
+    <button class="card-export-btn" title="导出卡片图" onclick="event.stopPropagation();exportCardImg('${id}')">📸</button>
     <div class="card-top">
       <div class="card-num-block">
         <div class="card-num ${numCls}">${m.match_num.replace(/[^0-9]/g,'')}</div>
@@ -1035,6 +1057,89 @@ function showToast(msg) {
   const t=$('#toast'); t.textContent=msg; t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2200);
 }
+
+// Export the 图3-style card image (team logos + prediction)
+async function exportCardImg(id) {
+  const m = allData.find(x=>x.fixture_id===id);
+  if(!m) return;
+  const pred = getPred(id);
+  const an = m.analysis||{};
+  const hS = formStats(an.home_recent_5_matches, m.home_team);
+  const aS = formStats(an.away_recent_5_matches, m.away_team);
+  const h2h = h2hSummary(an.h2h_matches, m.home_team, m.away_team);
+  const analysisTxt = genKeyPoint(m, hS, aS, h2h);
+
+  const num = m.match_num.replace(/[^0-9]/g,'');
+  const numCls = parseInt(num)%2===0?'hot':'';
+  const resLabel = pred.result==='home'?'主胜':pred.result==='draw'?'平局':pred.result==='away'?'客胜':'?';
+  const resCls = pred.result==='home'?'red':pred.result==='away'?'blue':pred.result==='draw'?'blue':'gray';
+  const resColor = pred.result==='home'?'#8b1a1a':pred.result==='away'?'#1a3a6c':pred.result==='draw'?'#1a3a6c':'#bbb';
+  const scores = pred.scores||['','',''];
+  const goalsLabel = pred.goals||'';
+
+  const html = `
+  <div style="background:#fff;width:520px;font-family:'PingFang SC','Microsoft YaHei',sans-serif;color:#1a1a1a;font-size:14px;">
+    <!-- Card top -->
+    <div style="display:flex;align-items:stretch;padding:18px 16px;border-bottom:1px solid #eee;">
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:54px;padding-right:14px;border-right:1px solid #eee;margin-right:14px;">
+        <div style="font-size:24px;font-weight:900;color:#fff;background:${numCls==='hot'?'linear-gradient(135deg,#8b1a1a,#c0392b)':'linear-gradient(135deg,#1a3a6c,#2a5aa0)'};width:46px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:4px 4px 0 0;letter-spacing:1px;">${num}</div>
+        <div style="font-size:9px;color:#999;letter-spacing:2px;margin-top:4px;font-weight:600;text-align:center;">MATCH<br>DAY</div>
+      </div>
+      <div style="flex:1;display:flex;align-items:center;justify-content:space-between;">
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <div style="width:60px;height:60px;display:flex;align-items:center;justify-content:center;">${teamShield(m.home_team, teamHue(m.home_team))}</div>
+          <div style="font-size:15px;font-weight:800;">${m.home_team}</div>
+          <div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.5px;">${m.home_team.slice(0,12)}</div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;padding:0 10px;">
+          <div style="font-size:26px;font-weight:900;font-style:italic;color:#333;letter-spacing:-1px;">VS</div>
+          <div style="width:1px;height:30px;background:linear-gradient(to bottom,transparent,#ccc,transparent);margin-top:2px;transform:rotate(-15deg);"></div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;">
+          <div style="width:60px;height:60px;display:flex;align-items:center;justify-content:center;">${teamShield(m.away_team, teamHue(m.away_team))}</div>
+          <div style="font-size:15px;font-weight:800;">${m.away_team}</div>
+          <div style="font-size:10px;color:#999;text-transform:uppercase;letter-spacing:.5px;">${m.away_team.slice(0,12)}</div>
+        </div>
+      </div>
+    </div>
+    <!-- Card bottom -->
+    <div style="display:flex;background:#fafafa;">
+      <div style="flex:0 0 90px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:12px 10px;border-right:1px solid #eee;">
+        <div style="font-size:10px;font-weight:700;color:#999;letter-spacing:1px;margin-bottom:6px;">预测结果</div>
+        <div style="display:inline-flex;align-items:center;justify-content:center;padding:5px 14px;border-radius:3px;font-size:15px;font-weight:800;color:#fff;background:${resCls==='gray'?'#bbb':resColor};">${goalsLabel||resLabel}</div>
+        ${goalsLabel&&resLabel!=='?'?`<div style="font-size:11px;font-weight:600;margin-top:2px;color:#888;">(${resLabel})</div>`:''}
+      </div>
+      <div style="flex:0 0 140px;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:12px 10px;border-right:1px solid #eee;">
+        <div style="font-size:10px;font-weight:700;color:#999;letter-spacing:1px;margin-bottom:6px;">比分参考</div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center;">
+          ${scores.map(s=>`<span style="border:1px solid ${s?'#1a3a6c':'#ddd'};background:${s?'#f0f4fa':'#fff'};padding:4px 10px;border-radius:3px;font-size:13px;font-weight:700;color:${s?'#1a3a6c':'#444'};min-width:36px;text-align:center;">${s||'-'}</span>`).join('')}
+        </div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:12px 12px;">
+        <div style="font-size:10px;font-weight:700;color:#999;letter-spacing:1px;margin-bottom:6px;">分析</div>
+        <div style="font-size:12px;color:#666;line-height:1.65;">${analysisTxt}</div>
+      </div>
+    </div>
+    <!-- Footer decoration -->
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;font-size:11px;color:#aaa;border-top:1px solid #eee;">
+      <span>${m.league||''} · ${m.match_date||''} ${m.match_time||''}</span>
+      <span>理性观赛 量力而行</span>
+    </div>
+  </div>`;
+
+  $('#exportImgCard').innerHTML = html;
+  $('#exportOverlay').classList.add('show');
+  showToast('正在生成卡片图...');
+  try {
+    const canvas = await html2canvas($('#exportImgCard'), {scale:3,useCORS:true,backgroundColor:'#fff',logging:false});
+    exportDataUrl = canvas.toDataURL('image/png');
+    showToast('✅ 卡片图已生成！再进入详情导出分析图');
+  } catch(e) {
+    showToast('⚠️ 生成失败，请重试');
+    console.error(e);
+  }
+}
+
 
 async function exportDetailImg(id) {
   const m = allData.find(x=>x.fixture_id===id);
