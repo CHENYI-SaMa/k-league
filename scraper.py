@@ -65,14 +65,51 @@ def extract_logos(html):
     return res
 
 
+# 500.com main page uses short/translated names that differ from the
+# analysis page's logo alt text. Map main-page name -> analysis-page alt.
+TEAM_NAME_ALIAS = {
+    '波兹南': '莱克普斯纳',
+    '里莫': '瑞模贝雷',
+    '帕梅拉斯': '帕尔梅拉斯',
+}
+
+
 def match_logo(logos, team):
-    """Find the logo url whose alt matches the given (possibly short) team name."""
+    """Find the logo url whose alt matches the given (possibly short) team name.
+    Tries direct substring match first, then a known alias map."""
     if not team:
         return ''
     for alt, url in logos.items():
         if team and (team in alt or alt in team):
             return url
+    alias = TEAM_NAME_ALIAS.get(team)
+    if alias:
+        for alt, url in logos.items():
+            if alias in alt or alt in alias:
+                return url
     return ''
+
+
+def assign_team_logos(logos, home, away):
+    """Return (home_url, away_url) robustly.
+
+    After direct/alias matching, if one side is still unclaimed there is
+    normally exactly one leftover logo for the other team — assign it so a
+    match never ships with a missing crest just because of a name mismatch.
+    """
+    home_url = match_logo(logos, home)
+    away_url = match_logo(logos, away)
+
+    if home_url and away_url:
+        return home_url, away_url
+
+    unclaimed = [url for alt, url in logos.items()
+                 if url not in (home_url, away_url)]
+    if not home_url and unclaimed:
+        home_url = unclaimed.pop(0)
+    if not away_url and unclaimed:
+        away_url = unclaimed.pop(0)
+    return home_url, away_url
 
 
 def parse_main_page(html):
@@ -330,8 +367,7 @@ def scrape_all():
 
             # Team logos (real crests) -> base64 for CORS-free render/export
             logos = extract_logos(analysis_html)
-            h_url = match_logo(logos, match['home_team'])
-            a_url = match_logo(logos, match['away_team'])
+            h_url, a_url = assign_team_logos(logos, match['home_team'], match['away_team'])
             match['home_logo'] = fetch_image_base64(h_url) if h_url else ''
             match['away_logo'] = fetch_image_base64(a_url) if a_url else ''
 
