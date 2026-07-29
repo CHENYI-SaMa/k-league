@@ -452,6 +452,14 @@ function teamHue(name) {
   return Math.abs(hash) % 360;
 }
 
+// Render real crest (base64) if available, else SVG placeholder
+function renderLogo(team, logo, hue) {
+  if (logo && logo.indexOf('data:image') === 0) {
+    return `<img src="${logo}" style="width:64px;height:64px;object-fit:contain;" alt="${team}">`;
+  }
+  return teamShield(team, hue);
+}
+
 // Barcode decoration
 function renderBarcode() {
   const widths = [2,1,3,1,2,3,1,2,1,3,2,1,1,3,1,2,3,1,2,1,3,2,1,3,1,2];
@@ -565,7 +573,7 @@ function renderCard(m) {
       </div>
       <div class="card-teams">
         <div class="team-side">
-          <div class="team-logo-wrap">${teamShield(m.home_team, teamHue(m.home_team))}</div>
+          <div class="team-logo-wrap">${renderLogo(m.home_team, m.home_logo, teamHue(m.home_team))}</div>
           <div class="team-name-cn">${m.home_team}</div>
           <div class="team-name-en">${m.home_team.slice(0,16)}</div>
         </div>
@@ -574,7 +582,7 @@ function renderCard(m) {
           <div class="vs-line"></div>
         </div>
         <div class="team-side away">
-          <div class="team-logo-wrap">${teamShield(m.away_team, teamHue(m.away_team))}</div>
+          <div class="team-logo-wrap">${renderLogo(m.away_team, m.away_logo, teamHue(m.away_team))}</div>
           <div class="team-name-cn">${m.away_team}</div>
           <div class="team-name-en">${m.away_team.slice(0,16)}</div>
         </div>
@@ -675,7 +683,7 @@ async function exportCardImg(id) {
       </div>
       <div style="flex:1;display:flex;align-items:center;justify-content:space-between;">
         <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;">
-          <div style="width:64px;height:64px;display:flex;align-items:center;justify-content:center;">${teamShield(m.home_team, teamHue(m.home_team))}</div>
+          <div style="width:64px;height:64px;display:flex;align-items:center;justify-content:center;">${renderLogo(m.home_team, m.home_logo, teamHue(m.home_team))}</div>
           <div style="font-size:17px;font-weight:800;">${m.home_team}</div>
           <div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">${m.home_team.slice(0,16)}</div>
         </div>
@@ -684,7 +692,7 @@ async function exportCardImg(id) {
           <div style="width:1.5px;height:32px;background:linear-gradient(to bottom,transparent,#bbb,transparent);margin-top:3px;transform:rotate(-15deg);"></div>
         </div>
         <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;">
-          <div style="width:64px;height:64px;display:flex;align-items:center;justify-content:center;">${teamShield(m.away_team, teamHue(m.away_team))}</div>
+          <div style="width:64px;height:64px;display:flex;align-items:center;justify-content:center;">${renderLogo(m.away_team, m.away_logo, teamHue(m.away_team))}</div>
           <div style="font-size:17px;font-weight:800;">${m.away_team}</div>
           <div style="font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.5px;">${m.away_team.slice(0,16)}</div>
         </div>

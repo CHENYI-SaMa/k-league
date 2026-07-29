@@ -10,6 +10,7 @@ import requests
 import re
 import json
 import time
+import base64
 from bs4 import BeautifulSoup
 
 HEADERS = {
@@ -30,6 +31,48 @@ def fetch_html(url, encoding='gb2312', retries=2):
             if attempt == retries - 1:
                 raise
             time.sleep(2)
+
+
+def fetch_image_base64(url, retries=2):
+    """Download an image and return a data: URI so the front-end can render
+    and export it without CORS issues. Returns '' on failure."""
+    for attempt in range(retries):
+        try:
+            r = requests.get(url, headers=HEADERS, timeout=10)
+            if r.status_code == 200 and r.content:
+                b64 = base64.b64encode(r.content).decode('ascii')
+                ext = 'png'
+                if url.lower().endswith('.gif'):
+                    ext = 'gif'
+                elif url.lower().endswith(('.jpg', '.jpeg')):
+                    ext = 'jpeg'
+                return f'data:image/{ext};base64,{b64}'
+            return ''
+        except Exception:
+            if attempt == retries - 1:
+                return ''
+            time.sleep(1.5)
+
+
+def extract_logos(html):
+    """Extract {team_name(alt): logo_url} from teamsignnew_*.png imgs."""
+    m1 = re.findall(r'<img[^>]+src="([^"]*teamsignnew_\d+\.png)"[^>]+alt="([^"]*)"', html)
+    m2 = re.findall(r'<img[^>]+alt="([^"]*)"[^>]+src="([^"]*teamsignnew_\d+\.png)"', html)
+    res = {}
+    for url, alt in m1 + m2:
+        if alt:
+            res[alt] = url
+    return res
+
+
+def match_logo(logos, team):
+    """Find the logo url whose alt matches the given (possibly short) team name."""
+    if not team:
+        return ''
+    for alt, url in logos.items():
+        if team and (team in alt or alt in team):
+            return url
+    return ''
 
 
 def parse_main_page(html):
@@ -284,14 +327,23 @@ def scrape_all():
             analysis_html = fetch_html(ANALYSIS_URL.format(fixture_id))
             analysis_data = parse_analysis_page(analysis_html, match)
             match['analysis'] = analysis_data
-            
+
+            # Team logos (real crests) -> base64 for CORS-free render/export
+            logos = extract_logos(analysis_html)
+            h_url = match_logo(logos, match['home_team'])
+            a_url = match_logo(logos, match['away_team'])
+            match['home_logo'] = fetch_image_base64(h_url) if h_url else ''
+            match['away_logo'] = fetch_image_base64(a_url) if a_url else ''
+
             h2h = len(analysis_data.get('h2h_matches', []))
             h5 = len(analysis_data.get('home_recent_5_matches', []))
             a5 = len(analysis_data.get('away_recent_5_matches', []))
-            print(f'  ✓ H2H:{h2h} 主:{h5} 客:{a5}')
+            print(f'  ✓ H2H:{h2h} 主:{h5} 客:{a5}  队徽:主{"✓" if match["home_logo"] else "✗"} 客{"✓" if match["away_logo"] else "✗"}')
         except Exception as e:
             print(f'  ✗ {e}')
             match['analysis'] = {}
+            match['home_logo'] = ''
+            match['away_logo'] = ''
         
         time.sleep(0.8)
     
